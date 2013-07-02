@@ -11,7 +11,7 @@ public class Particle {
 	public int numFixturesToTest;
 	public int neighborCount;
 	public int ci, cj;
-	public boolean alive, applyGravity;
+	public boolean alive, sendColor;
 	public float pressure, pressureNear;
 	public int index;
 	public Vec2[] collisionVertices, collisionNormals;
@@ -19,7 +19,6 @@ public class Particle {
 	public Particle(boolean alive)
 	{
 		this.alive = alive;
-		applyGravity = true;
 		distances = new float[FluidSimulation.MAX_NEIGHBORS];
 		neighbors = new int[FluidSimulation.MAX_NEIGHBORS];
 		fixtures = new Fixture[MAX_FIXTURES_TO_TEST];

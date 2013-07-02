@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.jbox2d.callbacks.QueryCallback;
-import org.jbox2d.callbacks.RayCastCallback;
 import org.jbox2d.collision.AABB;
 import org.jbox2d.collision.shapes.CircleShape;
 import org.jbox2d.collision.shapes.PolygonShape;
@@ -34,7 +33,7 @@ import org.newdawn.slick.util.ResourceLoader;
 public class FluidSimulation {
 	public static Integer LIQUID_INT = new Integer(1234598372);
 	public static final int WIDTH = 1280, HEIGHT = 720;
-	public static final float BOX2D_WIDTH = 30;
+	public static final float BOX2D_WIDTH = 80;
 	public static final float BOX2D_SCALE = ((float)BOX2D_WIDTH)/WIDTH; //To scale to Box2D
 	public static final float OPENGL_SCALE = ((float)WIDTH)/BOX2D_WIDTH; //To scale to OpenGL
 	public static final float BOX2D_HEIGHT = HEIGHT * BOX2D_SCALE;
@@ -43,14 +42,15 @@ public class FluidSimulation {
 	public final float MASS_PER_PARTICLE = ((float)TOTAL_MASS)/MAX_PARTICLES;
 	public final float RADIUS = 0.9f;
 	public final float VISCOSITY = 0.004f;
-	public final float DT = 1.0f / 120.0f;
+	public final float DT = 1.0f / 60.0f;
 	public final float IDEAL_RADIUS = 50.0f;
 	public final float IDEAL_RADIUS_SQ = IDEAL_RADIUS*IDEAL_RADIUS;
 	public final float MULTIPLIER = IDEAL_RADIUS / RADIUS;
 	public static final int MAX_NEIGHBORS = 75;
 	public static final int NUMBER_OF_PROCESSORS = Runtime.getRuntime().availableProcessors();
 	public static final Vec2 GRAVITY = new Vec2(0.0f, -9.8f).mul(1.0f / 3000.0f);
-	public static final float MAX_PRESSURE = 10.0f;
+	public static final float MAX_PRESSURE = 0.8f;
+	public static final float MAX_PRESSURE_NEAR = 1.6f;
 	
 	private int numActiveParticles = 0;
 	private Particle[] liquid;
@@ -70,7 +70,8 @@ public class FluidSimulation {
 	private int shaderProgram;
     private int vertexShader;
     private int fragmentShader;
-    private boolean useShader = true;
+    
+    private Vec2 mouseDirection;
 
 	
 	public FluidSimulation()
@@ -102,8 +103,8 @@ public class FluidSimulation {
 	     	shape.setAsBox(0.9f, 7.5f, new Vec2(1.0f, 7.5f), 0.0f);
 	     	ground.createFixture(shape, 0);
 	     	
-	     	//shape.setAsBox(0.5f, 4.5f, new Vec2(4.75f, 7.5f), 45.0f);
-	     	//ground.createFixture(shape, 0);
+	     	shape.setAsBox(0.5f, 4.5f, new Vec2(4.75f, 7.5f), 45.0f);
+	     	ground.createFixture(shape, 0);
 	      
 	     	shape.setAsBox(0.9f, 7.5f, new Vec2(21.0f, 7.5f), 0.0f);
 	     	ground.createFixture(shape, 0);
@@ -111,8 +112,8 @@ public class FluidSimulation {
 	     	shape.setAsBox(0.9f, 7.5f, new Vec2(31.0f, 7.5f), 0.0f);
 	     	ground.createFixture(shape, 0);
 	     	
-	     	//shape.setAsBox(0.5f, 4.5f, new Vec2(17.2f, 7.5f), -45.0f);
-	     	//ground.createFixture(shape, 0);
+	     	shape.setAsBox(0.5f, 4.5f, new Vec2(17.2f, 7.5f), -45.0f);
+	     	ground.createFixture(shape, 0);
 	     	
 	     	/*
 	     	CircleShape cd = new CircleShape();
@@ -124,6 +125,8 @@ public class FluidSimulation {
 	    screenAABB = new AABB();
 	    screenAABB.lowerBound.set(new Vec2(-100.0f, -100.0f));
 	    screenAABB.upperBound.set(new Vec2(BOX2D_WIDTH+100.0f, BOX2D_HEIGHT+100.0f));
+	    
+	    mouseDirection = new Vec2();
 	}
 	
 	public static void main(String[] args)
@@ -241,7 +244,7 @@ public class FluidSimulation {
 			update();
 
 			Display.update();
-			sync(60);
+			sync((int)(1.0f/DT));
 		}
 		destroyShaderProgram();
 		Display.destroy();
@@ -251,7 +254,10 @@ public class FluidSimulation {
 		//Poll input
 		if(Mouse.isButtonDown(0))
 		{
-			createParticle(4, (Mouse.getX()-screenX)*BOX2D_SCALE, (Mouse.getY()-screenY)*BOX2D_SCALE);
+			float mouseX = (Mouse.getX()-screenX)*BOX2D_SCALE;
+			float mouseY = (Mouse.getY()-screenY)*BOX2D_SCALE;
+			createParticle(4, mouseX, mouseY, mouseDirection);
+			mouseDirection = new Vec2(mouseX-mouseDirection.x, mouseY-mouseDirection.y);
 		}
 		if(Mouse.isButtonDown(1))
 		{
@@ -280,7 +286,6 @@ public class FluidSimulation {
 		{
 			screenX++;
 		}
-		useShader = !Keyboard.isKeyDown(Keyboard.KEY_SPACE);
 		//screenX--;
 		
 		applyLiquidConstraints();
@@ -291,6 +296,7 @@ public class FluidSimulation {
 		
 		GL11.glViewport(screenX, screenY, WIDTH, HEIGHT);
 		
+		
 		// draw 	
 		GL20.glUseProgram(shaderProgram);
 		//GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE);
@@ -299,8 +305,14 @@ public class FluidSimulation {
 		for (int i = 0; i < numActiveParticles; i++)
 	    {
 	        Particle particle = liquid[activeParticles.get(i)];
+	        float pressure = (particle.pressure - 5f) / 2.0f;
+	        float pressureN = particle.pressureNear / 2.0f;
+	        float speed = (float)Math.sqrt(particle.velocity.x*particle.velocity.x + particle.velocity.y*particle.velocity.y);
 	        int loc = GL20.glGetUniformLocation(shaderProgram, "speed");
-		    GL20.glUniform1f(loc, (float)Math.sqrt(particle.velocity.x*particle.velocity.x + particle.velocity.y*particle.velocity.y));
+	        if((pressure+0.01f >= MAX_PRESSURE  || pressureN+0.01f >= MAX_PRESSURE_NEAR) && speed >= 0.8f)
+	        	GL20.glUniform1f(loc, 0.0f);
+	        else
+	        	GL20.glUniform1f(loc, speed);
 	        GL11.glPushMatrix();
 	        float width = waterTexture.getWidth();
 	        float height = waterTexture.getHeight();
@@ -387,7 +399,7 @@ public class FluidSimulation {
 		GL11.glEnd(); 
 	}
 
-	public void createParticle(int numParticlesToSpawn, float x, float y)
+	public void createParticle(int numParticlesToSpawn, float x, float y, Vec2 mouse)
 	{
 		ArrayList<Particle> inactiveParticles = new ArrayList<Particle>();
 	    for(int i = 0; i < liquid.length; i++)
@@ -406,10 +418,10 @@ public class FluidSimulation {
 		    	Particle particle = inactiveParticles.get(i);
 		        if (numActiveParticles < MAX_PARTICLES)
 		        {
-					Vec2 jitter = new Vec2((float)(Math.random() * 2 - 1), (float)(Math.random()) - 0.5f);
-					particle.position = new Vec2(jitter.x + x, jitter.y + y);
+					Vec2 jitter = new Vec2((float)(Math.random() * 0.5f - 0.25f), (float)(Math.random()) - 0.25f);
+					particle.position = new Vec2(x + jitter.x, y + jitter.y);
 					particle.oldPosition = particle.position;
-					particle.velocity = new Vec2();
+					particle.velocity = new Vec2(0.25f, 0.0f);
 					
 					particle.alive = true;
 					particle.ci = getGridX(particle.position.x);
@@ -541,7 +553,7 @@ public class FluidSimulation {
 					float shortestDistance = 9999999f;
 					for(int v = 0; v < shape.getVertexCount(); v++)
 					{
-						float distance = Vec2.dot(particle.collisionNormals[v], particle.collisionVertices[v].sub(particle.position));
+						float distance = Vec2.dot(particle.collisionNormals[v], particle.collisionVertices[v].sub(particle.oldPosition));
 						if(distance < shortestDistance)
 						{
 							shortestDistance = distance;
@@ -550,8 +562,9 @@ public class FluidSimulation {
 							normal = particle.collisionNormals[v];
 						}
 					}
-					//particle.position = closestPoint.add(normal.mul(0.01f));
+					particle.position = closestPoint.add(normal.mul(0.01f));
 					//particle.position = particle.oldPosition;
+					/*
 					final Vec2 lambda = new Vec2(1.0f, 0.0f);
 					final Vec2 normalRay = new Vec2();
 					world.raycast(new RayCastCallback(){
@@ -559,7 +572,7 @@ public class FluidSimulation {
 								Vec2 normal, float fraction) {
 							lambda.set(new Vec2(fraction, 0.0f));
 							normalRay.set(normal);
-							return 1;
+							return fraction;
 						}
 						
 					}, particle.position, particle.oldPosition);
@@ -570,6 +583,7 @@ public class FluidSimulation {
 						normalRay.set(normalRay.mul(RADIUS));
 						particle.position = particle.oldPosition.add(delta).add(normalRay);
 					}
+					*/
 				}
 				else if(fixture.getShape().getType() == ShapeType.CIRCLE)
 				{
@@ -586,10 +600,6 @@ public class FluidSimulation {
 				//particle.velocity = new Vec2();
 				//particle.position = particle.position.add(particle.velocity.mul(DT));
 				delta[index] = new Vec2();
-			}
-			else
-			{
-				//particle.applyGravity = true;
 			}
 		}
 	}
@@ -798,8 +808,8 @@ public class FluidSimulation {
 		public Vec2[] applyForcesThread(int index, Vec2[] accumulatedDelta)
 		{
 			Particle particle = liquid[index];
-			float pressure = (particle.pressure - 5f) / 2.0f; //normal pressure term
-			float presnear = particle.pressureNear / 2.0f; //near particles term
+			float pressure = (float)Math.min(MAX_PRESSURE, (particle.pressure - 5f) / 2.0f); //normal pressure term
+			float presnear = (float)Math.min(MAX_PRESSURE_NEAR, particle.pressureNear / 2.0f); //near particles term
 			if(Math.abs(pressure)>MAX_PRESSURE)
 			{
 				pressure = MAX_PRESSURE * (pressure/Math.abs(pressure));
@@ -824,8 +834,7 @@ public class FluidSimulation {
 			    }
 			}
 			accumulatedDelta[index] = accumulatedDelta[index].add(change);
-			if(particle.applyGravity)
-				particle.velocity = particle.velocity.add(GRAVITY);
+			particle.velocity = particle.velocity.add(GRAVITY);
 			return accumulatedDelta;
 		}
 	}
@@ -865,30 +874,44 @@ public class FluidSimulation {
 						
 						for(int v = 0; v < shape.getVertexCount(); v++)
 						{
-							Vec2 vertex = shape.m_vertices[v];
-							float x = (collisionXF.q.c * vertex.x - collisionXF.q.s * vertex.y) + collisionXF.p.x;
-				            float y = (collisionXF.q.s * vertex.x + collisionXF.q.c * vertex.y) + collisionXF.p.x;
-							particle.collisionVertices[v] = new Vec2(x, y);
-							
-							vertex = shape.m_normals[v];
-							x = (collisionXF.q.c * vertex.x - collisionXF.q.s * vertex.y) + collisionXF.p.x;
-				            y = (collisionXF.q.s * vertex.x + collisionXF.q.c * vertex.y) + collisionXF.p.x;
-				            particle.collisionNormals[v] = new Vec2(x, y);
+							particle.collisionVertices[v] = Transform.mul(collisionXF, shape.m_vertices[v]);
+				            particle.collisionNormals[v] = Transform.mul(collisionXF, shape.m_normals[v]);
 						}
 						
-						float shortestDistance = Float.MAX_VALUE;
+						float shortestDistance = 9999999f;
 						for(int v = 0; v < shape.getVertexCount(); v++)
 						{
-							float distance = Vec2.dot(particle.collisionNormals[v], particle.collisionVertices[v].sub(particle.position));
+							float distance = Vec2.dot(particle.collisionNormals[v], particle.collisionVertices[v].sub(particle.oldPosition));
 							if(distance < shortestDistance)
 							{
 								shortestDistance = distance;
 								
-								closestPoint = particle.collisionNormals[v].mul(distance).add(particle.position);
+								closestPoint = particle.collisionNormals[v].mul(distance).add(particle.oldPosition);
 								normal = particle.collisionNormals[v];
 							}
 						}
-						particle.position = closestPoint.add(normal.mul(0.05f));
+						particle.position = closestPoint.add(normal.mul(0.01f));
+						//particle.position = particle.oldPosition;
+						/*
+						final Vec2 lambda = new Vec2(1.0f, 0.0f);
+						final Vec2 normalRay = new Vec2();
+						world.raycast(new RayCastCallback(){
+							public float reportFixture(Fixture fixture, Vec2 point,
+									Vec2 normal, float fraction) {
+								lambda.set(new Vec2(fraction, 0.0f));
+								normalRay.set(normal);
+								return fraction;
+							}
+							
+						}, particle.position, particle.oldPosition);
+						if(lambda.x != 1.0f)
+						{
+							Vec2 delta = particle.position.sub(particle.oldPosition);
+							delta = delta.mul(lambda.x);
+							normalRay.set(normalRay.mul(RADIUS));
+							particle.position = particle.oldPosition.add(delta).add(normalRay);
+						}
+						*/
 					}
 					else if(fixture.getShape().getType() == ShapeType.CIRCLE)
 					{
@@ -901,7 +924,14 @@ public class FluidSimulation {
 						particle.position = closestPoint.add(normal.mul(0.05f));
 					}
 					particle.velocity = (particle.velocity.sub(normal.mul(Vec2.dot(particle.velocity, normal)).mul(1.2f))).mul(0.85f);
+					//particle.applyGravity = false;
+					//particle.velocity = new Vec2();
+					//particle.position = particle.position.add(particle.velocity.mul(DT));
 					delta[index] = new Vec2();
+				}
+				else
+				{
+					//particle.applyGravity = true;
 				}
 			}
 		}
