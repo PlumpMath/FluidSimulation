@@ -1,6 +1,3 @@
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -8,41 +5,23 @@ import org.jbox2d.callbacks.QueryCallback;
 import org.jbox2d.collision.AABB;
 import org.jbox2d.collision.shapes.CircleShape;
 import org.jbox2d.collision.shapes.PolygonShape;
-import org.jbox2d.collision.shapes.Shape;
 import org.jbox2d.collision.shapes.ShapeType;
 import org.jbox2d.common.Transform;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
-import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.Fixture;
 import org.jbox2d.dynamics.World;
-import org.lwjgl.LWJGLException;
-import org.lwjgl.Sys;
-import org.lwjgl.input.Keyboard;
-import org.lwjgl.input.Mouse;
-import org.lwjgl.opengl.Display;
-import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL13;
 import org.lwjgl.opengl.GL20;
-import org.newdawn.slick.opengl.Texture;
-import org.newdawn.slick.opengl.TextureLoader;
-import org.newdawn.slick.util.ResourceLoader;
 
 public class FluidSimulation {
 	public static Integer LIQUID_INT = new Integer(1234598372);
-	public static final int WIDTH = 1280, HEIGHT = 720;
-	public static final float BOX2D_WIDTH = 80;
-	public static final float BOX2D_SCALE = ((float)BOX2D_WIDTH)/WIDTH; //To scale to Box2D
-	public static final float OPENGL_SCALE = ((float)WIDTH)/BOX2D_WIDTH; //To scale to OpenGL
-	public static final float BOX2D_HEIGHT = HEIGHT * BOX2D_SCALE;
 	public final int MAX_PARTICLES = 20000;
 	public final int TOTAL_MASS = 1;
 	public final float MASS_PER_PARTICLE = ((float)TOTAL_MASS)/MAX_PARTICLES;
 	public final float RADIUS = 0.9f;
 	public final float VISCOSITY = 0.004f;
-	public final float DT = 1.0f / 60.0f;
 	public final float IDEAL_RADIUS = 50.0f;
 	public final float IDEAL_RADIUS_SQ = IDEAL_RADIUS*IDEAL_RADIUS;
 	public final float MULTIPLIER = IDEAL_RADIUS / RADIUS;
@@ -63,19 +42,12 @@ public class FluidSimulation {
 	
 	private World world;
 	private AABB screenAABB;
-	private int screenX, screenY;
 	
-	private Texture waterTexture;
-	
-	private int shaderProgram;
-    private int vertexShader;
-    private int fragmentShader;
-    
-    private Vec2 mouseDirection;
-
-	
-	public FluidSimulation()
+	public FluidSimulation(World world, AABB aabb)
 	{
+		this.world = world;
+		screenAABB = aabb;
+		
 		activeParticles = new ArrayList<Integer>(MAX_PARTICLES);
 		liquid = new Particle[MAX_PARTICLES];
 		delta = new Vec2[MAX_PARTICLES];
@@ -87,319 +59,9 @@ public class FluidSimulation {
 		    liquid[i] = new Particle(false);
 		    liquid[i].index = i;
 		}
-		
-		Body ground = null;
-	    {
-	    	world = new World(new Vec2(0.0f, -9.8f));
-	     	BodyDef bd = new BodyDef();
-	     	bd.position.set(0.0f, 0.0f);
-	      
-	     	ground = world.createBody(bd);
-	     	PolygonShape shape = new PolygonShape();
-
-	     	shape.setAsBox(20.0f, 0.9f, new Vec2(20.0f, 0.9f), 0.0f);
-	     	ground.createFixture(shape, 0);
-	      
-	     	shape.setAsBox(0.9f, 7.5f, new Vec2(1.0f, 7.5f), 0.0f);
-	     	ground.createFixture(shape, 0);
-	     	
-	     	shape.setAsBox(0.5f, 4.5f, new Vec2(4.75f, 7.5f), 45.0f);
-	     	ground.createFixture(shape, 0);
-	      
-	     	shape.setAsBox(0.9f, 7.5f, new Vec2(21.0f, 7.5f), 0.0f);
-	     	ground.createFixture(shape, 0);
-	     	
-	     	shape.setAsBox(0.9f, 7.5f, new Vec2(31.0f, 7.5f), 0.0f);
-	     	ground.createFixture(shape, 0);
-	     	
-	     	shape.setAsBox(0.5f, 4.5f, new Vec2(17.2f, 7.5f), -45.0f);
-	     	ground.createFixture(shape, 0);
-	     	
-	     	/*
-	     	CircleShape cd = new CircleShape();
-	     	cd.m_radius = 3.0f;
-	     	cd.m_p.set(10.7f, 4.0f);
-	     	ground.createFixture(cd, 0);
-	     	*/
-	    }
-	    screenAABB = new AABB();
-	    screenAABB.lowerBound.set(new Vec2(-100.0f, -100.0f));
-	    screenAABB.upperBound.set(new Vec2(BOX2D_WIDTH+100.0f, BOX2D_HEIGHT+100.0f));
-	    
-	    mouseDirection = new Vec2();
 	}
 	
-	public static void main(String[] args)
-	{
-		FluidSimulation sim = new FluidSimulation();
-		sim.start();
-	}
-	
-	public void initGL() {
-		GL11.glMatrixMode(GL11.GL_PROJECTION);
-		GL11.glLoadIdentity();
-		GL11.glOrtho(0, BOX2D_WIDTH, 0, BOX2D_HEIGHT, 1, -1);
-		GL11.glMatrixMode(GL11.GL_MODELVIEW);
-		GL11.glHint(GL11.GL_POINT_SMOOTH_HINT, GL11.GL_NICEST);
-		GL11.glEnable(GL11.GL_POINT_SMOOTH);
-		GL11.glEnable(GL11.GL_BLEND);
-		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-		GL11.glPointSize(2);
-		try {
-			waterTexture = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("particle.png"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		};
-		GL13.glActiveTexture(GL13.GL_TEXTURE0);
-	}
-	public void initShaderProgram()
-	{
-		shaderProgram = GL20.glCreateProgram();
-        vertexShader = GL20.glCreateShader(GL20.GL_VERTEX_SHADER);
-        fragmentShader = GL20.glCreateShader(GL20.GL_FRAGMENT_SHADER);
-        StringBuilder vertexShaderSource = new StringBuilder();
-        StringBuilder fragmentShaderSource = new StringBuilder();
-        BufferedReader reader = null;
-        try {
-            reader = new BufferedReader(new FileReader("src/shader.vs"));
-            String line;
-            while ((line = reader.readLine()) != null) {
-                vertexShaderSource.append(line).append('\n');
-            }
-        } catch (IOException e) {
-            System.err.println("Vertex shader wasn't loaded properly.");
-            e.printStackTrace();
-            Display.destroy();
-            System.exit(1);
-        } finally {
-            if (reader != null) {
-                try {
-                    reader.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        BufferedReader reader2 = null;
-        try {
-            reader2 = new BufferedReader(new FileReader("src/shader.fs"));
-            String line;
-            while ((line = reader2.readLine()) != null) {
-                fragmentShaderSource.append(line).append('\n');
-            }
-        } catch (IOException e) {
-            System.err.println("Fragment shader wasn't loaded properly.");
-            Display.destroy();
-            System.exit(1);
-        } finally {
-            if (reader2 != null) {
-                try {
-                    reader2.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        GL20.glShaderSource(vertexShader, vertexShaderSource);
-        GL20.glCompileShader(vertexShader);
-        if (GL20.glGetShaderi(vertexShader, GL20.GL_COMPILE_STATUS) == GL11.GL_FALSE) {
-            System.err.println("Vertex shader wasn't able to be compiled correctly.");
-        }
-        GL20.glShaderSource(fragmentShader, fragmentShaderSource);
-        GL20.glCompileShader(fragmentShader);
-        if (GL20.glGetShaderi(fragmentShader, GL20.GL_COMPILE_STATUS) == GL11.GL_FALSE) {
-            System.err.println("Fragment shader wasn't able to be compiled correctly.");
-        }
-        GL20.glAttachShader(shaderProgram, vertexShader);
-        GL20.glAttachShader(shaderProgram, fragmentShader);
-        GL20.glLinkProgram(shaderProgram);
-        GL20.glValidateProgram(shaderProgram);
-	}
-	public void destroyShaderProgram()
-	{
-		GL20.glDeleteProgram(shaderProgram);
-		GL20.glDeleteShader(vertexShader);
-		GL20.glDeleteShader(fragmentShader);
-	}
-	public void setTextureUnit0(int programId) {
-	    int loc = GL20.glGetUniformLocation(programId, "texture1");
-	    GL20.glUniform1i(loc, 0);
-	}
-	public void start()
-	{
-		try {
-			Display.setDisplayMode(new DisplayMode(WIDTH, HEIGHT));
-			Display.create();
-		} catch (LWJGLException e) {
-			e.printStackTrace();
-			System.exit(0);
-		}
-
-		initGL(); // init OpenGL
-		initShaderProgram();
-		setTextureUnit0(shaderProgram);
-
-		while (!Display.isCloseRequested()) {
-			update();
-
-			Display.update();
-			sync((int)(1.0f/DT));
-		}
-		destroyShaderProgram();
-		Display.destroy();
-	}
-	public void update()
-	{
-		//Poll input
-		if(Mouse.isButtonDown(0))
-		{
-			float mouseX = (Mouse.getX()-screenX)*BOX2D_SCALE;
-			float mouseY = (Mouse.getY()-screenY)*BOX2D_SCALE;
-			createParticle(4, mouseX, mouseY, mouseDirection);
-			mouseDirection = new Vec2(mouseX-mouseDirection.x, mouseY-mouseDirection.y);
-		}
-		if(Mouse.isButtonDown(1))
-		{
-			BodyDef bd = new BodyDef();
-	     	bd.position.set(0.0f, 0.0f);
-	      
-	     	Body temp = world.createBody(bd);
-	     	PolygonShape shape = new PolygonShape();
-
-	     	shape.setAsBox(1.0f, 1.0f, new Vec2((Mouse.getX()-screenX)*BOX2D_SCALE, (Mouse.getY()-screenY)*BOX2D_SCALE), 0.0f);
-	     	temp.createFixture(shape, 0);
-		}
-		if(Keyboard.isKeyDown(Keyboard.KEY_DOWN))
-		{
-			screenY++;
-		}
-		if(Keyboard.isKeyDown(Keyboard.KEY_UP))
-		{
-			screenY--;
-		}
-		if(Keyboard.isKeyDown(Keyboard.KEY_RIGHT))
-		{
-			screenX--;
-		}
-		if(Keyboard.isKeyDown(Keyboard.KEY_LEFT))
-		{
-			screenX++;
-		}
-		//screenX--;
-		
-		applyLiquidConstraints();
-		world.step(DT, 10, 10);
-		
-		GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
-		GL11.glColor3f(0.0f, 0.0f, 0.0f);
-		
-		GL11.glViewport(screenX, screenY, WIDTH, HEIGHT);
-		
-		
-		// draw 	
-		GL20.glUseProgram(shaderProgram);
-		//GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE);
-		GL11.glEnable(GL11.GL_TEXTURE_2D);
-		waterTexture.bind();
-		for (int i = 0; i < numActiveParticles; i++)
-	    {
-	        Particle particle = liquid[activeParticles.get(i)];
-	        float pressure = (particle.pressure - 5f) / 2.0f;
-	        float pressureN = particle.pressureNear / 2.0f;
-	        float speed = (float)Math.sqrt(particle.velocity.x*particle.velocity.x + particle.velocity.y*particle.velocity.y);
-	        int loc = GL20.glGetUniformLocation(shaderProgram, "speed");
-	        if((pressure+0.01f >= MAX_PRESSURE  || pressureN+0.01f >= MAX_PRESSURE_NEAR) && speed >= 0.8f)
-	        	GL20.glUniform1f(loc, 0.0f);
-	        else
-	        	GL20.glUniform1f(loc, speed);
-	        GL11.glPushMatrix();
-	        float width = waterTexture.getWidth();
-	        float height = waterTexture.getHeight();
-	        GL11.glTranslatef(particle.position.x-(width/2), particle.position.y-(height/2), 0.0f);
-	        GL11.glBegin(GL11.GL_QUADS);
-		        GL11.glTexCoord2d(0.0,0.0); GL11.glVertex2d(0.0,0.0);
-		        GL11.glTexCoord2d(1.0,0.0); GL11.glVertex2d(width,0.0);
-		        GL11.glTexCoord2d(1.0,1.0); GL11.glVertex2d(width, height);
-		        GL11.glTexCoord2d(0.0,1.0); GL11.glVertex2d(0.0, height);
-	       	GL11.glEnd();
-	       	GL11.glPopMatrix();
-	    }
-		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-		GL11.glDisable(GL11.GL_TEXTURE_2D);
-		GL20.glUseProgram(0);
-		
-		Body render = world.getBodyList();
-		for(int i = 0; i < world.getBodyCount(); render = render.getNext())
-		{
-			if(render.m_type != BodyType.DYNAMIC)
-			{
-				Fixture fix = render.getFixtureList();
-				for(int j = 0; j < render.m_fixtureCount; fix = fix.getNext())
-				{
-					Shape s = fix.getShape();
-					ShapeType type = s.getType();
-					GL11.glColor3f(0.0f, 0.0f, 1.0f);
-					if(type.equals(ShapeType.CIRCLE))
-					{
-						CircleShape cs = (CircleShape)s;
-						drawCircle(cs.m_p.x, cs.m_p.y, s.getRadius(), 20);
-					}
-					else if(type.equals(ShapeType.POLYGON))
-					{
-						PolygonShape ps = (PolygonShape)s;
-						Vec2[] vertices = ps.m_vertices;
-						GL11.glBegin(GL11.GL_QUADS); 
-						for(int k = 0; k < vertices.length; k++) 
-						{ 
-							GL11.glVertex2f(vertices[k].x, vertices[k].y);
-						} 
-						GL11.glEnd(); 
-					}
-					j++;
-				}
-			}
-			i++;
-		}
-	}
-	
-	private void drawCircle(float cx, float cy, float r, int num_segments) 
-	{
-		float theta = 2.0f * 3.1415926f / (float)num_segments; 
-		float tangetial_factor = (float)Math.tan(theta);//calculate the tangential factor 
-
-		float radial_factor = (float)Math.cos(theta);//calculate the radial factor 
-		
-		float x = r;//we start at angle = 0 
-
-		float y = 0; 
-	    
-		GL11.glBegin(GL11.GL_TRIANGLE_FAN); 
-		for(int ii = 0; ii < num_segments; ii++) 
-		{ 
-			GL11.glVertex2f(x + cx, y + cy);//output vertex 
-	        
-			//calculate the tangential vector 
-			//remember, the radial vector is (x, y) 
-			//to get the tangential vector we flip those coordinates and negate one of them 
-
-			float tx = -y; 
-			float ty = x; 
-	        
-			//add the tangential vector 
-
-			x += tx * tangetial_factor; 
-			y += ty * tangetial_factor; 
-	        
-			//correct using the radial factor 
-
-			x *= radial_factor; 
-			y *= radial_factor; 
-		} 
-		GL11.glEnd(); 
-	}
-
-	public void createParticle(int numParticlesToSpawn, float x, float y, Vec2 mouse)
+	public void createParticle(int numParticlesToSpawn, float x, float y)
 	{
 		ArrayList<Particle> inactiveParticles = new ArrayList<Particle>();
 	    for(int i = 0; i < liquid.length; i++)
@@ -531,76 +193,94 @@ public class FluidSimulation {
 		for(int i = 0; i < particle.numFixturesToTest; i++)
 		{
 			Fixture fixture = particle.fixtures[i];
-			
 			Vec2 newPosition = particle.position.add(particle.velocity).add(delta[index]);
 			if(fixture.testPoint(newPosition))
 			{
 				Body body = fixture.getBody();
-				Vec2 closestPoint = new Vec2();
-				Vec2 normal = new Vec2();
-				
-				if(fixture.getShape().getType() == ShapeType.POLYGON)
+				if(body.getType() == BodyType.STATIC)
 				{
-					PolygonShape shape = (PolygonShape)fixture.getShape();
-					Transform collisionXF = body.getTransform();
+					Vec2 closestPoint = new Vec2();
+					Vec2 normal = new Vec2();
 					
-					for(int v = 0; v < shape.getVertexCount(); v++)
+					if(fixture.getShape().getType() == ShapeType.POLYGON)
 					{
-						particle.collisionVertices[v] = Transform.mul(collisionXF, shape.m_vertices[v]);
-			            particle.collisionNormals[v] = Transform.mul(collisionXF, shape.m_normals[v]);
-					}
-					
-					float shortestDistance = 9999999f;
-					for(int v = 0; v < shape.getVertexCount(); v++)
-					{
-						float distance = Vec2.dot(particle.collisionNormals[v], particle.collisionVertices[v].sub(particle.oldPosition));
-						if(distance < shortestDistance)
+						PolygonShape shape = (PolygonShape)fixture.getShape();
+						Transform collisionXF = body.getTransform();
+						
+						for(int v = 0; v < shape.getVertexCount(); v++)
 						{
-							shortestDistance = distance;
-							
-							closestPoint = particle.collisionNormals[v].mul(distance).add(particle.oldPosition);
-							normal = particle.collisionNormals[v];
-						}
-					}
-					particle.position = closestPoint.add(normal.mul(0.01f));
-					//particle.position = particle.oldPosition;
-					/*
-					final Vec2 lambda = new Vec2(1.0f, 0.0f);
-					final Vec2 normalRay = new Vec2();
-					world.raycast(new RayCastCallback(){
-						public float reportFixture(Fixture fixture, Vec2 point,
-								Vec2 normal, float fraction) {
-							lambda.set(new Vec2(fraction, 0.0f));
-							normalRay.set(normal);
-							return fraction;
+							particle.collisionVertices[v] = Transform.mul(collisionXF, shape.m_vertices[v]);
+				            particle.collisionNormals[v] = Transform.mul(collisionXF, shape.m_normals[v]);
 						}
 						
-					}, particle.position, particle.oldPosition);
-					if(lambda.x != 1.0f)
-					{
-						Vec2 delta = particle.position.sub(particle.oldPosition);
-						delta = delta.mul(lambda.x);
-						normalRay.set(normalRay.mul(RADIUS));
-						particle.position = particle.oldPosition.add(delta).add(normalRay);
+						float shortestDistance = 9999999f;
+						for(int v = 0; v < shape.getVertexCount(); v++)
+						{
+							float distance = Vec2.dot(particle.collisionNormals[v], particle.collisionVertices[v].sub(particle.oldPosition));
+							if(distance < shortestDistance)
+							{
+								shortestDistance = distance;
+								
+								closestPoint = particle.collisionNormals[v].mul(distance).add(particle.oldPosition);
+								normal = particle.collisionNormals[v];
+							}
+						}
+						particle.position = closestPoint.add(normal.mul(0.01f));
+						//particle.position = particle.oldPosition;
+						/*
+						final Vec2 lambda = new Vec2(1.0f, 0.0f);
+						final Vec2 normalRay = new Vec2();
+						world.raycast(new RayCastCallback(){
+							public float reportFixture(Fixture fixture, Vec2 point,
+									Vec2 normal, float fraction) {
+								lambda.set(new Vec2(fraction, 0.0f));
+								normalRay.set(normal);
+								return fraction;
+							}
+							
+						}, particle.position, particle.oldPosition);
+						if(lambda.x != 1.0f)
+						{
+							Vec2 delta = particle.position.sub(particle.oldPosition);
+							delta = delta.mul(lambda.x);
+							normalRay.set(normalRay.mul(RADIUS));
+							particle.position = particle.oldPosition.add(delta).add(normalRay);
+						}
+						*/
 					}
-					*/
+					else if(fixture.getShape().getType() == ShapeType.CIRCLE)
+					{
+						CircleShape shape = (CircleShape)fixture.getShape();
+						Vec2 center = shape.m_p.add(body.getPosition());
+						Vec2 difference = particle.position.sub(center);
+						normal = difference;
+						normal.normalize();
+						closestPoint = center.add(difference.mul(shape.getRadius() * difference.length()));
+						particle.position = closestPoint.add(normal.mul(0.05f));
+					}
+					particle.velocity = (particle.velocity.sub(normal.mul(Vec2.dot(particle.velocity, normal)).mul(1.2f))).mul(0.85f);
+					//particle.applyGravity = false;
+					//particle.velocity = new Vec2();
+					//particle.position = particle.position.add(particle.velocity.mul(DT));
+					delta[index] = new Vec2();
 				}
-				else if(fixture.getShape().getType() == ShapeType.CIRCLE)
-				{
-					CircleShape shape = (CircleShape)fixture.getShape();
-					Vec2 center = shape.m_p.add(body.getPosition());
-					Vec2 difference = particle.position.sub(center);
-					normal = difference;
-					normal.normalize();
-					closestPoint = center.add(difference.mul(shape.getRadius() * difference.length()));
-					particle.position = closestPoint.add(normal.mul(0.05f));
-				}
-				particle.velocity = (particle.velocity.sub(normal.mul(Vec2.dot(particle.velocity, normal)).mul(1.2f))).mul(0.85f);
-				//particle.applyGravity = false;
-				//particle.velocity = new Vec2();
-				//particle.position = particle.position.add(particle.velocity.mul(DT));
-				delta[index] = new Vec2();
 			}
+		}
+		for(int i = 0; i < Main.boxes.size(); i++)
+		{
+			boolean collide = false;
+			int fixtures = Main.boxes.get(i).body.m_fixtureCount;
+			Fixture fixture = Main.boxes.get(i).body.getFixtureList();
+			for(int k = 0; k < fixtures; k++)
+			{
+				if(fixture.testPoint(particle.position))
+				{
+					Main.boxes.get(i).numberDisplaced += 0.2f;
+					Main.boxes.get(i).body.applyForce(particle.velocity.mul(5.0f), Main.boxes.get(i).body.getPosition());
+					collide = collide || true;
+				}
+			}
+			Main.boxes.get(i).collide = collide;
 		}
 	}
 	public void applyLiquidConstraints()
@@ -717,6 +397,30 @@ public class FluidSimulation {
 		    moveParticle(activeParticles.get(i));
 		}
 	}
+	public void drawFluid(int shaderProgram, float texWidth, float texHeight)
+	{
+		for (int i = 0; i < numActiveParticles; i++)
+	    {
+	        Particle particle = liquid[activeParticles.get(i)];
+	        float pressure = (particle.pressure - 5f) / 2.0f;
+	        float pressureN = particle.pressureNear / 2.0f;
+	        float speed = (float)Math.sqrt(particle.velocity.x*particle.velocity.x + particle.velocity.y*particle.velocity.y);
+	        int loc = GL20.glGetUniformLocation(shaderProgram, "speed");
+	        if((pressure+0.01f >= MAX_PRESSURE  || pressureN+0.01f >= MAX_PRESSURE_NEAR) && speed >= 0.8f)
+	        	GL20.glUniform1f(loc, 0.0f);
+	        else
+	        	GL20.glUniform1f(loc, speed);
+	        GL11.glPushMatrix();
+	        GL11.glTranslatef(particle.position.x-(texWidth/2), particle.position.y-(texHeight/2), 0.0f);
+	        GL11.glBegin(GL11.GL_QUADS);
+		        GL11.glTexCoord2d(0.0,0.0); GL11.glVertex2d(0.0,0.0);
+		        GL11.glTexCoord2d(1.0,0.0); GL11.glVertex2d(texWidth,0.0);
+		        GL11.glTexCoord2d(1.0,1.0); GL11.glVertex2d(texWidth, texHeight);
+		        GL11.glTexCoord2d(0.0,1.0); GL11.glVertex2d(0.0, texHeight);
+	       	GL11.glEnd();
+	       	GL11.glPopMatrix();
+	    }
+	}
 	class PrepareSimulation implements Runnable
 	{
 		private int startIndex, endIndex;
@@ -827,7 +531,7 @@ public class FluidSimulation {
 			        Vec2 d = relativePosition.mul(factor);
 			        Vec2 relativeVelocity = scaledVelocities[particle.neighbors[a]].sub(scaledVelocities[index]);
 
-			        factor = VISCOSITY * oneminusq * DT;
+			        factor = VISCOSITY * oneminusq * Main.DT;
 			        d = d.sub(relativeVelocity.mul(factor));
 			        accumulatedDelta[particle.neighbors[a]] =  accumulatedDelta[particle.neighbors[a]].add(d);
 			        change = change.sub(d);
@@ -975,61 +679,5 @@ public class FluidSimulation {
 	            }
 	        }
 	    }
-	}
-	
-	static long variableYieldTime;
-	private static long lastTime;
-	
-	/**
-	 * An accurate sync method that adapts automatically
-	 * to the system it runs on to provide reliable results.
-	 * 
-	 * @param fps The desired frame rate, in frames per second
-	 */
-	public static void sync(int fps) {
-		if (fps <= 0) return;
-		
-		long sleepTime = 1000000000 / fps; // nanoseconds to sleep this frame
-		// yieldTime + remainder micro & nano seconds if smaller than sleepTime
-		long yieldTime = Math.min(sleepTime, variableYieldTime + sleepTime % (1000*1000));
-		long overSleep = 0; // time the sync goes over by
-		
-		try {
-			while (true) {
-				long t = getTime() - lastTime;
-				
-				if (t < sleepTime - yieldTime) {
-					Thread.sleep(1);
-				}
-				else if (t < sleepTime) {
-					// burn the last few CPU cycles to ensure accuracy
-					Thread.yield();
-				}
-				else {
-					overSleep = t - sleepTime;
-					break; // exit while loop
-				}
-			}
-		} catch (InterruptedException e) {}
-		
-		lastTime = getTime() - Math.min(overSleep, sleepTime);
-		
-		// auto tune the time sync should yield
-		if (overSleep > variableYieldTime) {
-			// increase by 200 microseconds (1/5 a ms)
-			variableYieldTime = Math.min(variableYieldTime + 200*1000, sleepTime);
-		}
-		else if (overSleep < variableYieldTime - 200*1000) {
-			// decrease by 2 microseconds
-			variableYieldTime = Math.max(variableYieldTime - 2*1000, 0);
-		}
-	}
-
-	/**
-	 * Get System Nano Time
-	 * @return will return the current time in nano's
-	 */
-	private static long getTime() {
-	    return (Sys.getTime() * 1000000000) / Sys.getTimerResolution();
 	}
 }
