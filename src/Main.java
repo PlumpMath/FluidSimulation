@@ -23,7 +23,6 @@ import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL13;
 import org.lwjgl.opengl.GL20;
-import org.lwjgl.util.glu.GLU;
 import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
 import org.newdawn.slick.util.ResourceLoader;
@@ -44,7 +43,6 @@ public class Main {
 	//Box2D things
 	private World world;
 	private AABB screenAABB;
-	private float screenX, screenY;
 	
 	//Rendering things
 	private Texture waterTexture;
@@ -55,6 +53,7 @@ public class Main {
     private FluidSimulation sim;
     public static ArrayList<Box> boxes;
     private Player player;
+    private Camera camera;
 	
 	public Main()
 	{
@@ -63,7 +62,7 @@ public class Main {
 	    	world = new World(new Vec2(0.0f, -40.8f));
 	     	BodyDef bd = new BodyDef();
 	     	bd.position.set(0.0f, 0.0f);
-	      
+	     	
 	     	ground = world.createBody(bd);
 	     	PolygonShape shape = new PolygonShape();
 
@@ -76,7 +75,7 @@ public class Main {
 	     	shape.setAsBox(0.5f, 4.5f, new Vec2(4.75f, 7.5f), 45.0f);
 	     	ground.createFixture(shape, 0);
 	      
-	     	shape.setAsBox(0.9f, 7.5f, new Vec2(21.0f, 7.5f), 0.0f);
+	     	shape.setAsBox(0.9f, 7.5f, new Vec2(21.0f, 11.5f), 0.0f);
 	     	ground.createFixture(shape, 0);
 	     	
 	     	shape.setAsBox(0.9f, 7.5f, new Vec2(31.0f, 7.5f), 0.0f);
@@ -93,13 +92,15 @@ public class Main {
 	     	*/
 	    }
 	    screenAABB = new AABB();
-	    screenAABB.lowerBound.set(new Vec2(-100.0f, -100.0f));
-	    screenAABB.upperBound.set(new Vec2(BOX2D_WIDTH+100.0f, BOX2D_HEIGHT+100.0f));
+	    screenAABB.lowerBound.set(new Vec2(-10.0f, -10.0f));
+	    screenAABB.upperBound.set(new Vec2(BOX2D_WIDTH+10.0f, BOX2D_HEIGHT+10.0f));
 	    
 	    sim = new FluidSimulation(world, screenAABB);
 	    boxes = new ArrayList<Box>();
 	    player = new Player(new Vec2(10.5f, 4.0f), world);
 	    boxes.add(player);
+	    camera = new Camera(player);
+	    world.setContactListener(player);
 	}
 	
 	public static void main(String[] args)
@@ -228,34 +229,32 @@ public class Main {
 		//Poll input
 		if(Mouse.isButtonDown(0))
 		{
-			float mouseX = Mouse.getX()*BOX2D_SCALE+screenX;
-			float mouseY = Mouse.getY()*BOX2D_SCALE+screenY;
+			float mouseX = Mouse.getX()*BOX2D_SCALE+camera.getScreenX();
+			float mouseY = Mouse.getY()*BOX2D_SCALE+camera.getScreenY();
 			sim.createParticle(4, mouseX, mouseY);
 		}
 		if(Mouse.isButtonDown(1))
 		{
-			boxes.add(new Box(new Vec2(Mouse.getX()*BOX2D_SCALE+screenX, Mouse.getY()*BOX2D_SCALE+screenY), world));
+			boxes.add(new Box(new Vec2(Mouse.getX()*BOX2D_SCALE+camera.getScreenX(), Mouse.getY()*BOX2D_SCALE+camera.getScreenY()), world));
 		}
 		if(Keyboard.isKeyDown(Keyboard.KEY_DOWN))
 		{
-			//screenY += 0.1f;
 			player.moveDown();
 		}
 		if(Keyboard.isKeyDown(Keyboard.KEY_UP))
 		{
-			//screenY -= 0.1f;
+			player.jump();
 		}
 		if(Keyboard.isKeyDown(Keyboard.KEY_RIGHT))
 		{
-			//screenX -= 0.1f;
 			player.moveRight();
 		}
 		if(Keyboard.isKeyDown(Keyboard.KEY_LEFT))
 		{
-			//screenX += 0.1f;
 			player.moveLeft();
 		}
-		//screenX--;
+		
+		//Logic
 		for(int i = 0; i < boxes.size(); i++)
 		{
 			boxes.get(i).numberDisplaced = 0.0f;
@@ -265,19 +264,15 @@ public class Main {
 		{
 			Box box = boxes.get(i);
 			box.body.applyForce(world.getGravity().mul(-box.numberDisplaced), box.body.getPosition());
-			if(box.collide)
+			if(box.waterCollide)
 			{
 				box.body.setLinearDamping(1.0f);
 			}
 		}
+		player.update();
 		world.step(DT, 10, 10);
 		
-		
-		GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
-		GL11.glColor3f(0.0f, 0.0f, 0.0f);
-		GL11.glLoadIdentity();
-		GLU.gluLookAt(screenX, screenY, 1.0f, screenX, screenY, 0.0f, 0.0f, 1.0f, 0.0f);
-		
+		camera.update();
 		
 		// draw 	
 		GL11.glPushMatrix();

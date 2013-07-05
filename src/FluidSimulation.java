@@ -280,7 +280,7 @@ public class FluidSimulation {
 					collide = collide || true;
 				}
 			}
-			Main.boxes.get(i).collide = collide;
+			Main.boxes.get(i).waterCollide = collide;
 		}
 	}
 	public void applyLiquidConstraints()

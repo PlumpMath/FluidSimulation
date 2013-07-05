@@ -10,7 +10,7 @@ import org.jbox2d.dynamics.World;
 public class Box {
 	public Body body;
 	public float numberDisplaced;
-	public boolean collide;
+	public boolean waterCollide;
 	
 	public Box(Vec2 position, World world)
 	{
@@ -28,5 +28,9 @@ public class Box {
      	fixture.density = 1.0f;
      	fixture.friction = 0.2f;
      	body.createFixture(fixture);
+	}
+	public Box()
+	{
+		
 	}
 }
