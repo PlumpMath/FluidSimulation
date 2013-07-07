@@ -12,6 +12,7 @@ import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.Fixture;
 import org.jbox2d.dynamics.World;
+import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL20;
 
@@ -61,7 +62,7 @@ public class FluidSimulation {
 		}
 	}
 	
-	public void createParticle(int numParticlesToSpawn, float x, float y)
+	public void createParticle(int numParticlesToSpawn, float x, float y, Player player)
 	{
 		ArrayList<Particle> inactiveParticles = new ArrayList<Particle>();
 	    for(int i = 0; i < liquid.length; i++)
@@ -80,10 +81,12 @@ public class FluidSimulation {
 		    	Particle particle = inactiveParticles.get(i);
 		        if (numActiveParticles < MAX_PARTICLES)
 		        {
-					Vec2 jitter = new Vec2((float)(Math.random() * 0.5f - 0.25f), (float)(Math.random()) - 0.25f);
-					particle.position = new Vec2(x + jitter.x, y + jitter.y);
+					Vec2 jitter = new Vec2((float)(Math.random() * 0.25f - 0.125f), (float)(Math.random()) - 0.125f);
+					particle.position = new Vec2(player.body.getPosition().x + jitter.x, player.body.getPosition().y + jitter.y);
 					particle.oldPosition = particle.position;
-					particle.velocity = new Vec2(0.25f, 0.0f);
+					Vec2 direction = new Vec2(x, y).sub(particle.position);
+					direction.normalize();
+					particle.velocity = direction.mul(0.4f);
 					
 					particle.alive = true;
 					particle.ci = getGridX(particle.position.x);
@@ -275,12 +278,16 @@ public class FluidSimulation {
 			{
 				if(fixture.testPoint(particle.position))
 				{
-					Main.boxes.get(i).numberDisplaced += 0.2f;
-					Main.boxes.get(i).body.applyForce(particle.velocity.mul(5.0f), Main.boxes.get(i).body.getPosition());
-					collide = collide || true;
+					if(Keyboard.isKeyDown(Keyboard.KEY_T) || particle.velocity.length() < 0.35f)
+					{
+						Main.boxes.get(i).numberDisplaced += 0.2f;
+						Main.boxes.get(i).body.applyForce(particle.velocity.mul(5.0f), Main.boxes.get(i).body.getPosition());
+						collide = true;
+					}
 				}
+				fixture = fixture.getNext();
 			}
-			Main.boxes.get(i).waterCollide = collide;
+			Main.boxes.get(i).waterCollide = Main.boxes.get(i).waterCollide || collide;
 		}
 	}
 	public void applyLiquidConstraints()
@@ -404,7 +411,7 @@ public class FluidSimulation {
 	        Particle particle = liquid[activeParticles.get(i)];
 	        float pressure = (particle.pressure - 5f) / 2.0f;
 	        float pressureN = particle.pressureNear / 2.0f;
-	        float speed = (float)Math.sqrt(particle.velocity.x*particle.velocity.x + particle.velocity.y*particle.velocity.y);
+	        float speed = (float)Math.sqrt(particle.velocity.x*particle.velocity.x + particle.velocity.y*particle.velocity.y) * 0.8f;
 	        int loc = GL20.glGetUniformLocation(shaderProgram, "speed");
 	        if((pressure+0.01f >= MAX_PRESSURE  || pressureN+0.01f >= MAX_PRESSURE_NEAR) && speed >= 0.8f)
 	        	GL20.glUniform1f(loc, 0.0f);

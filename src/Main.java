@@ -59,7 +59,7 @@ public class Main {
 	{
 		Body ground = null;
 	    {
-	    	world = new World(new Vec2(0.0f, -40.8f));
+	    	world = new World(new Vec2(0.0f, -80.8f));
 	     	BodyDef bd = new BodyDef();
 	     	bd.position.set(0.0f, 0.0f);
 	     	
@@ -231,33 +231,61 @@ public class Main {
 		{
 			float mouseX = Mouse.getX()*BOX2D_SCALE+camera.getScreenX();
 			float mouseY = Mouse.getY()*BOX2D_SCALE+camera.getScreenY();
-			sim.createParticle(4, mouseX, mouseY);
+			sim.createParticle(4, mouseX, mouseY, player);
 		}
 		if(Mouse.isButtonDown(1))
 		{
-			boxes.add(new Box(new Vec2(Mouse.getX()*BOX2D_SCALE+camera.getScreenX(), Mouse.getY()*BOX2D_SCALE+camera.getScreenY()), world));
+			float mouseX = Mouse.getX()*BOX2D_SCALE+camera.getScreenX();
+			float mouseY = Mouse.getY()*BOX2D_SCALE+camera.getScreenY();
+			boxes.add(new Box(new Vec2(mouseX, mouseY), world));
 		}
-		if(Keyboard.isKeyDown(Keyboard.KEY_DOWN))
+		if(Mouse.isButtonDown(2))
+		{
+			float mouseX = Mouse.getX()*BOX2D_SCALE+camera.getScreenX();
+			float mouseY = Mouse.getY()*BOX2D_SCALE+camera.getScreenY();
+			BodyDef bd = new BodyDef();
+			bd.position.set(0.0f, 0.0f);
+			
+			Body temp = world.createBody(bd);
+			PolygonShape shape = new PolygonShape();
+			
+			shape.setAsBox(1.0f, 1.0f, new Vec2(mouseX, mouseY), 0.0f);
+			temp.createFixture(shape, 0);
+
+		}
+		if(Keyboard.isKeyDown(Keyboard.KEY_DOWN) || Keyboard.isKeyDown(Keyboard.KEY_S))
 		{
 			player.moveDown();
 		}
-		if(Keyboard.isKeyDown(Keyboard.KEY_UP))
+		if(Keyboard.isKeyDown(Keyboard.KEY_UP) || Keyboard.isKeyDown(Keyboard.KEY_W))
 		{
 			player.jump();
 		}
-		if(Keyboard.isKeyDown(Keyboard.KEY_RIGHT))
+		boolean keyTest = true;
+		if(Keyboard.isKeyDown(Keyboard.KEY_RIGHT) || Keyboard.isKeyDown(Keyboard.KEY_D))
 		{
 			player.moveRight();
+			player.resetStillTime();
+			keyTest = false;
 		}
-		if(Keyboard.isKeyDown(Keyboard.KEY_LEFT))
+		if(Keyboard.isKeyDown(Keyboard.KEY_LEFT) || Keyboard.isKeyDown(Keyboard.KEY_A))
 		{
 			player.moveLeft();
+			player.resetStillTime();
+			keyTest = false;
+		}
+		if(keyTest)
+		{
+			player.addStillTime(getTime() - lastTime);
+			player.body.setLinearVelocity(new Vec2(player.body.getLinearVelocity().x *0.9f, player.body.getLinearVelocity().y));
+			player.setKeyTest(keyTest);
 		}
 		
 		//Logic
 		for(int i = 0; i < boxes.size(); i++)
 		{
 			boxes.get(i).numberDisplaced = 0.0f;
+			boxes.get(i).waterCollide = false;
 		}
 		sim.applyLiquidConstraints();
 		for(int i = 0; i < boxes.size(); i++)
@@ -270,7 +298,7 @@ public class Main {
 			}
 		}
 		player.update();
-		world.step(DT, 10, 10);
+		world.step(DT, 4, 4);
 		
 		camera.update();
 		
@@ -336,7 +364,7 @@ public class Main {
 
 		float y = 0; 
 	    
-		GL11.glBegin(GL11.GL_TRIANGLE_FAN); 
+		GL11.glBegin(GL11.GL_TRIANGLE_FAN);
 		for(int ii = 0; ii < num_segments; ii++) 
 		{ 
 			GL11.glVertex2f(x + cx, y + cy);//output vertex 

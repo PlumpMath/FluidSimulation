@@ -9,12 +9,16 @@ import org.jbox2d.dynamics.Fixture;
 import org.jbox2d.dynamics.FixtureDef;
 import org.jbox2d.dynamics.World;
 import org.jbox2d.dynamics.contacts.Contact;
+import org.lwjgl.input.Keyboard;
 
 
 public class Player extends Box implements ContactListener {
-	private Fixture footSensor;
+	public static final float MAX_VELOCITY = 13.0f;
+	private Fixture footSensor, playerFixture;
 	private int fixturesUnderFoot;
-	public int jumpTimeout;
+	private int jumpTimeout;
+	private float stillTime;
+	private boolean keyTest;
 	
 	public Player(Vec2 position, World world)
 	{
@@ -31,8 +35,9 @@ public class Player extends Box implements ContactListener {
      	FixtureDef fixture = new FixtureDef();
      	fixture.shape = shape;
      	fixture.density = 1.0f;
-     	fixture.friction = 2.0f;
-     	body.createFixture(fixture);
+     	fixture.friction = 0.2f;
+     	fixture.userData = 1;
+     	playerFixture = body.createFixture(fixture);
      	
      	shape.setAsBox(0.3f, 0.3f, new Vec2(0.0f,-1.25f), 0.0f);
         fixture.isSensor = true;
@@ -41,38 +46,110 @@ public class Player extends Box implements ContactListener {
 	}
 	public void update()
 	{
+		if(Math.abs(body.getLinearVelocity().x) >= MAX_VELOCITY)
+		{
+			float vx = Math.signum(body.getLinearVelocity().x) * MAX_VELOCITY;
+			body.setLinearVelocity(new Vec2(vx, body.getLinearVelocity().y));
+		}
+		System.out.println(playerFixture.getFriction());
+		if(fixturesUnderFoot == 0)
+		{
+			footSensor.setFriction(0.0f);
+			playerFixture.setFriction(0.0f);
+		}
+		else
+		{
+			if(keyTest && stillTime > 0.2f)
+			{
+				playerFixture.setFriction(100.0f);
+				footSensor.setFriction(100.0f);
+			}
+			else
+			{
+				playerFixture.setFriction(0.4f);
+				footSensor.setFriction(0.4f);
+			}
+		}
 		jumpTimeout--;
 	}
 	//TODO tweak player movement to be more responsive
 	public void moveRight()
 	{
-		body.applyForce(new Vec2(150.0f, 0.0f), body.getPosition());
+		if(body.getLinearVelocity().x <= MAX_VELOCITY)
+			body.applyLinearImpulse(new Vec2(6.0f, 0.0f), body.getWorldCenter());
 	}
 	public void moveLeft()
 	{
-		body.applyForce(new Vec2(-150.0f, 0.0f), body.getPosition());
+		if(body.getLinearVelocity().x >= -MAX_VELOCITY)
+			body.applyLinearImpulse(new Vec2(-6.0f, 0.0f), body.getWorldCenter());
 	}
 	public void moveDown()
 	{
-		body.applyForce(body.getWorld().getGravity().mul(-1.1f), body.getPosition());
+		body.applyForce(body.getWorld().getGravity().mul(numberDisplaced), body.getWorldCenter());
 	}
 	public void jump()
 	{
-		if(fixturesUnderFoot > 1 && jumpTimeout <= 0)
+		if((fixturesUnderFoot > 0) && jumpTimeout <= 0)
 		{
-			body.applyLinearImpulse(new Vec2(0.0f, body.getMass() * 22.0f), body.getWorldCenter());
+			body.applyLinearImpulse(new Vec2(0.0f, body.getMass()*30.0f), body.getWorldCenter());
 			jumpTimeout = 20;
 		}
+	}
+	public void addStillTime(float time)
+	{
+		stillTime++;
+	}
+	public void resetStillTime()
+	{
+		stillTime = 0;
+	}
+	public void setKeyTest(boolean key)
+	{
+		keyTest = key;
 	}
 
 	public void beginContact(Contact contact)
 	{
-		fixturesUnderFoot++;
+		Object fixtureUserData = contact.getFixtureA().getUserData();
+		if(fixtureUserData instanceof Integer)
+		{
+			int integer = (Integer)fixtureUserData;
+			if(integer == -1)
+			{
+				fixturesUnderFoot++;
+			}
+		}
+		fixtureUserData = contact.getFixtureB().getUserData();
+		if(fixtureUserData instanceof Integer)
+		{
+			int integer = (Integer)fixtureUserData;
+			if(integer == -1)
+			{
+				fixturesUnderFoot++;
+			}
+		}
 	}
 
 	public void endContact(Contact contact)
 	{
-		fixturesUnderFoot--;
+		Object fixtureUserData = contact.getFixtureA().getUserData();
+		if(fixtureUserData instanceof Integer)
+		{
+			int integer = (Integer)fixtureUserData;
+			if(integer == -1)
+			{
+				fixturesUnderFoot--;
+			}
+		}
+		fixtureUserData = contact.getFixtureB().getUserData();
+		if(fixtureUserData instanceof Integer)
+		{
+			int integer = (Integer)fixtureUserData;
+			if(integer == -1)
+			{
+				fixturesUnderFoot--;
+			}
+		}
 	}
 
 	public void postSolve(Contact arg0, ContactImpulse arg1)
