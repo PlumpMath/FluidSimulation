@@ -32,12 +32,7 @@ public class Main {
     private int vertexShader;
     private int fragmentShader;
     
-    public static Level1 currentLevel;
-    	
-	public Main()
-	{
-	    currentLevel = new Level1();
-	}
+    public static Level currentLevel;
 	
 	public static void main(String[] args)
 	{
@@ -57,7 +52,7 @@ public class Main {
 		GL11.glViewport(0, 0, WIDTH, HEIGHT);
 		//GL11.glPointSize(2);
 		try {
-			waterTexture = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("particle.png"));
+			waterTexture = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("res/particle.png"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -150,6 +145,8 @@ public class Main {
 		initGL(); // init OpenGL
 		initShaderProgram();
 		setTextureUnit0(shaderProgram);
+		
+		currentLevel = new Level1();
 
 		while (!Display.isCloseRequested()) {
 			update();
@@ -178,7 +175,7 @@ public class Main {
 		GL20.glUseProgram(0);
 		GL11.glPopMatrix();
 		
-		currentLevel.renderGround();
+		currentLevel.render();
 	}
 	
 	public static void drawCircle(float cx, float cy, float r, int num_segments) 

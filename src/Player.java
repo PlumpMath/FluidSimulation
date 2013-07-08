@@ -1,3 +1,5 @@
+import java.io.IOException;
+
 import org.jbox2d.callbacks.ContactImpulse;
 import org.jbox2d.callbacks.ContactListener;
 import org.jbox2d.collision.Manifold;
@@ -9,10 +11,15 @@ import org.jbox2d.dynamics.Fixture;
 import org.jbox2d.dynamics.FixtureDef;
 import org.jbox2d.dynamics.World;
 import org.jbox2d.dynamics.contacts.Contact;
+import org.lwjgl.opengl.GL11;
+import org.newdawn.slick.opengl.Texture;
+import org.newdawn.slick.opengl.TextureLoader;
+import org.newdawn.slick.util.ResourceLoader;
 
 
 public class Player extends Box implements ContactListener {
 	public static final float MAX_VELOCITY = 13.0f;
+	private Texture playerTexture;
 	private Fixture footSensor, playerFixture;
 	private int fixturesUnderFoot;
 	private int jumpTimeout;
@@ -22,11 +29,18 @@ public class Player extends Box implements ContactListener {
 	public Player(Vec2 position, World world)
 	{
 		super();
+		try {
+			playerTexture = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("res/player_idle.png"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		};
+		
 		BodyDef bd = new BodyDef();
 		bd.fixedRotation = true;
 		bd.type = BodyType.DYNAMIC;
      	bd.position.set(position);
-      
+        
      	body = world.createBody(bd);
      	PolygonShape shape = new PolygonShape();
 
@@ -69,6 +83,20 @@ public class Player extends Box implements ContactListener {
 			}
 		}
 		jumpTimeout--;
+	}
+	public void draw()
+	{
+		GL11.glPushMatrix();
+        GL11.glTranslatef(body.getPosition().x-(playerTexture.getImageWidth()*Main.BOX2D_SCALE/2), body.getPosition().y-(playerTexture.getImageHeight()*Main.BOX2D_SCALE/2), 0.0f);
+        GL11.glColor3f(1.0f, 1.0f, 1.0f);
+        playerTexture.bind();
+        GL11.glBegin(GL11.GL_QUADS);
+	        GL11.glTexCoord2d(0.0f, 0.0f); GL11.glVertex2d(0.0f, 0.0f);
+	        GL11.glTexCoord2d(1.0f, 0.0f); GL11.glVertex2d(playerTexture.getImageWidth()*Main.BOX2D_SCALE, 0.0f);
+	        GL11.glTexCoord2d(1.0f, -1.0f); GL11.glVertex2d(playerTexture.getImageWidth()*Main.BOX2D_SCALE, playerTexture.getImageHeight()*Main.BOX2D_SCALE);
+	        GL11.glTexCoord2d(0.0f, -1.0f); GL11.glVertex2d(0.0f, playerTexture.getImageHeight()*Main.BOX2D_SCALE);
+       	GL11.glEnd();
+       	GL11.glPopMatrix();
 	}
 	//TODO tweak player movement to be more responsive
 	public void moveRight()
