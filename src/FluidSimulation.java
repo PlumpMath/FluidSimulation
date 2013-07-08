@@ -269,25 +269,26 @@ public class FluidSimulation {
 				}
 			}
 		}
-		for(int i = 0; i < Main.boxes.size(); i++)
+		for(int i = 0; i < Main.currentLevel.getBoxes().size(); i++)
 		{
 			boolean collide = false;
-			int fixtures = Main.boxes.get(i).body.m_fixtureCount;
-			Fixture fixture = Main.boxes.get(i).body.getFixtureList();
+			Box box = Main.currentLevel.getBoxes().get(i);
+			int fixtures = box.body.m_fixtureCount;
+			Fixture fixture = box.body.getFixtureList();
 			for(int k = 0; k < fixtures; k++)
 			{
 				if(fixture.testPoint(particle.position))
 				{
 					if(Keyboard.isKeyDown(Keyboard.KEY_T) || particle.velocity.length() < 0.35f)
 					{
-						Main.boxes.get(i).numberDisplaced += 0.2f;
-						Main.boxes.get(i).body.applyForce(particle.velocity.mul(5.0f), Main.boxes.get(i).body.getPosition());
+						box.numberDisplaced += 0.2f;
+						box.body.applyForce(particle.velocity.mul(5.0f), box.body.getPosition());
 						collide = true;
 					}
 				}
 				fixture = fixture.getNext();
 			}
-			Main.boxes.get(i).waterCollide = Main.boxes.get(i).waterCollide || collide;
+			box.waterCollide = box.waterCollide || collide;
 		}
 	}
 	public void applyLiquidConstraints()

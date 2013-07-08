@@ -9,7 +9,6 @@ import org.jbox2d.dynamics.Fixture;
 import org.jbox2d.dynamics.FixtureDef;
 import org.jbox2d.dynamics.World;
 import org.jbox2d.dynamics.contacts.Contact;
-import org.lwjgl.input.Keyboard;
 
 
 public class Player extends Box implements ContactListener {
@@ -51,7 +50,6 @@ public class Player extends Box implements ContactListener {
 			float vx = Math.signum(body.getLinearVelocity().x) * MAX_VELOCITY;
 			body.setLinearVelocity(new Vec2(vx, body.getLinearVelocity().y));
 		}
-		System.out.println(playerFixture.getFriction());
 		if(fixturesUnderFoot == 0)
 		{
 			footSensor.setFriction(0.0f);

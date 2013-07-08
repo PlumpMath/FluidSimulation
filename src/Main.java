@@ -1,23 +1,9 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
 
-import org.jbox2d.collision.AABB;
-import org.jbox2d.collision.shapes.CircleShape;
-import org.jbox2d.collision.shapes.PolygonShape;
-import org.jbox2d.collision.shapes.Shape;
-import org.jbox2d.collision.shapes.ShapeType;
-import org.jbox2d.common.Vec2;
-import org.jbox2d.dynamics.Body;
-import org.jbox2d.dynamics.BodyDef;
-import org.jbox2d.dynamics.BodyType;
-import org.jbox2d.dynamics.Fixture;
-import org.jbox2d.dynamics.World;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.Sys;
-import org.lwjgl.input.Keyboard;
-import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
@@ -38,11 +24,7 @@ public class Main {
 	//public static final Vec2 buoyancyForce = new Vec2(0.0f, 10.0f);
 	
 	static long variableYieldTime;
-	private static long lastTime;
-	
-	//Box2D things
-	private World world;
-	private AABB screenAABB;
+	public static long lastTime;
 	
 	//Rendering things
 	private Texture waterTexture;
@@ -50,57 +32,11 @@ public class Main {
     private int vertexShader;
     private int fragmentShader;
     
-    private FluidSimulation sim;
-    public static ArrayList<Box> boxes;
-    private Player player;
-    private Camera camera;
-	
+    public static Level1 currentLevel;
+    	
 	public Main()
 	{
-		Body ground = null;
-	    {
-	    	world = new World(new Vec2(0.0f, -80.8f));
-	     	BodyDef bd = new BodyDef();
-	     	bd.position.set(0.0f, 0.0f);
-	     	
-	     	ground = world.createBody(bd);
-	     	PolygonShape shape = new PolygonShape();
-
-	     	shape.setAsBox(20.0f, 0.9f, new Vec2(20.0f, 0.9f), 0.0f);
-	     	ground.createFixture(shape, 0);
-	      
-	     	shape.setAsBox(0.9f, 7.5f, new Vec2(1.0f, 7.5f), 0.0f);
-	     	ground.createFixture(shape, 0);
-	     	
-	     	shape.setAsBox(0.5f, 4.5f, new Vec2(4.75f, 7.5f), 45.0f);
-	     	ground.createFixture(shape, 0);
-	      
-	     	shape.setAsBox(0.9f, 7.5f, new Vec2(21.0f, 11.5f), 0.0f);
-	     	ground.createFixture(shape, 0);
-	     	
-	     	shape.setAsBox(0.9f, 7.5f, new Vec2(31.0f, 7.5f), 0.0f);
-	     	ground.createFixture(shape, 0);
-	     	
-	     	shape.setAsBox(0.5f, 4.5f, new Vec2(17.2f, 7.5f), -45.0f);
-	     	ground.createFixture(shape, 0);
-	     	
-	     	/*
-	     	CircleShape cd = new CircleShape();
-	     	cd.m_radius = 3.0f;
-	     	cd.m_p.set(10.7f, 4.0f);
-	     	ground.createFixture(cd, 0);
-	     	*/
-	    }
-	    screenAABB = new AABB();
-	    screenAABB.lowerBound.set(new Vec2(-10.0f, -10.0f));
-	    screenAABB.upperBound.set(new Vec2(BOX2D_WIDTH+10.0f, BOX2D_HEIGHT+10.0f));
-	    
-	    sim = new FluidSimulation(world, screenAABB);
-	    boxes = new ArrayList<Box>();
-	    player = new Player(new Vec2(10.5f, 4.0f), world);
-	    boxes.add(player);
-	    camera = new Camera(player);
-	    world.setContactListener(player);
+	    currentLevel = new Level1();
 	}
 	
 	public static void main(String[] args)
@@ -226,81 +162,9 @@ public class Main {
 	}
 	public void update()
 	{
-		//Poll input
-		if(Mouse.isButtonDown(0))
-		{
-			float mouseX = Mouse.getX()*BOX2D_SCALE+camera.getScreenX();
-			float mouseY = Mouse.getY()*BOX2D_SCALE+camera.getScreenY();
-			sim.createParticle(4, mouseX, mouseY, player);
-		}
-		if(Mouse.isButtonDown(1))
-		{
-			float mouseX = Mouse.getX()*BOX2D_SCALE+camera.getScreenX();
-			float mouseY = Mouse.getY()*BOX2D_SCALE+camera.getScreenY();
-			boxes.add(new Box(new Vec2(mouseX, mouseY), world));
-		}
-		if(Mouse.isButtonDown(2))
-		{
-			float mouseX = Mouse.getX()*BOX2D_SCALE+camera.getScreenX();
-			float mouseY = Mouse.getY()*BOX2D_SCALE+camera.getScreenY();
-			BodyDef bd = new BodyDef();
-			bd.position.set(0.0f, 0.0f);
-			
-			Body temp = world.createBody(bd);
-			PolygonShape shape = new PolygonShape();
-			
-			shape.setAsBox(1.0f, 1.0f, new Vec2(mouseX, mouseY), 0.0f);
-			temp.createFixture(shape, 0);
-
-		}
-		if(Keyboard.isKeyDown(Keyboard.KEY_DOWN) || Keyboard.isKeyDown(Keyboard.KEY_S))
-		{
-			player.moveDown();
-		}
-		if(Keyboard.isKeyDown(Keyboard.KEY_UP) || Keyboard.isKeyDown(Keyboard.KEY_W))
-		{
-			player.jump();
-		}
-		boolean keyTest = true;
-		if(Keyboard.isKeyDown(Keyboard.KEY_RIGHT) || Keyboard.isKeyDown(Keyboard.KEY_D))
-		{
-			player.moveRight();
-			player.resetStillTime();
-			keyTest = false;
-		}
-		if(Keyboard.isKeyDown(Keyboard.KEY_LEFT) || Keyboard.isKeyDown(Keyboard.KEY_A))
-		{
-			player.moveLeft();
-			player.resetStillTime();
-			keyTest = false;
-		}
-		if(keyTest)
-		{
-			player.addStillTime(getTime() - lastTime);
-			player.body.setLinearVelocity(new Vec2(player.body.getLinearVelocity().x *0.9f, player.body.getLinearVelocity().y));
-			player.setKeyTest(keyTest);
-		}
+		currentLevel.pollInput();
 		
-		//Logic
-		for(int i = 0; i < boxes.size(); i++)
-		{
-			boxes.get(i).numberDisplaced = 0.0f;
-			boxes.get(i).waterCollide = false;
-		}
-		sim.applyLiquidConstraints();
-		for(int i = 0; i < boxes.size(); i++)
-		{
-			Box box = boxes.get(i);
-			box.body.applyForce(world.getGravity().mul(-box.numberDisplaced), box.body.getPosition());
-			if(box.waterCollide)
-			{
-				box.body.setLinearDamping(1.0f);
-			}
-		}
-		player.update();
-		world.step(DT, 4, 4);
-		
-		camera.update();
+		currentLevel.logic();
 		
 		// draw 	
 		GL11.glPushMatrix();
@@ -308,52 +172,16 @@ public class Main {
 		//GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE);
 		GL11.glEnable(GL11.GL_TEXTURE_2D);
 		waterTexture.bind();
-		sim.drawFluid(shaderProgram, waterTexture.getWidth(), waterTexture.getHeight());
+		currentLevel.drawFluid(shaderProgram, waterTexture.getWidth(), waterTexture.getHeight());
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 		GL11.glDisable(GL11.GL_TEXTURE_2D);
 		GL20.glUseProgram(0);
 		GL11.glPopMatrix();
 		
-		GL11.glPushMatrix();
-		Body render = world.getBodyList();
-		for(int i = 0; i < world.getBodyCount(); render = render.getNext())
-		{
-			Fixture fix = render.getFixtureList();
-			for(int j = 0; j < render.m_fixtureCount; fix = fix.getNext())
-			{
-				Shape s = fix.getShape();
-				ShapeType type = s.getType();
-				if(render.getType() == BodyType.DYNAMIC)
-					GL11.glColor3f(1.0f, 0.0f, 0.0f);
-				else
-					GL11.glColor3f(0.0f, 0.0f, 1.0f);
-				if(type.equals(ShapeType.CIRCLE))
-				{
-					CircleShape cs = (CircleShape)s;
-					drawCircle(cs.m_p.x, cs.m_p.y, s.getRadius(), 20);
-				}
-				else if(type.equals(ShapeType.POLYGON))
-				{
-					GL11.glPushMatrix();
-					GL11.glTranslatef(render.getPosition().x, render.getPosition().y, 0.0f);
-					PolygonShape ps = (PolygonShape)s;
-					Vec2[] vertices = ps.m_vertices;
-					GL11.glBegin(GL11.GL_QUADS); 
-					for(int k = 0; k < vertices.length; k++) 
-					{ 
-						GL11.glVertex2f(vertices[k].x, vertices[k].y);
-					} 
-					GL11.glEnd(); 
-					GL11.glPopMatrix();
-				}
-				j++;
-			}
-			i++;
-		}
-		GL11.glPopMatrix();
+		currentLevel.renderGround();
 	}
 	
-	private void drawCircle(float cx, float cy, float r, int num_segments) 
+	public static void drawCircle(float cx, float cy, float r, int num_segments) 
 	{
 		float theta = 2.0f * 3.1415926f / (float)num_segments; 
 		float tangetial_factor = (float)Math.tan(theta);//calculate the tangential factor 
@@ -440,7 +268,7 @@ public class Main {
 	 * Get System Nano Time
 	 * @return will return the current time in nano's
 	 */
-	private static long getTime() {
+	public static long getTime() {
 	    return (Sys.getTime() * 1000000000) / Sys.getTimerResolution();
 	}
 
