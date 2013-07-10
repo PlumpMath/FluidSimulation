@@ -1,5 +1,8 @@
+import java.io.IOException;
 import java.util.ArrayList;
 
+import org.iforce2d.Jb2dJson;
+import org.iforce2d.Jb2dJsonImage;
 import org.jbox2d.callbacks.ContactImpulse;
 import org.jbox2d.callbacks.ContactListener;
 import org.jbox2d.collision.AABB;
@@ -8,44 +11,84 @@ import org.jbox2d.collision.shapes.CircleShape;
 import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.collision.shapes.Shape;
 import org.jbox2d.collision.shapes.ShapeType;
+import org.jbox2d.common.Transform;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.Fixture;
+import org.jbox2d.dynamics.FixtureDef;
 import org.jbox2d.dynamics.World;
 import org.jbox2d.dynamics.contacts.Contact;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
+import org.newdawn.slick.opengl.Texture;
+import org.newdawn.slick.opengl.TextureLoader;
+import org.newdawn.slick.util.ResourceLoader;
 
 
 public class Level implements ContactListener {
 	protected World world;
 	private FluidSimulation sim;
-    public static ArrayList<Box> boxes;
     protected ArrayList<Button> buttons;
     protected Player player;
     protected Camera camera;
+    private Body ground, boundary;
+    private Jb2dJsonImage groundImageInfo;
+    private Texture groundTexture;
+    private Body[] otherBodies;
     private AABB screenAABB;
     
-    public Level()
+    public Level(int level)
     {
-    	world = new World(new Vec2(0.0f, -80.8f));
+    	Jb2dJson json = new Jb2dJson();
+		String levelFile = "levels/level"+level+".rube";
+		StringBuilder errorMessage = new StringBuilder();
+		world = json.readFromFile(levelFile, errorMessage);
+		System.err.println(errorMessage);
+		
+	    player = new Player(json);
+	    ground = json.getBodyByName("ground");
+	    boundary = json.getBodyByName("boundary");
+	    otherBodies = json.getBodiesByName("object");
+	    groundImageInfo = json.getImageByName("groundImage");
+	    try
+	    {
+	    	groundTexture = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("res/level"+level+".png"));
+	    }
+	    catch(IOException e)
+	    {
+	    	e.printStackTrace();
+	    }
 	    
 	    screenAABB = new AABB();
-	    screenAABB.lowerBound.set(new Vec2(-10.0f, -10.0f));
-	    screenAABB.upperBound.set(new Vec2(Main.BOX2D_WIDTH+10.0f, Main.BOX2D_HEIGHT+10.0f));
-	    
+	    screenAABB.lowerBound.set(new Vec2(player.body.getPosition().x-100.0f, player.body.getPosition().y-100.0f));
+	    screenAABB.upperBound.set(new Vec2(player.body.getPosition().x+100.0f, player.body.getPosition().y+100.0f));
+	    camera = new Camera(player);
 	    sim = new FluidSimulation(world, screenAABB);
-	    boxes = new ArrayList<Box>();
 	    buttons = new ArrayList<Button>();
 	    world.setContactListener(this);
+	    
+	    if(level == 1)
+	    {
+	    	/*
+			buttons.add(new Button(levelFile, new ActionCommand(){
+				public void doCommand() {
+					boxes.add(new Box(new Vec2(10.0f, 10.0f), world));
+				}
+
+				public void undoCommand() {
+					
+				}
+		    }));
+		    */
+	    }
     }
-    public ArrayList<Box> getBoxes()
+    public Player getPlayer()
     {
-    	return boxes;
+    	return player;
     }
     
     public void pollInput()
@@ -53,20 +96,34 @@ public class Level implements ContactListener {
     	//Poll input
 		if(Mouse.isButtonDown(0))
 		{
-			float mouseX = Mouse.getX()*Main.BOX2D_SCALE+camera.getScreenX();
-			float mouseY = Mouse.getY()*Main.BOX2D_SCALE+camera.getScreenY();
+			float mouseX = Mouse.getX()*Main.BOX2D_SCALE+(camera.getScreenX()*Main.BOX2D_SCALE);
+			float mouseY = Mouse.getY()*Main.BOX2D_SCALE+(camera.getScreenY()*Main.BOX2D_SCALE);
 			sim.createParticle(4, mouseX, mouseY, player);
 		}
 		if(Mouse.isButtonDown(1))
 		{
-			float mouseX = Mouse.getX()*Main.BOX2D_SCALE+camera.getScreenX();
-			float mouseY = Mouse.getY()*Main.BOX2D_SCALE+camera.getScreenY();
-			boxes.add(new Box(new Vec2(mouseX, mouseY), world));
+			float mouseX = Mouse.getX()*Main.BOX2D_SCALE+(camera.getScreenX()*Main.BOX2D_SCALE);
+			float mouseY = Mouse.getY()*Main.BOX2D_SCALE+(camera.getScreenY()*Main.BOX2D_SCALE);
+			
+			BodyDef bd = new BodyDef();
+			bd.fixedRotation = false;
+			bd.type = BodyType.DYNAMIC;
+	     	bd.position.set(0.0f, 0.0f);
+	      
+	     	Body body = world.createBody(bd);
+	     	PolygonShape shape = new PolygonShape();
+
+	     	shape.setAsBox(1.0f, 1.0f, new Vec2(mouseX, mouseY), 0.0f);
+	     	FixtureDef fixture = new FixtureDef();
+	     	fixture.shape = shape;
+	     	fixture.density = 1.0f;
+	     	fixture.friction = 0.2f;
+	     	body.createFixture(fixture);
 		}
 		if(Mouse.isButtonDown(2))
 		{
-			float mouseX = Mouse.getX()*Main.BOX2D_SCALE+camera.getScreenX();
-			float mouseY = Mouse.getY()*Main.BOX2D_SCALE+camera.getScreenY();
+			float mouseX = Mouse.getX()*Main.BOX2D_SCALE+(camera.getScreenX()*Main.BOX2D_SCALE);
+			float mouseY = Mouse.getY()*Main.BOX2D_SCALE+(camera.getScreenY()*Main.BOX2D_SCALE);
 			BodyDef bd = new BodyDef();
 			bd.position.set(0.0f, 0.0f);
 			
@@ -113,22 +170,9 @@ public class Level implements ContactListener {
     
     public void logic()
     {
+    	player.reset();
     	//Logic
-		for(int i = 0; i < boxes.size(); i++)
-		{
-			boxes.get(i).numberDisplaced = 0.0f;
-			boxes.get(i).waterCollide = false;
-		}
 		sim.applyLiquidConstraints();
-		for(int i = 0; i < boxes.size(); i++)
-		{
-			Box box = boxes.get(i);
-			box.body.applyForce(world.getGravity().mul(-box.numberDisplaced), box.body.getPosition());
-			if(box.waterCollide)
-			{
-				box.body.setLinearDamping(1.0f);
-			}
-		}
 		for(int i = 0; i < buttons.size(); i++)
 		{
 			buttons.get(i).update();
@@ -138,73 +182,74 @@ public class Level implements ContactListener {
 		
 		camera.update();
     }
-    public void drawFluid(int shaderProgram, float width, float height)
+    public void drawFluid(int shaderProgram)
     {
-    	sim.drawFluid(shaderProgram, width, height);
+    	sim.drawFluid(shaderProgram);
     }
-    public void render()
+    public void renderObjects()
     {
+    	//Render other bodies
     	GL11.glPushMatrix();
-		Body render = world.getBodyList();
-		for(int i = 0; i < world.getBodyCount(); render = render.getNext())
+		for(int i = 0; i < otherBodies.length; i++)
 		{
-			Fixture fix = render.getFixtureList();
-			if(render.getType() == BodyType.STATIC)
+			Body body = otherBodies[i];
+			Transform transform = body.getTransform();
+			Fixture fix = body.getFixtureList();
+			for(int j = 0; j < body.m_fixtureCount; fix = fix.getNext())
 			{
-				for(int j = 0; j < render.m_fixtureCount; fix = fix.getNext())
+				Shape s = fix.getShape();
+				ShapeType type = s.getType();
+				GL11.glColor3f(0.0f, 0.0f, 1.0f);
+				if(type.equals(ShapeType.CIRCLE))
 				{
-					Shape s = fix.getShape();
-					ShapeType type = s.getType();
-					GL11.glColor3f(0.0f, 0.0f, 1.0f);
-					if(type.equals(ShapeType.CIRCLE))
-					{
-						CircleShape cs = (CircleShape)s;
-						Main.drawCircle(cs.m_p.x, cs.m_p.y, s.getRadius(), 20);
-					}
-					else if(type.equals(ShapeType.POLYGON))
-					{
-						GL11.glPushMatrix();
-						GL11.glTranslatef(render.getPosition().x, render.getPosition().y, 0.0f);
-						PolygonShape ps = (PolygonShape)s;
-						Vec2[] vertices = ps.m_vertices;
-						GL11.glBegin(GL11.GL_QUADS); 
-						for(int k = 0; k < vertices.length; k++) 
-						{ 
-							GL11.glVertex2f(vertices[k].x, vertices[k].y);
-						} 
-						GL11.glEnd(); 
-						GL11.glPopMatrix();
-					}
-					j++;
+					CircleShape cs = (CircleShape)s;
+					Vec2 center = Transform.mul(transform, cs.m_p);
+					Main.drawCircle(center.x, center.y, s.getRadius(), 20);
 				}
-			}
-			i++;
-		}
-		GL11.glPopMatrix();
-		
-		GL11.glPushMatrix();
-		for(int i = 0; i < boxes.size(); i++)
-		{
-			Box box = boxes.get(i);
-			if(!(box instanceof Player))
-			{
-				GL11.glPushMatrix();
-				GL11.glTranslatef(box.body.getPosition().x, box.body.getPosition().y, 0.0f);
-				PolygonShape ps = (PolygonShape)box.body.getFixtureList().getShape();
-				Vec2[] vertices = ps.m_vertices;
-				GL11.glColor3f(1.0f, 0.0f, 0.0f);
-				GL11.glBegin(GL11.GL_QUADS); 
-				for(int k = 0; k < vertices.length; k++)
-				{ 
-					GL11.glVertex2f(vertices[k].x, vertices[k].y);
-				} 
-				GL11.glEnd(); 
-				GL11.glPopMatrix();	
+				else if(type.equals(ShapeType.POLYGON))
+				{
+					GL11.glPushMatrix();
+					PolygonShape ps = (PolygonShape)s;
+					Vec2[] vertices = ps.m_vertices;
+					GL11.glTranslatef(body.getPosition().x * Main.OPENGL_SCALE, body.getPosition().y * Main.OPENGL_SCALE, 0.0f);
+					GL11.glRotatef((float) (body.getAngle() * (180 / Math.PI)), 0.0f, 0.0f, 1.0f);
+					GL11.glBegin(GL11.GL_TRIANGLE_FAN); 
+					for(int k = 0; k < ps.getVertexCount(); k++)
+					{
+						GL11.glVertex2f(vertices[k].x * Main.OPENGL_SCALE, vertices[k].y * Main.OPENGL_SCALE);
+					} 
+					GL11.glEnd(); 
+					GL11.glPopMatrix();
+				}
+				j++;
 			}
 		}
 		GL11.glPopMatrix();
 		
-		player.draw();
+		//Render ground
+    	GL11.glPushMatrix();
+		GL11.glEnable(GL11.GL_TEXTURE_2D);
+		groundTexture.bind();
+		float height = groundImageInfo.scale * Main.OPENGL_SCALE;//groundImageInfo.scale*Main.BOX2D_SCALE;
+        float ratio = (float)groundTexture.getImageWidth()/groundTexture.getImageHeight();
+        float width = height*ratio;
+    	GL11.glTranslatef((ground.getPosition().x + groundImageInfo.center.x)*Main.OPENGL_SCALE, (ground.getPosition().y + groundImageInfo.center.y)*Main.OPENGL_SCALE, 0.0f);
+    	GL11.glRotatef(180.0f, 0.0f, 1.0f, 0.0f);
+        GL11.glColor3f(1.0f, 1.0f, 1.0f);
+        float textureWidth = (float)groundTexture.getImageWidth()/Main.get2Fold(groundTexture.getImageWidth());
+        float textureHeight = (float)groundTexture.getImageHeight()/Main.get2Fold(groundTexture.getImageHeight());
+        GL11.glBegin(GL11.GL_QUADS);
+        	GL11.glTexCoord2f(textureWidth, textureHeight); GL11.glVertex2f(-width/2, -height/2);
+        	GL11.glTexCoord2f(0.0f, textureHeight); GL11.glVertex2f(width/2, -height/2);
+        	GL11.glTexCoord2f(0.0f, 0.0f); GL11.glVertex2f(width/2, height/2);
+        	GL11.glTexCoord2f(textureWidth, 0.0f); GL11.glVertex2f(-width/2, height/2);
+       	GL11.glEnd();
+       	GL11.glDisable(GL11.GL_TEXTURE_2D);
+       	GL11.glPopMatrix();
+    }
+    public void renderPlayer()
+    {
+    	player.draw();
     }
 	@Override
 	public void beginContact(Contact contact) {

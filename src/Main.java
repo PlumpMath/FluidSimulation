@@ -15,11 +15,9 @@ import org.newdawn.slick.util.ResourceLoader;
 
 
 public class Main {
-	public static final int WIDTH = 1280, HEIGHT = 720;
-	public static final float BOX2D_WIDTH = 80;
-	public static final float BOX2D_SCALE = ((float)BOX2D_WIDTH)/WIDTH; //To scale to Box2D
-	public static final float OPENGL_SCALE = ((float)WIDTH)/BOX2D_WIDTH; //To scale to OpenGL
-	public static final float BOX2D_HEIGHT = HEIGHT * BOX2D_SCALE;
+	public static final int WIDTH = 1280, HEIGHT = 960;
+	public static final float BOX2D_SCALE = 1.0f/30.0f;
+	public static final float OPENGL_SCALE = 1.0f/BOX2D_SCALE;
 	public static final float DT = 1.0f / 60.0f;
 	//public static final Vec2 buoyancyForce = new Vec2(0.0f, 10.0f);
 	
@@ -27,7 +25,6 @@ public class Main {
 	public static long lastTime;
 	
 	//Rendering things
-	private Texture waterTexture;
 	private int shaderProgram;
     private int vertexShader;
     private int fragmentShader;
@@ -42,22 +39,15 @@ public class Main {
 	
 	public void initGL() {
 		GL11.glMatrixMode(GL11.GL_PROJECTION);
-		GL11.glLoadIdentity();
-		GL11.glOrtho(0, BOX2D_WIDTH, 0, BOX2D_HEIGHT, 1.0f, -1.0f);
+		GL11.glOrtho(0, WIDTH, 0, HEIGHT,-10.0f, 10.0f);
 		GL11.glMatrixMode(GL11.GL_MODELVIEW);
 		GL11.glHint(GL11.GL_POINT_SMOOTH_HINT, GL11.GL_NICEST);
 		//GL11.glEnable(GL11.GL_POINT_SMOOTH);
 		GL11.glEnable(GL11.GL_BLEND);
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 		GL11.glViewport(0, 0, WIDTH, HEIGHT);
+		GL11.glEnable(GL11.GL_TEXTURE_2D);
 		//GL11.glPointSize(2);
-		try {
-			waterTexture = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("res/particle.png"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		};
-		GL13.glActiveTexture(GL13.GL_TEXTURE0);
 	}
 	public void initShaderProgram()
 	{
@@ -146,7 +136,7 @@ public class Main {
 		initShaderProgram();
 		setTextureUnit0(shaderProgram);
 		
-		currentLevel = new Level1();
+		currentLevel = new Level(1);
 
 		while (!Display.isCloseRequested()) {
 			update();
@@ -163,22 +153,19 @@ public class Main {
 		
 		currentLevel.logic();
 		
-		// draw 	
-		GL11.glPushMatrix();
-		GL20.glUseProgram(shaderProgram);
-		//GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE);
-		GL11.glEnable(GL11.GL_TEXTURE_2D);
-		waterTexture.bind();
-		currentLevel.drawFluid(shaderProgram, waterTexture.getWidth(), waterTexture.getHeight());
-		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-		GL11.glDisable(GL11.GL_TEXTURE_2D);
-		GL20.glUseProgram(0);
-		GL11.glPopMatrix();
-		
-		currentLevel.render();
+		// draw level
+		currentLevel.drawFluid(shaderProgram);
+		currentLevel.renderPlayer();
+		currentLevel.renderObjects();
+	}	
+	public static int get2Fold(int fold)
+	{
+		int ret = 2;
+		while(ret<fold)
+			ret*=2;
+		return ret;
 	}
-	
-	public static void drawCircle(float cx, float cy, float r, int num_segments) 
+	public static void drawCircle(float cx, float cy, float r, int num_segments)
 	{
 		float theta = 2.0f * 3.1415926f / (float)num_segments; 
 		float tangetial_factor = (float)Math.tan(theta);//calculate the tangential factor 

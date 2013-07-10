@@ -4,14 +4,14 @@ import org.jbox2d.dynamics.Fixture;
 
 public class Particle {
 	public static final int MAX_FIXTURES_TO_TEST = 30;
-	public Vec2 position, oldPosition, velocity;
+	public Vec2 velocity, position, oldPosition;
 	public float[] distances;
 	public int[] neighbors;
 	public Fixture[] fixtures;
 	public int numFixturesToTest;
 	public int neighborCount;
 	public int ci, cj;
-	public boolean alive, sendColor;
+	public boolean alive;
 	public float pressure, pressureNear;
 	public int index;
 	public Vec2[] collisionVertices, collisionNormals;

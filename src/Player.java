@@ -1,15 +1,14 @@
 import java.io.IOException;
 
+import org.iforce2d.Jb2dJson;
 import org.jbox2d.callbacks.ContactImpulse;
 import org.jbox2d.callbacks.ContactListener;
 import org.jbox2d.collision.Manifold;
 import org.jbox2d.collision.shapes.PolygonShape;
+import org.jbox2d.collision.shapes.Shape;
 import org.jbox2d.common.Vec2;
-import org.jbox2d.dynamics.BodyDef;
-import org.jbox2d.dynamics.BodyType;
+import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.Fixture;
-import org.jbox2d.dynamics.FixtureDef;
-import org.jbox2d.dynamics.World;
 import org.jbox2d.dynamics.contacts.Contact;
 import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.opengl.Texture;
@@ -17,8 +16,11 @@ import org.newdawn.slick.opengl.TextureLoader;
 import org.newdawn.slick.util.ResourceLoader;
 
 
-public class Player extends Box implements ContactListener {
-	public static final float MAX_VELOCITY = 13.0f;
+public class Player implements ContactListener {
+	public Body body;
+	public float numberDisplaced;
+	public boolean waterCollide;
+	public static final float MAX_VELOCITY = 10.0f;
 	private Texture playerTexture;
 	private Fixture footSensor, playerFixture;
 	private int fixturesUnderFoot;
@@ -26,7 +28,7 @@ public class Player extends Box implements ContactListener {
 	private float stillTime;
 	private boolean keyTest;
 	
-	public Player(Vec2 position, World world)
+	public Player(Jb2dJson json)
 	{
 		super();
 		try {
@@ -36,29 +38,17 @@ public class Player extends Box implements ContactListener {
 			e.printStackTrace();
 		};
 		
-		BodyDef bd = new BodyDef();
-		bd.fixedRotation = true;
-		bd.type = BodyType.DYNAMIC;
-     	bd.position.set(position);
-        
-     	body = world.createBody(bd);
-     	PolygonShape shape = new PolygonShape();
-
-     	shape.setAsBox(1.0f, 1.0f);
-     	FixtureDef fixture = new FixtureDef();
-     	fixture.shape = shape;
-     	fixture.density = 1.0f;
-     	fixture.friction = 0.2f;
-     	fixture.userData = 1;
-     	playerFixture = body.createFixture(fixture);
-     	
-     	shape.setAsBox(0.3f, 0.3f, new Vec2(0.0f,-1.25f), 0.0f);
-        fixture.isSensor = true;
-        fixture.userData = -1;
-        footSensor = body.createFixture(fixture);
+		body = json.getBodyByName("player");
+		footSensor = json.getFixtureByName("footSensor");
+		playerFixture = json.getFixtureByName("playerFixture");
 	}
 	public void update()
 	{
+		body.applyForce(body.getWorld().getGravity().mul(-numberDisplaced), body.getPosition());
+		if(waterCollide)
+		{
+			body.setLinearDamping(1.0f);
+		}
 		if(Math.abs(body.getLinearVelocity().x) >= MAX_VELOCITY)
 		{
 			float vx = Math.signum(body.getLinearVelocity().x) * MAX_VELOCITY;
@@ -84,30 +74,53 @@ public class Player extends Box implements ContactListener {
 		}
 		jumpTimeout--;
 	}
+	public void reset()
+	{
+		numberDisplaced = 0.0f;
+		waterCollide = false;
+	}
 	public void draw()
 	{
+		PolygonShape shape = ((PolygonShape)playerFixture.getShape());
+		for(int i = 0; i < shape.getVertexCount(); i++)
+		{
+			System.out.println(shape.m_vertices[i].x + " " + shape.m_vertices[i].y);
+		}
 		GL11.glPushMatrix();
-        GL11.glTranslatef(body.getPosition().x-(playerTexture.getImageWidth()*Main.BOX2D_SCALE/2), body.getPosition().y-(playerTexture.getImageHeight()*Main.BOX2D_SCALE/2), 0.0f);
+		GL11.glEnable(GL11.GL_TEXTURE_2D);
+		playerTexture.bind();
+        GL11.glTranslatef(body.getPosition().x*Main.OPENGL_SCALE, body.getPosition().y*Main.OPENGL_SCALE, 0.0f);
         GL11.glColor3f(1.0f, 1.0f, 1.0f);
-        playerTexture.bind();
+        Vec2[] vertices = ((PolygonShape)playerFixture.getShape()).getVertices();
+        float textureWidth = (float)playerTexture.getImageWidth()/Main.get2Fold(playerTexture.getImageWidth());
+        float textureHeight = (float)playerTexture.getImageHeight()/Main.get2Fold(playerTexture.getImageHeight());
         GL11.glBegin(GL11.GL_QUADS);
-	        GL11.glTexCoord2d(0.0f, 0.0f); GL11.glVertex2d(0.0f, 0.0f);
-	        GL11.glTexCoord2d(1.0f, 0.0f); GL11.glVertex2d(playerTexture.getImageWidth()*Main.BOX2D_SCALE, 0.0f);
-	        GL11.glTexCoord2d(1.0f, -1.0f); GL11.glVertex2d(playerTexture.getImageWidth()*Main.BOX2D_SCALE, playerTexture.getImageHeight()*Main.BOX2D_SCALE);
-	        GL11.glTexCoord2d(0.0f, -1.0f); GL11.glVertex2d(0.0f, playerTexture.getImageHeight()*Main.BOX2D_SCALE);
+        	GL11.glTexCoord2f(textureWidth, 0.0f); GL11.glVertex2f(vertices[0].x*Main.OPENGL_SCALE, vertices[0].y*Main.OPENGL_SCALE);
+        	GL11.glTexCoord2f(0.0f, 0.0f); GL11.glVertex2f(vertices[1].x*Main.OPENGL_SCALE, vertices[1].y*Main.OPENGL_SCALE);
+	        GL11.glTexCoord2f(0.0f, textureHeight); GL11.glVertex2f(vertices[2].x*Main.OPENGL_SCALE, vertices[2].y*Main.OPENGL_SCALE);
+	        GL11.glTexCoord2f(textureWidth, textureHeight); GL11.glVertex2f(vertices[3].x*Main.OPENGL_SCALE, vertices[3].y*Main.OPENGL_SCALE);
        	GL11.glEnd();
+       	GL11.glDisable(GL11.GL_TEXTURE_2D);
        	GL11.glPopMatrix();
+	}
+	public Fixture getPlayerFixture()
+	{
+		return playerFixture;
+	}
+	public Fixture getFootSensor()
+	{
+		return footSensor;
 	}
 	//TODO tweak player movement to be more responsive
 	public void moveRight()
 	{
 		if(body.getLinearVelocity().x <= MAX_VELOCITY)
-			body.applyLinearImpulse(new Vec2(6.0f, 0.0f), body.getWorldCenter());
+			body.applyLinearImpulse(new Vec2(12.0f, 0.0f), body.getWorldCenter());
 	}
 	public void moveLeft()
 	{
 		if(body.getLinearVelocity().x >= -MAX_VELOCITY)
-			body.applyLinearImpulse(new Vec2(-6.0f, 0.0f), body.getWorldCenter());
+			body.applyLinearImpulse(new Vec2(-12.0f, 0.0f), body.getWorldCenter());
 	}
 	public void moveDown()
 	{
@@ -117,7 +130,7 @@ public class Player extends Box implements ContactListener {
 	{
 		if((fixturesUnderFoot > 0) && jumpTimeout <= 0)
 		{
-			body.applyLinearImpulse(new Vec2(0.0f, body.getMass()*30.0f), body.getWorldCenter());
+			body.applyLinearImpulse(new Vec2(0.0f, 80.0f), body.getWorldCenter());
 			jumpTimeout = 20;
 		}
 	}
@@ -136,45 +149,29 @@ public class Player extends Box implements ContactListener {
 
 	public void beginContact(Contact contact)
 	{
-		Object fixtureUserData = contact.getFixtureA().getUserData();
-		if(fixtureUserData instanceof Integer)
+		Fixture fixture = contact.getFixtureA();
+		if(!fixture.equals(playerFixture) && fixture.equals(footSensor))
 		{
-			int integer = (Integer)fixtureUserData;
-			if(integer == -1)
-			{
-				fixturesUnderFoot++;
-			}
+			fixturesUnderFoot++;
 		}
-		fixtureUserData = contact.getFixtureB().getUserData();
-		if(fixtureUserData instanceof Integer)
+		fixture = contact.getFixtureB();
+		if(!fixture.equals(playerFixture) && fixture.equals(footSensor))
 		{
-			int integer = (Integer)fixtureUserData;
-			if(integer == -1)
-			{
-				fixturesUnderFoot++;
-			}
+			fixturesUnderFoot++;
 		}
 	}
 
 	public void endContact(Contact contact)
 	{
-		Object fixtureUserData = contact.getFixtureA().getUserData();
-		if(fixtureUserData instanceof Integer)
+		Fixture fixture = contact.getFixtureA();
+		if(!fixture.equals(playerFixture) && fixture.equals(footSensor))
 		{
-			int integer = (Integer)fixtureUserData;
-			if(integer == -1)
-			{
-				fixturesUnderFoot--;
-			}
+			fixturesUnderFoot--;
 		}
-		fixtureUserData = contact.getFixtureB().getUserData();
-		if(fixtureUserData instanceof Integer)
+		fixture = contact.getFixtureB();
+		if(!fixture.equals(playerFixture) && fixture.equals(footSensor))
 		{
-			int integer = (Integer)fixtureUserData;
-			if(integer == -1)
-			{
-				fixturesUnderFoot--;
-			}
+			fixturesUnderFoot--;
 		}
 	}
 

@@ -25,12 +25,12 @@ public class Camera {
 		*/
 		//TODO Fix screen scrolling here
 		
-		screenX = player.body.getPosition().x - Main.BOX2D_WIDTH/3 - screenOffsetX;
-		screenY = player.body.getPosition().y - Main.BOX2D_HEIGHT/3;
+		screenX = player.body.getPosition().x*Main.OPENGL_SCALE - Main.WIDTH/2;
+		screenY = player.body.getPosition().y*Main.OPENGL_SCALE - Main.HEIGHT/2;
 		GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 		GL11.glColor3f(0.0f, 0.0f, 0.0f);
 		GL11.glLoadIdentity();
-		GLU.gluLookAt(screenX, screenY, 1.0f, screenX, screenY, 0.0f, 0.0f, 1.0f, 0.0f);
+		GLU.gluLookAt(screenX, screenY, 5.0f, screenX, screenY, 0.0f, 0.0f, 1.0f, 0.0f);
 	}
 	
 	public float getScreenX()
