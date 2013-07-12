@@ -82,10 +82,6 @@ public class Player implements ContactListener {
 	public void draw()
 	{
 		PolygonShape shape = ((PolygonShape)playerFixture.getShape());
-		for(int i = 0; i < shape.getVertexCount(); i++)
-		{
-			System.out.println(shape.m_vertices[i].x + " " + shape.m_vertices[i].y);
-		}
 		GL11.glPushMatrix();
 		GL11.glEnable(GL11.GL_TEXTURE_2D);
 		playerTexture.bind();

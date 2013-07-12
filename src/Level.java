@@ -36,8 +36,8 @@ public class Level implements ContactListener {
     protected Player player;
     protected Camera camera;
     private Body ground, boundary;
-    private Jb2dJsonImage groundImageInfo;
-    private Texture groundTexture;
+    private Jb2dJsonImage[] groundImages;
+    private Texture[] groundTextures;
     private Body[] otherBodies;
     private AABB screenAABB;
     
@@ -53,10 +53,16 @@ public class Level implements ContactListener {
 	    ground = json.getBodyByName("ground");
 	    boundary = json.getBodyByName("boundary");
 	    otherBodies = json.getBodiesByName("object");
-	    groundImageInfo = json.getImageByName("groundImage");
+	    groundImages = json.getImagesByName("groundImage");
+	    groundTextures = new Texture[groundImages.length];
 	    try
 	    {
-	    	groundTexture = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("res/level"+level+".png"));
+	    	for(int i = 0; i < groundImages.length; i++)
+	    	{
+	    		String imageLocation = groundImages[i].file.substring(3);
+	    		System.out.println(imageLocation);
+	    		groundTextures[i] = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream(imageLocation));
+	    	}
 	    }
 	    catch(IOException e)
 	    {
@@ -66,7 +72,7 @@ public class Level implements ContactListener {
 	    screenAABB = new AABB();
 	    screenAABB.lowerBound.set(new Vec2(player.body.getPosition().x-100.0f, player.body.getPosition().y-100.0f));
 	    screenAABB.upperBound.set(new Vec2(player.body.getPosition().x+100.0f, player.body.getPosition().y+100.0f));
-	    camera = new Camera(player);
+	    camera = new Camera(player, json.getBodyByName("boundary"));
 	    sim = new FluidSimulation(world, screenAABB);
 	    buttons = new ArrayList<Button>();
 	    world.setContactListener(this);
@@ -226,26 +232,70 @@ public class Level implements ContactListener {
 		}
 		GL11.glPopMatrix();
 		
+		GL11.glPushMatrix();
+		Body render = world.getBodyList();
+		for(int i = 0; i < world.getBodyCount(); render = render.getNext())
+		{
+			Fixture fix = render.getFixtureList();
+			if(render.getType() == BodyType.STATIC)
+			{
+				for(int j = 0; j < render.m_fixtureCount; fix = fix.getNext())
+				{
+					Shape s = fix.getShape();
+					ShapeType type = s.getType();
+					GL11.glColor3f(0.0f, 0.0f, 1.0f);
+					if(type.equals(ShapeType.CIRCLE))
+					{
+						CircleShape cs = (CircleShape)s;
+						Main.drawCircle(cs.m_p.x, cs.m_p.y, s.getRadius(), 20);
+					}
+					else if(type.equals(ShapeType.POLYGON))
+					{
+						GL11.glPushMatrix();
+						GL11.glTranslatef(render.getPosition().x*Main.OPENGL_SCALE, render.getPosition().y*Main.OPENGL_SCALE, 0.0f);
+						PolygonShape ps = (PolygonShape)s;
+						Vec2[] vertices = ps.m_vertices;
+						GL11.glBegin(GL11.GL_TRIANGLE_FAN); 
+						for(int k = 0; k < ps.getVertexCount(); k++) 
+						{ 
+							GL11.glVertex2f(vertices[k].x*Main.OPENGL_SCALE, vertices[k].y*Main.OPENGL_SCALE);
+						} 
+						GL11.glEnd(); 
+						GL11.glPopMatrix();
+					}
+					j++;
+				}
+			}
+			i++;
+		}
+		GL11.glPopMatrix();
+
+		
 		//Render ground
-    	GL11.glPushMatrix();
 		GL11.glEnable(GL11.GL_TEXTURE_2D);
-		groundTexture.bind();
-		float height = groundImageInfo.scale * Main.OPENGL_SCALE;//groundImageInfo.scale*Main.BOX2D_SCALE;
-        float ratio = (float)groundTexture.getImageWidth()/groundTexture.getImageHeight();
-        float width = height*ratio;
-    	GL11.glTranslatef((ground.getPosition().x + groundImageInfo.center.x)*Main.OPENGL_SCALE, (ground.getPosition().y + groundImageInfo.center.y)*Main.OPENGL_SCALE, 0.0f);
-    	GL11.glRotatef(180.0f, 0.0f, 1.0f, 0.0f);
-        GL11.glColor3f(1.0f, 1.0f, 1.0f);
-        float textureWidth = (float)groundTexture.getImageWidth()/Main.get2Fold(groundTexture.getImageWidth());
-        float textureHeight = (float)groundTexture.getImageHeight()/Main.get2Fold(groundTexture.getImageHeight());
-        GL11.glBegin(GL11.GL_QUADS);
-        	GL11.glTexCoord2f(textureWidth, textureHeight); GL11.glVertex2f(-width/2, -height/2);
-        	GL11.glTexCoord2f(0.0f, textureHeight); GL11.glVertex2f(width/2, -height/2);
-        	GL11.glTexCoord2f(0.0f, 0.0f); GL11.glVertex2f(width/2, height/2);
-        	GL11.glTexCoord2f(textureWidth, 0.0f); GL11.glVertex2f(-width/2, height/2);
-       	GL11.glEnd();
+		for(int i = 0; i < groundTextures.length; i++)
+		{
+			Texture groundTexture = groundTextures[i];
+			Jb2dJsonImage groundImageInfo = groundImages[i];
+			groundTexture.bind();
+			float height = groundImageInfo.scale * Main.OPENGL_SCALE;
+	        float ratio = (float)groundTexture.getImageWidth()/groundTexture.getImageHeight();
+	        float width = height*ratio;
+	        GL11.glPushMatrix();
+	    	GL11.glTranslatef((ground.getPosition().x + groundImageInfo.center.x)*Main.OPENGL_SCALE, (ground.getPosition().y + groundImageInfo.center.y)*Main.OPENGL_SCALE, 0.0f);
+	    	GL11.glRotatef(180.0f, 0.0f, 1.0f, 0.0f);
+	        GL11.glColor3f(1.0f, 1.0f, 1.0f);
+	        float textureWidth = (float)groundTexture.getImageWidth()/Main.get2Fold(groundTexture.getImageWidth());
+	        float textureHeight = (float)groundTexture.getImageHeight()/Main.get2Fold(groundTexture.getImageHeight());
+	        GL11.glBegin(GL11.GL_QUADS);
+	        	GL11.glTexCoord2f(textureWidth, textureHeight); GL11.glVertex2f(-width/2, -height/2);
+	        	GL11.glTexCoord2f(0.0f, textureHeight); GL11.glVertex2f(width/2, -height/2);
+	        	GL11.glTexCoord2f(0.0f, 0.0f); GL11.glVertex2f(width/2, height/2);
+	        	GL11.glTexCoord2f(textureWidth, 0.0f); GL11.glVertex2f(-width/2, height/2);
+	       	GL11.glEnd();
+	       	GL11.glPopMatrix();
+		}
        	GL11.glDisable(GL11.GL_TEXTURE_2D);
-       	GL11.glPopMatrix();
     }
     public void renderPlayer()
     {
