@@ -1003,10 +1003,10 @@ public class Jb2dJson {
 		String type = fixtureValue.optJSONArray("shapes").getJSONObject(0).getString("type");
 		if (type.equals("circle")) {
 			//TODO Convert this to RUBE
-			JSONObject circleValue = fixtureValue.getJSONObject("circle");
+			float radius = (float) jsonToFloat("radius", fixtureValue.optJSONArray("shapes").getJSONObject(0));
 			CircleShape circleShape = new CircleShape();
-			circleShape.m_radius = jsonToFloat("radius", circleValue);
-			circleShape.m_p.set(jsonToVec("center", circleValue));
+			circleShape.m_radius = radius;
+			circleShape.m_p.set(jsonToVec("position", fixtureValue));
 			fixtureDef.shape = circleShape;
 			fixture = body.createFixture(fixtureDef);
 		} else if (type.equals("line")) {

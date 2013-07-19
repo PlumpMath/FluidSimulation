@@ -7,15 +7,11 @@ import org.lwjgl.Sys;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL13;
 import org.lwjgl.opengl.GL20;
-import org.newdawn.slick.opengl.Texture;
-import org.newdawn.slick.opengl.TextureLoader;
-import org.newdawn.slick.util.ResourceLoader;
 
 
 public class Main {
-	public static final int WIDTH = 1280, HEIGHT = 960;
+	public static int WIDTH = 10, HEIGHT = 10;
 	public static final float BOX2D_SCALE = 1.0f/30.0f;
 	public static final float OPENGL_SCALE = 1.0f/BOX2D_SCALE;
 	public static final float DT = 1.0f / 60.0f;
@@ -30,6 +26,7 @@ public class Main {
     private int fragmentShader;
     
     public static Level currentLevel;
+    public static int level = 1;
 	
 	public static void main(String[] args)
 	{
@@ -47,6 +44,10 @@ public class Main {
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 		GL11.glViewport(0, 0, WIDTH, HEIGHT);
 		GL11.glEnable(GL11.GL_TEXTURE_2D);
+		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_LINEAR_MIPMAP_LINEAR);
+		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_LINEAR);
+		//GL11.glEnable(GL11.GL_CULL_FACE);
+		//GL11.glCullFace(GL11.GL_BACK);
 		//GL11.glPointSize(2);
 	}
 	public void initShaderProgram()
@@ -125,18 +126,36 @@ public class Main {
 	public void start()
 	{
 		try {
+			DisplayMode[] modes = Display.getAvailableDisplayModes();
+			int i;
+			float ratio = 640.0f/480.0f;
+			float biggest = Float.MIN_VALUE;
+			for(i = 0; i < modes.length; i++)
+			{
+				float tempRatio = (float)modes[i].getWidth()/modes[i].getHeight();
+				if(tempRatio == ratio)
+				{
+					if(tempRatio > biggest)
+					{
+						biggest = tempRatio;
+						WIDTH = modes[i].getWidth();
+						HEIGHT = modes[i].getHeight();
+					}
+				}
+			}
 			Display.setDisplayMode(new DisplayMode(WIDTH, HEIGHT));
+			Display.setFullscreen(true);
 			Display.create();
 		} catch (LWJGLException e) {
 			e.printStackTrace();
 			System.exit(0);
 		}
 
-		initGL(); // init OpenGL
+		initGL(); // init OpenGL 
 		initShaderProgram();
 		setTextureUnit0(shaderProgram);
 		
-		currentLevel = new Level(1);
+		currentLevel = new Level(level);
 
 		while (!Display.isCloseRequested()) {
 			update();
@@ -146,6 +165,10 @@ public class Main {
 		}
 		destroyShaderProgram();
 		Display.destroy();
+	}
+	public static void nextLevel()
+	{
+		currentLevel = new Level(++level);
 	}
 	public void update()
 	{

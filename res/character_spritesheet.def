@@ -1,0 +1,56 @@
+character_spritesheet.png
+{
+	player_idle.png
+	0
+	280
+	88
+	142
+	0
+	0
+	0
+	0
+}
+{
+	player_pissing.png
+	122
+	140
+	88
+	142
+	0
+	0
+	0
+	0
+}
+{
+	player_running1.png
+	0
+	140
+	122
+	140
+	0
+	0
+	0
+	0
+}
+{
+	player_running2.png
+	122
+	0
+	122
+	140
+	0
+	0
+	0
+	0
+}
+{
+	player_running3.png
+	0
+	0
+	122
+	140
+	0
+	0
+	0
+	0
+}

@@ -1,19 +1,16 @@
-import java.io.IOException;
 
 import org.iforce2d.Jb2dJson;
 import org.jbox2d.callbacks.ContactImpulse;
 import org.jbox2d.callbacks.ContactListener;
 import org.jbox2d.collision.Manifold;
-import org.jbox2d.collision.shapes.PolygonShape;
-import org.jbox2d.collision.shapes.Shape;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.Fixture;
 import org.jbox2d.dynamics.contacts.Contact;
 import org.lwjgl.opengl.GL11;
-import org.newdawn.slick.opengl.Texture;
-import org.newdawn.slick.opengl.TextureLoader;
-import org.newdawn.slick.util.ResourceLoader;
+import org.newdawn.slick.Image;
+import org.newdawn.slick.PackedSpriteSheet;
+import org.newdawn.slick.SlickException;
 
 
 public class Player implements ContactListener {
@@ -21,26 +18,31 @@ public class Player implements ContactListener {
 	public float numberDisplaced;
 	public boolean waterCollide;
 	public static final float MAX_VELOCITY = 10.0f;
-	private Texture playerTexture;
+	private float scale;
+	private Image currentTexture;
+	private PackedSpriteSheet spriteSheet;
 	private Fixture footSensor, playerFixture;
 	private int fixturesUnderFoot;
 	private int jumpTimeout;
 	private float stillTime;
-	private boolean keyTest;
+	private boolean keyTest, faceRight, peeing, running;
+	private float runningTick;
 	
 	public Player(Jb2dJson json)
 	{
 		super();
 		try {
-			playerTexture = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("res/player_idle.png"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			spriteSheet = new PackedSpriteSheet("res/character_spritesheet.def");
+		} catch (SlickException e) {
 			e.printStackTrace();
-		};
+		}
+		currentTexture = spriteSheet.getSprite("player_idle.png");
 		
 		body = json.getBodyByName("player");
 		footSensor = json.getFixtureByName("footSensor");
 		playerFixture = json.getFixtureByName("playerFixture");
+		scale = json.getImageByName("playerTexture").scale;
+		faceRight = true;
 	}
 	public void update()
 	{
@@ -73,6 +75,17 @@ public class Player implements ContactListener {
 			}
 		}
 		jumpTimeout--;
+		if(Math.abs(body.getLinearVelocity().x)<3.5f || fixturesUnderFoot <= 0)
+		{
+			running = false;
+			runningTick = 0;
+		}
+		
+		if(running)
+		{
+			runningTick += 0.1f;
+			currentTexture = spriteSheet.getSprite("player_running"+(int)((runningTick%3)+1)+".png");
+		}
 	}
 	public void reset()
 	{
@@ -81,23 +94,46 @@ public class Player implements ContactListener {
 	}
 	public void draw()
 	{
-		PolygonShape shape = ((PolygonShape)playerFixture.getShape());
 		GL11.glPushMatrix();
 		GL11.glEnable(GL11.GL_TEXTURE_2D);
-		playerTexture.bind();
+		currentTexture.bind();
         GL11.glTranslatef(body.getPosition().x*Main.OPENGL_SCALE, body.getPosition().y*Main.OPENGL_SCALE, 0.0f);
+        if(!faceRight)
+        	GL11.glRotatef(180.0f, 0.0f, 1.0f, 0.0f);
         GL11.glColor3f(1.0f, 1.0f, 1.0f);
-        Vec2[] vertices = ((PolygonShape)playerFixture.getShape()).getVertices();
-        float textureWidth = (float)playerTexture.getImageWidth()/Main.get2Fold(playerTexture.getImageWidth());
-        float textureHeight = (float)playerTexture.getImageHeight()/Main.get2Fold(playerTexture.getImageHeight());
+        float height = scale * Main.OPENGL_SCALE;
+        float ratio = (float)currentTexture.getWidth()/currentTexture.getHeight();
+        float width = height*ratio;
+        float x = currentTexture.getTextureOffsetX();
+        float y = currentTexture.getTextureOffsetY();
+        float textureWidth = currentTexture.getTextureWidth();
+        float textureHeight = currentTexture.getTextureHeight();
         GL11.glBegin(GL11.GL_QUADS);
-        	GL11.glTexCoord2f(textureWidth, 0.0f); GL11.glVertex2f(vertices[0].x*Main.OPENGL_SCALE, vertices[0].y*Main.OPENGL_SCALE);
-        	GL11.glTexCoord2f(0.0f, 0.0f); GL11.glVertex2f(vertices[1].x*Main.OPENGL_SCALE, vertices[1].y*Main.OPENGL_SCALE);
-	        GL11.glTexCoord2f(0.0f, textureHeight); GL11.glVertex2f(vertices[2].x*Main.OPENGL_SCALE, vertices[2].y*Main.OPENGL_SCALE);
-	        GL11.glTexCoord2f(textureWidth, textureHeight); GL11.glVertex2f(vertices[3].x*Main.OPENGL_SCALE, vertices[3].y*Main.OPENGL_SCALE);
+        	GL11.glTexCoord2f(x, y); GL11.glVertex2f(-width/2, height/2);
+	        GL11.glTexCoord2f(x+textureWidth, y); GL11.glVertex2f(width/2, height/2);
+	        GL11.glTexCoord2f(x+textureWidth, y+textureHeight); GL11.glVertex2f(width/2, -height/2);
+	        GL11.glTexCoord2f(x, y+textureHeight); GL11.glVertex2f(-width/2, -height/2);
        	GL11.glEnd();
        	GL11.glDisable(GL11.GL_TEXTURE_2D);
        	GL11.glPopMatrix();
+	}
+	public void mouseDown(float x)
+	{
+		if(x >= body.getPosition().x)
+		{
+			faceRight = true;
+		}
+		else if(x < body.getPosition().x)
+		{
+			faceRight = false;
+		}
+		peeing = true;
+		currentTexture = spriteSheet.getSprite("player_pissing.png");
+	}
+	public void mouseUp()
+	{
+		peeing = false;
+		currentTexture = spriteSheet.getSprite("player_idle.png");
 	}
 	public Fixture getPlayerFixture()
 	{
@@ -110,13 +146,19 @@ public class Player implements ContactListener {
 	//TODO tweak player movement to be more responsive
 	public void moveRight()
 	{
-		if(body.getLinearVelocity().x <= MAX_VELOCITY)
+		if (body.getLinearVelocity().x <= MAX_VELOCITY)
 			body.applyLinearImpulse(new Vec2(12.0f, 0.0f), body.getWorldCenter());
+		if(!peeing)
+			faceRight = true;
+		running = true;
 	}
 	public void moveLeft()
 	{
-		if(body.getLinearVelocity().x >= -MAX_VELOCITY)
+		if (body.getLinearVelocity().x >= -MAX_VELOCITY)
 			body.applyLinearImpulse(new Vec2(-12.0f, 0.0f), body.getWorldCenter());
+		if(!peeing)
+			faceRight = false;
+		running = true;
 	}
 	public void moveDown()
 	{
@@ -126,7 +168,7 @@ public class Player implements ContactListener {
 	{
 		if((fixturesUnderFoot > 0) && jumpTimeout <= 0)
 		{
-			body.applyLinearImpulse(new Vec2(0.0f, 80.0f), body.getWorldCenter());
+			body.applyLinearImpulse(new Vec2(0.0f, 85.0f), body.getWorldCenter());
 			jumpTimeout = 20;
 		}
 	}

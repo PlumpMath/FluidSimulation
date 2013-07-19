@@ -11,7 +11,7 @@ public class Particle {
 	public int numFixturesToTest;
 	public int neighborCount;
 	public int ci, cj;
-	public boolean alive;
+	public boolean alive, render;
 	public float pressure, pressureNear;
 	public int index;
 	public Vec2[] collisionVertices, collisionNormals;

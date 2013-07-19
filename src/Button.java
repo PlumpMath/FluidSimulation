@@ -1,88 +1,94 @@
+import java.io.IOException;
+
+import org.iforce2d.Jb2dJsonImage;
 import org.jbox2d.callbacks.ContactImpulse;
 import org.jbox2d.callbacks.ContactListener;
 import org.jbox2d.collision.Manifold;
-import org.jbox2d.collision.shapes.PolygonShape;
-import org.jbox2d.common.Vec2;
-import org.jbox2d.dynamics.Body;
-import org.jbox2d.dynamics.BodyDef;
-import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.Fixture;
-import org.jbox2d.dynamics.FixtureDef;
-import org.jbox2d.dynamics.World;
 import org.jbox2d.dynamics.contacts.Contact;
+import org.lwjgl.opengl.GL11;
+import org.newdawn.slick.opengl.Texture;
+import org.newdawn.slick.opengl.TextureLoader;
+import org.newdawn.slick.util.ResourceLoader;
 
 
 public class Button implements ContactListener{
 	private Fixture sensor;
+	private Texture pressed, unpressed, current;
+	private Jb2dJsonImage info;
 	private ActionCommand action;
 	private int numContacts;
 	
-	public Button(Vec2 position, World world, ActionCommand command)
+	public Button(Fixture sensor, Jb2dJsonImage info, ActionCommand command)
 	{
-		BodyDef bd = new BodyDef();
-		bd.fixedRotation = true;
-		bd.type = BodyType.STATIC;
-     	bd.position.set(position);
-     	
-     	Body body = world.createBody(bd);
-     	PolygonShape shape = new PolygonShape();
-     	shape.setAsBox(0.3f, 0.3f, new Vec2(0.0f, 0.0f), 0.0f);
-     	
-     	FixtureDef fixture = new FixtureDef();
-     	fixture.shape = shape;
-     	fixture.userData = "button";
-        fixture.isSensor = true;
-        sensor = body.createFixture(fixture);
-        
-        action = command;
+		this.sensor = sensor;
+		this.info = info;
+		action = command;
+		try {
+			pressed = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("res/button_pressed.png"));
+			unpressed = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("res/button_unpressed.png"));
+			current = unpressed;
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public void update()
 	{
 		if(numContacts > 0)
+		{
 			action.doCommand();
+			current = pressed;
+		}
 		else
+		{
 			action.undoCommand();
+			current = unpressed;
+		}
 	}
 	
+	public void draw()
+	{
+		float height = info.scale * Main.OPENGL_SCALE;
+        float ratio = (float)current.getImageWidth()/current.getImageHeight();
+        float width = height*ratio;
+        float textureWidth = (float)current.getImageWidth()/Main.get2Fold(current.getImageWidth());
+        float textureHeight = (float)current.getImageHeight()/Main.get2Fold(current.getImageHeight());
+		GL11.glEnable(GL11.GL_TEXTURE_2D);
+        GL11.glPushMatrix();
+		current.bind();
+		GL11.glTranslatef((sensor.getBody().getPosition().x+info.center.x)*Main.OPENGL_SCALE, (sensor.getBody().getPosition().y+info.center.y)*Main.OPENGL_SCALE, 0.0f);
+        GL11.glBegin(GL11.GL_QUADS);
+        	GL11.glTexCoord2f(textureWidth, textureHeight); GL11.glVertex2f(-width/2, -height/2);
+        	GL11.glTexCoord2f(0.0f, textureHeight); GL11.glVertex2f(width/2, -height/2);
+        	GL11.glTexCoord2f(0.0f, 0.0f); GL11.glVertex2f(width/2, height/2);
+        	GL11.glTexCoord2f(textureWidth, 0.0f); GL11.glVertex2f(-width/2, height/2);
+		GL11.glEnd();
+		GL11.glPopMatrix();
+		GL11.glDisable(GL11.GL_TEXTURE_2D);
+	}
 	public void beginContact(Contact contact) {
-		Object fixtureUserData = contact.getFixtureA().getUserData();
-		if(fixtureUserData instanceof String)
+		Fixture fixture = contact.getFixtureA();
+		if(fixture.equals(sensor))
 		{
-			String string = (String)fixtureUserData;
-			if(!string.equals("ground"))
-			{
-				numContacts++;
-			}
+			numContacts++;
 		}
-		fixtureUserData = contact.getFixtureB().getUserData();
-		if(fixtureUserData instanceof String)
+		fixture = contact.getFixtureB();
+		if(fixture.equals(sensor))
 		{
-			String string = (String)fixtureUserData;
-			if(!string.equals("ground"))
-			{
-				numContacts++;
-			}
+			numContacts++;
 		}
 	}
 	public void endContact(Contact contact) {
-		Object fixtureUserData = contact.getFixtureA().getUserData();
-		if(fixtureUserData instanceof String)
+		Fixture fixture = contact.getFixtureA();
+		if(fixture.equals(sensor))
 		{
-			String string = (String)fixtureUserData;
-			if(!string.equals("ground"))
-			{
-				numContacts--;
-			}
+			numContacts--;
 		}
-		fixtureUserData = contact.getFixtureB().getUserData();
-		if(fixtureUserData instanceof String)
+		fixture = contact.getFixtureB();
+		if(fixture.equals(sensor))
 		{
-			String string = (String)fixtureUserData;
-			if(!string.equals("ground"))
-			{
-				numContacts--;
-			}
+			numContacts--;
 		}
 	}
 

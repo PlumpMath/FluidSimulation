@@ -1,5 +1,8 @@
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.PriorityQueue;
 
 import org.iforce2d.Jb2dJson;
 import org.iforce2d.Jb2dJsonImage;
@@ -14,10 +17,7 @@ import org.jbox2d.collision.shapes.ShapeType;
 import org.jbox2d.common.Transform;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
-import org.jbox2d.dynamics.BodyDef;
-import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.Fixture;
-import org.jbox2d.dynamics.FixtureDef;
 import org.jbox2d.dynamics.World;
 import org.jbox2d.dynamics.contacts.Contact;
 import org.lwjgl.input.Keyboard;
@@ -37,8 +37,8 @@ public class Level implements ContactListener {
     protected Camera camera;
     private Body ground, boundary;
     private Jb2dJsonImage[] groundImages;
-    private Texture[] groundTextures;
-    private Body[] otherBodies;
+    private HashMap<String, Texture> groundTextures;
+    private ArrayList<Body> otherBodies;
     private AABB screenAABB;
     
     public Level(int level)
@@ -52,16 +52,29 @@ public class Level implements ContactListener {
 	    player = new Player(json);
 	    ground = json.getBodyByName("ground");
 	    boundary = json.getBodyByName("boundary");
-	    otherBodies = json.getBodiesByName("object");
+	    otherBodies = new ArrayList<Body>();
+	    for(Body b:json.getBodiesByName("object"))
+	    	otherBodies.add(b);
 	    groundImages = json.getImagesByName("groundImage");
-	    groundTextures = new Texture[groundImages.length];
+	    PriorityQueue<Jb2dJsonImage> queue = new PriorityQueue<Jb2dJsonImage>(groundImages.length, new Comparator<Jb2dJsonImage>(){
+			public int compare(Jb2dJsonImage one, Jb2dJsonImage two) {
+				return (int)(one.renderOrder-two.renderOrder);
+			}
+	    	
+	    });
+	    for(int i = 0; i < groundImages.length; i++)
+	    {
+	    	queue.add(groundImages[i]);
+	    }
+	    queue.toArray(groundImages);
+	    groundTextures = new HashMap<String, Texture>();
 	    try
 	    {
 	    	for(int i = 0; i < groundImages.length; i++)
 	    	{
 	    		String imageLocation = groundImages[i].file.substring(3);
-	    		System.out.println(imageLocation);
-	    		groundTextures[i] = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream(imageLocation));
+	    		if(groundTextures.get(imageLocation)==null)
+	    			groundTextures.put(imageLocation, TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream(imageLocation)));
 	    	}
 	    }
 	    catch(IOException e)
@@ -72,13 +85,80 @@ public class Level implements ContactListener {
 	    screenAABB = new AABB();
 	    screenAABB.lowerBound.set(new Vec2(player.body.getPosition().x-100.0f, player.body.getPosition().y-100.0f));
 	    screenAABB.upperBound.set(new Vec2(player.body.getPosition().x+100.0f, player.body.getPosition().y+100.0f));
-	    camera = new Camera(player, json.getBodyByName("boundary"));
-	    sim = new FluidSimulation(world, screenAABB);
+	    camera = new Camera(player, json.getBodyByName("boundary"), "res/background.png");
+	    sim = new FluidSimulation(world, screenAABB, camera);
 	    buttons = new ArrayList<Button>();
 	    world.setContactListener(this);
 	    
 	    if(level == 1)
 	    {
+	    	//Button 1
+	    	final Body wall = json.getBodyByName("wall");
+	    	otherBodies.add(wall);
+	    	Fixture sensor = json.getBodyByName("button1").getFixtureList();
+	    	Jb2dJsonImage image = json.getImageByName("buttonImage");
+	    	buttons.add(new Button(sensor, image, new ActionCommand(){
+	    		public float startY = wall.getPosition().y;
+	    		public float endY = -2.2553f;
+				public void doCommand() {
+					wall.setLinearVelocity(new Vec2(0.0f, -10.0f));
+					if(wall.getPosition().y<endY)
+					{
+						wall.getPosition().set(new Vec2(wall.getPosition().x, endY));
+						wall.setLinearVelocity(new Vec2(0.0f, 0.0f));
+					}
+				}
+
+				public void undoCommand() {
+					wall.setLinearVelocity(new Vec2(0.0f, 10.0f));
+					if(wall.getPosition().y>startY)
+					{
+						wall.getPosition().set(new Vec2(wall.getPosition().x, startY));
+						wall.setLinearVelocity(new Vec2(0.0f, 0.0f));
+					}
+				}
+	    		
+	    	}));
+	    	
+	    	//Button 2
+	    	final Body wall2 = json.getBodyByName("wall2");
+	    	otherBodies.add(wall2);
+	    	sensor = json.getBodyByName("button2").getFixtureList();
+	    	image = json.getImageByName("buttonImage");
+	    	buttons.add(new Button(sensor, image, new ActionCommand(){
+	    		public float startY = wall2.getPosition().y;
+	    		public float endY = 10.0792f;
+				public void doCommand() {
+					wall2.setLinearVelocity(new Vec2(0.0f, 10.0f));
+					if(wall2.getPosition().y>endY)
+					{
+						wall2.getPosition().set(new Vec2(wall2.getPosition().x, endY));
+						wall2.setLinearVelocity(new Vec2(0.0f, 0.0f));
+					}
+				}
+
+				public void undoCommand() {
+					wall2.setLinearVelocity(new Vec2(0.0f, -10.0f));
+					if(wall2.getPosition().y<startY)
+					{
+						wall2.getPosition().set(new Vec2(wall2.getPosition().x, startY));
+						wall2.setLinearVelocity(new Vec2(0.0f, 0.0f));
+					}
+				}
+	    		
+	    	}));
+	    	
+	    	sensor = json.getBodyByName("door").getFixtureList();
+	    	image = json.getImageByName("buttonImage");
+	    	buttons.add(new Button(sensor, image, new ActionCommand(){
+				public void doCommand() {
+					Main.nextLevel();
+				}
+
+				public void undoCommand() {
+				}
+	    		
+	    	}));
 	    	/*
 			buttons.add(new Button(levelFile, new ActionCommand(){
 				public void doCommand() {
@@ -105,40 +185,11 @@ public class Level implements ContactListener {
 			float mouseX = Mouse.getX()*Main.BOX2D_SCALE+(camera.getScreenX()*Main.BOX2D_SCALE);
 			float mouseY = Mouse.getY()*Main.BOX2D_SCALE+(camera.getScreenY()*Main.BOX2D_SCALE);
 			sim.createParticle(4, mouseX, mouseY, player);
+			player.mouseDown(mouseX);
 		}
-		if(Mouse.isButtonDown(1))
+		else
 		{
-			float mouseX = Mouse.getX()*Main.BOX2D_SCALE+(camera.getScreenX()*Main.BOX2D_SCALE);
-			float mouseY = Mouse.getY()*Main.BOX2D_SCALE+(camera.getScreenY()*Main.BOX2D_SCALE);
-			
-			BodyDef bd = new BodyDef();
-			bd.fixedRotation = false;
-			bd.type = BodyType.DYNAMIC;
-	     	bd.position.set(0.0f, 0.0f);
-	      
-	     	Body body = world.createBody(bd);
-	     	PolygonShape shape = new PolygonShape();
-
-	     	shape.setAsBox(1.0f, 1.0f, new Vec2(mouseX, mouseY), 0.0f);
-	     	FixtureDef fixture = new FixtureDef();
-	     	fixture.shape = shape;
-	     	fixture.density = 1.0f;
-	     	fixture.friction = 0.2f;
-	     	body.createFixture(fixture);
-		}
-		if(Mouse.isButtonDown(2))
-		{
-			float mouseX = Mouse.getX()*Main.BOX2D_SCALE+(camera.getScreenX()*Main.BOX2D_SCALE);
-			float mouseY = Mouse.getY()*Main.BOX2D_SCALE+(camera.getScreenY()*Main.BOX2D_SCALE);
-			BodyDef bd = new BodyDef();
-			bd.position.set(0.0f, 0.0f);
-			
-			Body temp = world.createBody(bd);
-			PolygonShape shape = new PolygonShape();
-			
-			shape.setAsBox(1.0f, 1.0f, new Vec2(mouseX, mouseY), 0.0f);
-			temp.createFixture(shape, 0);
-
+			player.mouseUp();
 		}
 		if(Keyboard.isKeyDown(Keyboard.KEY_DOWN) || Keyboard.isKeyDown(Keyboard.KEY_S))
 		{
@@ -194,11 +245,15 @@ public class Level implements ContactListener {
     }
     public void renderObjects()
     {
+    	for(int i = 0; i < buttons.size(); i++)
+    	{
+    		buttons.get(i).draw();
+    	}
     	//Render other bodies
     	GL11.glPushMatrix();
-		for(int i = 0; i < otherBodies.length; i++)
+		for(int i = 0; i < otherBodies.size(); i++)
 		{
-			Body body = otherBodies[i];
+			Body body = otherBodies.get(i);
 			Transform transform = body.getTransform();
 			Fixture fix = body.getFixtureList();
 			for(int j = 0; j < body.m_fixtureCount; fix = fix.getNext())
@@ -210,7 +265,9 @@ public class Level implements ContactListener {
 				{
 					CircleShape cs = (CircleShape)s;
 					Vec2 center = Transform.mul(transform, cs.m_p);
-					Main.drawCircle(center.x, center.y, s.getRadius(), 20);
+					GL11.glPushMatrix();
+					Main.drawCircle(center.x*Main.OPENGL_SCALE, center.y*Main.OPENGL_SCALE, s.getRadius()*Main.OPENGL_SCALE, 20);
+					GL11.glPopMatrix();
 				}
 				else if(type.equals(ShapeType.POLYGON))
 				{
@@ -232,6 +289,7 @@ public class Level implements ContactListener {
 		}
 		GL11.glPopMatrix();
 		
+		/*
 		GL11.glPushMatrix();
 		Body render = world.getBodyList();
 		for(int i = 0; i < world.getBodyCount(); render = render.getNext())
@@ -269,13 +327,15 @@ public class Level implements ContactListener {
 			i++;
 		}
 		GL11.glPopMatrix();
+		*/
 
 		
 		//Render ground
 		GL11.glEnable(GL11.GL_TEXTURE_2D);
-		for(int i = 0; i < groundTextures.length; i++)
+		for(int i = 0; i < groundImages.length; i++)
 		{
-			Texture groundTexture = groundTextures[i];
+			String imageLocation = groundImages[i].file.substring(3);
+			Texture groundTexture = groundTextures.get(imageLocation);
 			Jb2dJsonImage groundImageInfo = groundImages[i];
 			groundTexture.bind();
 			float height = groundImageInfo.scale * Main.OPENGL_SCALE;
@@ -283,8 +343,12 @@ public class Level implements ContactListener {
 	        float width = height*ratio;
 	        GL11.glPushMatrix();
 	    	GL11.glTranslatef((ground.getPosition().x + groundImageInfo.center.x)*Main.OPENGL_SCALE, (ground.getPosition().y + groundImageInfo.center.y)*Main.OPENGL_SCALE, 0.0f);
-	    	GL11.glRotatef(180.0f, 0.0f, 1.0f, 0.0f);
-	        GL11.glColor3f(1.0f, 1.0f, 1.0f);
+	    	if(!groundImageInfo.flip)
+	    		GL11.glRotatef(180.0f, 0.0f, 1.0f, 0.0f);
+	    	else
+	    		GL11.glRotatef(-180.0f, 0.0f, 1.0f, 0.0f);
+	        GL11.glRotatef(-(float)(groundImageInfo.angle*180/Math.PI), 0.0f, 0.0f, 1.0f);
+	    	GL11.glColor3f(1.0f, 1.0f, 1.0f);
 	        float textureWidth = (float)groundTexture.getImageWidth()/Main.get2Fold(groundTexture.getImageWidth());
 	        float textureHeight = (float)groundTexture.getImageHeight()/Main.get2Fold(groundTexture.getImageHeight());
 	        GL11.glBegin(GL11.GL_QUADS);
