@@ -885,7 +885,7 @@ public class Jb2dJson {
 				Body body = j2b2Body(world, bodyValue);
 				readCustomPropertiesFromJson(body, bodyValue);
 				m_bodies.add(body);
-				m_indexToBodyMap.put(i, body);
+				m_indexToBodyMap.put(bodyValue.getInt("id"), body);
 			}
 		}
 

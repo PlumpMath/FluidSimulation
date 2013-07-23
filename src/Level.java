@@ -10,11 +10,6 @@ import org.jbox2d.callbacks.ContactImpulse;
 import org.jbox2d.callbacks.ContactListener;
 import org.jbox2d.collision.AABB;
 import org.jbox2d.collision.Manifold;
-import org.jbox2d.collision.shapes.CircleShape;
-import org.jbox2d.collision.shapes.PolygonShape;
-import org.jbox2d.collision.shapes.Shape;
-import org.jbox2d.collision.shapes.ShapeType;
-import org.jbox2d.common.Transform;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.Fixture;
@@ -38,7 +33,8 @@ public class Level implements ContactListener {
     private Body ground, boundary;
     private Jb2dJsonImage[] groundImages;
     private HashMap<String, Texture> groundTextures;
-    private ArrayList<Body> otherBodies;
+    private Jb2dJsonImage[] otherImages;
+    private HashMap<String, Texture> otherTextures;
     private AABB screenAABB;
     
     public Level(int level)
@@ -52,16 +48,35 @@ public class Level implements ContactListener {
 	    player = new Player(json);
 	    ground = json.getBodyByName("ground");
 	    boundary = json.getBodyByName("boundary");
-	    otherBodies = new ArrayList<Body>();
-	    for(Body b:json.getBodiesByName("object"))
-	    	otherBodies.add(b);
-	    groundImages = json.getImagesByName("groundImage");
-	    PriorityQueue<Jb2dJsonImage> queue = new PriorityQueue<Jb2dJsonImage>(groundImages.length, new Comparator<Jb2dJsonImage>(){
+	    otherImages = json.getImagesByName("objectImage");
+	    PriorityQueue<Jb2dJsonImage> queue = new PriorityQueue<Jb2dJsonImage>(otherImages.length, new Comparator<Jb2dJsonImage>(){
 			public int compare(Jb2dJsonImage one, Jb2dJsonImage two) {
 				return (int)(one.renderOrder-two.renderOrder);
 			}
 	    	
 	    });
+	    for(int i = 0; i < otherImages.length; i++)
+	    {
+	    	queue.add(otherImages[i]);
+	    }
+	    queue.toArray(otherImages);
+	    otherTextures = new HashMap<String, Texture>();
+	    try
+	    {
+	    	for(int i = 0; i < otherImages.length; i++)
+	    	{
+	    		String imageLocation = otherImages[i].file.substring(3);
+	    		if(otherTextures.get(imageLocation)==null)
+	    			otherTextures.put(imageLocation, TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream(imageLocation)));
+	    	}
+	    }
+	    catch(IOException e)
+	    {
+	    	e.printStackTrace();
+	    }
+	    
+	    groundImages = json.getImagesByName("groundImage");
+	    queue.clear();
 	    for(int i = 0; i < groundImages.length; i++)
 	    {
 	    	queue.add(groundImages[i]);
@@ -94,7 +109,6 @@ public class Level implements ContactListener {
 	    {
 	    	//Button 1
 	    	final Body wall = json.getBodyByName("wall");
-	    	otherBodies.add(wall);
 	    	Fixture sensor = json.getBodyByName("button1").getFixtureList();
 	    	Jb2dJsonImage image = json.getImageByName("buttonImage");
 	    	buttons.add(new Button(sensor, image, new ActionCommand(){
@@ -122,7 +136,6 @@ public class Level implements ContactListener {
 	    	
 	    	//Button 2
 	    	final Body wall2 = json.getBodyByName("wall2");
-	    	otherBodies.add(wall2);
 	    	sensor = json.getBodyByName("button2").getFixtureList();
 	    	image = json.getImageByName("buttonImage");
 	    	buttons.add(new Button(sensor, image, new ActionCommand(){
@@ -249,86 +262,39 @@ public class Level implements ContactListener {
     	{
     		buttons.get(i).draw();
     	}
+    	
     	//Render other bodies
-    	GL11.glPushMatrix();
-		for(int i = 0; i < otherBodies.size(); i++)
+    	GL11.glEnable(GL11.GL_TEXTURE_2D);
+		for(int i = 0; i < otherImages.length; i++)
 		{
-			Body body = otherBodies.get(i);
-			Transform transform = body.getTransform();
-			Fixture fix = body.getFixtureList();
-			for(int j = 0; j < body.m_fixtureCount; fix = fix.getNext())
-			{
-				Shape s = fix.getShape();
-				ShapeType type = s.getType();
-				GL11.glColor3f(0.0f, 0.0f, 1.0f);
-				if(type.equals(ShapeType.CIRCLE))
-				{
-					CircleShape cs = (CircleShape)s;
-					Vec2 center = Transform.mul(transform, cs.m_p);
-					GL11.glPushMatrix();
-					Main.drawCircle(center.x*Main.OPENGL_SCALE, center.y*Main.OPENGL_SCALE, s.getRadius()*Main.OPENGL_SCALE, 20);
-					GL11.glPopMatrix();
-				}
-				else if(type.equals(ShapeType.POLYGON))
-				{
-					GL11.glPushMatrix();
-					PolygonShape ps = (PolygonShape)s;
-					Vec2[] vertices = ps.m_vertices;
-					GL11.glTranslatef(body.getPosition().x * Main.OPENGL_SCALE, body.getPosition().y * Main.OPENGL_SCALE, 0.0f);
-					GL11.glRotatef((float) (body.getAngle() * (180 / Math.PI)), 0.0f, 0.0f, 1.0f);
-					GL11.glBegin(GL11.GL_TRIANGLE_FAN); 
-					for(int k = 0; k < ps.getVertexCount(); k++)
-					{
-						GL11.glVertex2f(vertices[k].x * Main.OPENGL_SCALE, vertices[k].y * Main.OPENGL_SCALE);
-					} 
-					GL11.glEnd(); 
-					GL11.glPopMatrix();
-				}
-				j++;
-			}
+			String imageLocation = otherImages[i].file.substring(3);
+			Texture otherTexture = otherTextures.get(imageLocation);
+			Jb2dJsonImage otherImageInfo = otherImages[i];
+			Body body = otherImages[i].body;
+			otherTexture.bind();
+			float height = otherImageInfo.scale * Main.OPENGL_SCALE;
+	        float ratio = (float)otherTexture.getImageWidth()/otherTexture.getImageHeight();
+	        float width = height*ratio;
+	        GL11.glPushMatrix();
+	        if(body!=null)
+	        	GL11.glTranslatef((body.getPosition().x + otherImageInfo.center.x)*Main.OPENGL_SCALE, (body.getPosition().y + otherImageInfo.center.y)*Main.OPENGL_SCALE, 0.0f);
+	    	if(!otherImageInfo.flip)
+	    		GL11.glRotatef(180.0f, 0.0f, 1.0f, 0.0f);
+	    	else
+	    		GL11.glRotatef(-180.0f, 0.0f, 1.0f, 0.0f);
+	        GL11.glRotatef(-(float)(otherImageInfo.angle*180/Math.PI), 0.0f, 0.0f, 1.0f);
+	    	GL11.glColor3f(1.0f, 1.0f, 1.0f);
+	        float textureWidth = (float)otherTexture.getImageWidth()/Main.get2Fold(otherTexture.getImageWidth());
+	        float textureHeight = (float)otherTexture.getImageHeight()/Main.get2Fold(otherTexture.getImageHeight());
+	        GL11.glBegin(GL11.GL_QUADS);
+	        	GL11.glTexCoord2f(textureWidth, textureHeight); GL11.glVertex2f(-width/2, -height/2);
+	        	GL11.glTexCoord2f(0.0f, textureHeight); GL11.glVertex2f(width/2, -height/2);
+	        	GL11.glTexCoord2f(0.0f, 0.0f); GL11.glVertex2f(width/2, height/2);
+	        	GL11.glTexCoord2f(textureWidth, 0.0f); GL11.glVertex2f(-width/2, height/2);
+	       	GL11.glEnd();
+	       	GL11.glPopMatrix();
 		}
-		GL11.glPopMatrix();
-		
-		/*
-		GL11.glPushMatrix();
-		Body render = world.getBodyList();
-		for(int i = 0; i < world.getBodyCount(); render = render.getNext())
-		{
-			Fixture fix = render.getFixtureList();
-			if(render.getType() == BodyType.STATIC)
-			{
-				for(int j = 0; j < render.m_fixtureCount; fix = fix.getNext())
-				{
-					Shape s = fix.getShape();
-					ShapeType type = s.getType();
-					GL11.glColor3f(0.0f, 0.0f, 1.0f);
-					if(type.equals(ShapeType.CIRCLE))
-					{
-						CircleShape cs = (CircleShape)s;
-						Main.drawCircle(cs.m_p.x, cs.m_p.y, s.getRadius(), 20);
-					}
-					else if(type.equals(ShapeType.POLYGON))
-					{
-						GL11.glPushMatrix();
-						GL11.glTranslatef(render.getPosition().x*Main.OPENGL_SCALE, render.getPosition().y*Main.OPENGL_SCALE, 0.0f);
-						PolygonShape ps = (PolygonShape)s;
-						Vec2[] vertices = ps.m_vertices;
-						GL11.glBegin(GL11.GL_TRIANGLE_FAN); 
-						for(int k = 0; k < ps.getVertexCount(); k++) 
-						{ 
-							GL11.glVertex2f(vertices[k].x*Main.OPENGL_SCALE, vertices[k].y*Main.OPENGL_SCALE);
-						} 
-						GL11.glEnd(); 
-						GL11.glPopMatrix();
-					}
-					j++;
-				}
-			}
-			i++;
-		}
-		GL11.glPopMatrix();
-		*/
-
+       	GL11.glDisable(GL11.GL_TEXTURE_2D);
 		
 		//Render ground
 		GL11.glEnable(GL11.GL_TEXTURE_2D);
