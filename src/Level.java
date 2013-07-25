@@ -105,6 +105,7 @@ public class Level implements ContactListener {
 	    buttons = new ArrayList<Button>();
 	    world.setContactListener(this);
 	    
+	    //Custom code for each level
 	    if(level == 1)
 	    {
 	    	//Button 1

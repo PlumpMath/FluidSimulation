@@ -22,7 +22,8 @@ public class Player implements ContactListener {
 	private Image currentTexture;
 	private PackedSpriteSheet spriteSheet;
 	private Fixture footSensor, playerFixture;
-	private int fixturesUnderFoot;
+	private Fixture[] wallSensors;
+	private int fixturesUnderFoot, fixturesByWall;
 	private int jumpTimeout;
 	private float stillTime;
 	private boolean keyTest, faceRight, peeing, running;
@@ -40,6 +41,7 @@ public class Player implements ContactListener {
 		
 		body = json.getBodyByName("player");
 		footSensor = json.getFixtureByName("footSensor");
+		wallSensors = json.getFixturesByName("wallSensor");
 		playerFixture = json.getFixtureByName("playerFixture");
 		scale = json.getImageByName("playerTexture").scale;
 		faceRight = true;
@@ -56,9 +58,8 @@ public class Player implements ContactListener {
 			float vx = Math.signum(body.getLinearVelocity().x) * MAX_VELOCITY;
 			body.setLinearVelocity(new Vec2(vx, body.getLinearVelocity().y));
 		}
-		if(fixturesUnderFoot == 0)
+		if(fixturesUnderFoot == 0 || (fixturesByWall > 0 && fixturesUnderFoot!=0))
 		{
-			footSensor.setFriction(0.0f);
 			playerFixture.setFriction(0.0f);
 		}
 		else
@@ -66,12 +67,10 @@ public class Player implements ContactListener {
 			if(keyTest && stillTime > 0.2f)
 			{
 				playerFixture.setFriction(100.0f);
-				footSensor.setFriction(100.0f);
 			}
 			else
 			{
 				playerFixture.setFriction(0.4f);
-				footSensor.setFriction(0.4f);
 			}
 		}
 		jumpTimeout--;
@@ -143,6 +142,10 @@ public class Player implements ContactListener {
 	{
 		return footSensor;
 	}
+	public Fixture[] getWallSensor()
+	{
+		return wallSensors;
+	}
 	//TODO tweak player movement to be more responsive
 	public void moveRight()
 	{
@@ -192,10 +195,18 @@ public class Player implements ContactListener {
 		{
 			fixturesUnderFoot++;
 		}
+		if(fixture.equals(wallSensors[0])||fixture.equals(wallSensors[1]))
+		{
+			fixturesByWall++;
+		}
 		fixture = contact.getFixtureB();
 		if(!fixture.equals(playerFixture) && fixture.equals(footSensor))
 		{
 			fixturesUnderFoot++;
+		}
+		if(fixture.equals(wallSensors[0])||fixture.equals(wallSensors[1]))
+		{
+			fixturesByWall++;
 		}
 	}
 
@@ -206,10 +217,18 @@ public class Player implements ContactListener {
 		{
 			fixturesUnderFoot--;
 		}
+		if(fixture.equals(wallSensors[0])||fixture.equals(wallSensors[1]))
+		{
+			fixturesByWall--;
+		}
 		fixture = contact.getFixtureB();
 		if(!fixture.equals(playerFixture) && fixture.equals(footSensor))
 		{
 			fixturesUnderFoot--;
+		}
+		if(fixture.equals(wallSensors[0])||fixture.equals(wallSensors[1]))
+		{
+			fixturesByWall--;
 		}
 	}
 
