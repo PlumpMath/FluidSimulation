@@ -507,7 +507,8 @@ public class FluidSimulation {
 			{
 				Fixture fixture = particle.fixtures[i];
 				Vec2 newPosition = particle.position.add(particle.velocity).add(delta[index]);
-				if(fixture.equals(Main.currentLevel.getPlayer().getPlayerFixture()) || fixture.equals(Main.currentLevel.getPlayer().getFootSensor()) || fixture.isSensor())
+				if(fixture.equals(Main.currentLevel.getPlayer().getPlayerFixture()) || fixture.equals(Main.currentLevel.getPlayer().getFootSensor()) || fixture.equals(Main.currentLevel.getPlayer().getWallSensor()[0]) ||
+						fixture.equals(Main.currentLevel.getPlayer().getWallSensor()[1]) || fixture.isSensor())
 				{
 					continue;
 				}
