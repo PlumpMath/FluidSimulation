@@ -83,7 +83,7 @@ public class Player implements ContactListener {
 		if(running)
 		{
 			runningTick += 0.1f;
-			currentTexture = spriteSheet.getSprite("player_running"+(int)((runningTick%3)+1)+".png");
+			currentTexture = spriteSheet.getSprite("player_running"+(int)((runningTick%5)+1)+".png");
 		}
 	}
 	public void reset()

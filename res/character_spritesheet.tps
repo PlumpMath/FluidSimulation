@@ -151,6 +151,8 @@
             <filename>player_running2.png</filename>
             <filename>player_running3.png</filename>
             <filename>player_running1.png</filename>
+            <filename>player_running4.png</filename>
+            <filename>player_running5.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>
