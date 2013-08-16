@@ -1,0 +1,2340 @@
+
+{
+  "collisionbitplanes" : 
+  {
+    "names" : 
+    [
+      "bitplane1",
+      "bitplane2",
+      "bitplane3",
+      "bitplane4",
+      "bitplane5",
+      "bitplane6",
+      "bitplane7",
+      "bitplane8",
+      "bitplane9",
+      "bitplane10",
+      "bitplane11",
+      "bitplane12",
+      "bitplane13",
+      "bitplane14",
+      "bitplane15",
+      "bitplane16",
+      "bitplane17",
+      "bitplane18",
+      "bitplane19",
+      "bitplane20",
+      "bitplane21",
+      "bitplane22",
+      "bitplane23",
+      "bitplane24",
+      "bitplane25",
+      "bitplane26",
+      "bitplane27",
+      "bitplane28",
+      "bitplane29",
+      "bitplane30",
+      "bitplane31",
+      "bitplane32"
+    ]
+  },
+  "metaworld" : 
+  {
+    "allowSleep" : true,
+    "autoClearForces" : true,
+    "continuousPhysics" : true,
+    "exportOptions" : 
+    {
+      "saveFullPathForImages" : false,
+      "useHumanReadableFloats" : true
+    },
+    "gravity" : 
+    {
+      "x" : 0,
+      "y" : -40.0
+    },
+    "metabody" : 
+    [
+      
+      {
+        "angle" : 0,
+        "angularVelocity" : 0,
+        "awake" : true,
+        "fixture" : 
+        [
+          
+          {
+            "density" : 1,
+            "friction" : 0.2,
+            "id" : 5,
+            "name" : "fixture5",
+            "sensor" : true,
+            "shapes" : 
+            [
+              
+              {
+                "type" : "line"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : [ -24.85876464843750, 8.366539001464844 ],
+              "y" : [ 3.096197128295898, 3.016176223754883 ]
+            }
+          },
+          
+          {
+            "density" : 1,
+            "friction" : 0.2,
+            "id" : 6,
+            "name" : "fixture5",
+            "sensor" : true,
+            "shapes" : 
+            [
+              
+              {
+                "type" : "line"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : [ -49.30540847778320, 73.24415588378906 ],
+              "y" : [ -17.73619079589844, -17.81621170043945 ]
+            }
+          }
+        ],
+        "id" : 1,
+        "linearVelocity" : 0,
+        "name" : "death",
+        "position" : 
+        {
+          "x" : 38.23891448974609,
+          "y" : -4.622693061828613
+        },
+        "type" : "static"
+      },
+      
+      {
+        "angle" : 0,
+        "angularVelocity" : 0,
+        "awake" : true,
+        "fixture" : 
+        [
+          
+          {
+            "density" : 1,
+            "friction" : 0.2,
+            "id" : 2,
+            "name" : "fixture1",
+            "shapes" : 
+            [
+              
+              {
+                "type" : "polygon"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : 
+              [
+                7.873297691345215,
+                12.58692455291748,
+                12.67730045318604,
+                10.92909145355225,
+                9.619261741638184,
+                8.535242080688477
+              ],
+              "y" : 
+              [
+                -0.5406177043914795,
+                -0.5406177043914795,
+                20.64293670654297,
+                18.46981811523438,
+                14.37055110931397,
+                7.782027244567871
+              ]
+            }
+          },
+          
+          {
+            "density" : 1,
+            "friction" : 0.2,
+            "id" : 3,
+            "name" : "fixture1",
+            "shapes" : 
+            [
+              
+              {
+                "type" : "polygon"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : 
+              [
+                -1.297130107879639,
+                3.416496753692627,
+                3.141767740249634,
+                1.530700206756592,
+                0.1290077567100525,
+                -1.185503721237183
+              ],
+              "y" : 
+              [
+                -0.5310431718826294,
+                -0.5310431718826294,
+                7.477478027343750,
+                14.41815662384033,
+                18.81551742553711,
+                20.77937698364258
+              ]
+            }
+          },
+          
+          {
+            "density" : 1,
+            "friction" : 0.2,
+            "id" : 4,
+            "name" : "fixture0",
+            "shapes" : 
+            [
+              
+              {
+                "type" : "polygon"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : 
+              [
+                21.13995742797852,
+                43.19089508056641,
+                43.19089508056641,
+                21.13995742797852
+              ],
+              "y" : 
+              [
+                25.96005821228027,
+                25.93475914001465,
+                28.41241836547852,
+                28.43771743774414
+              ]
+            }
+          },
+          
+          {
+            "density" : 1,
+            "friction" : 0.2,
+            "id" : 7,
+            "name" : "fixture0",
+            "shapes" : 
+            [
+              
+              {
+                "type" : "polygon"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : 
+              [
+                46.35848999023438,
+                62.16993331909180,
+                62.16993331909180,
+                46.35848999023438
+              ],
+              "y" : 
+              [
+                -0.6656618118286133,
+                -0.6790513992309570,
+                9.294309616088867,
+                9.307699203491211
+              ]
+            }
+          },
+          
+          {
+            "density" : 1,
+            "friction" : 0.2,
+            "id" : 10,
+            "name" : "fixture0",
+            "shapes" : 
+            [
+              
+              {
+                "type" : "polygon"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : 
+              [
+                59.66828918457031,
+                74.53903198242188,
+                74.70692443847656,
+                72.5026855468750,
+                59.72682952880859
+              ],
+              "y" : 
+              [
+                -0.6656618118286133,
+                -0.6790513992309570,
+                27.90569496154785,
+                30.39244079589844,
+                30.43897056579590
+              ]
+            }
+          },
+          
+          {
+            "density" : 1,
+            "friction" : 0.2,
+            "id" : 16,
+            "name" : "fixture8",
+            "shapes" : 
+            [
+              
+              {
+                "type" : "polygon"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : 
+              [
+                69.31036376953125,
+                74.71172332763672,
+                72.87094116210938,
+                69.29965972900391
+              ],
+              "y" : 
+              [
+                27.85604858398438,
+                27.90547943115234,
+                30.40388298034668,
+                30.40404891967773
+              ]
+            }
+          },
+          
+          {
+            "density" : 1,
+            "friction" : 0.2,
+            "id" : 17,
+            "name" : "fixture8",
+            "shapes" : 
+            [
+              
+              {
+                "type" : "polygon"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : 
+              [
+                77.13036346435547,
+                77.11200714111328,
+                84.61696624755859,
+                84.66249084472656,
+                79.05306243896484
+              ],
+              "y" : 
+              [
+                27.88566780090332,
+                13.01793384552002,
+                13.03396129608154,
+                30.41222763061523,
+                30.42564773559570
+              ]
+            }
+          },
+          
+          {
+            "density" : 1,
+            "friction" : 0.2,
+            "id" : 18,
+            "name" : "fixture0",
+            "shapes" : 
+            [
+              
+              {
+                "type" : "polygon"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : 
+              [
+                72.15131378173828,
+                100.5967407226563,
+                100.5967407226563,
+                72.15131378173828
+              ],
+              "y" : 
+              [
+                -0.7155714035034180,
+                -0.6751008033752441,
+                9.298259735107422,
+                9.257789611816406
+              ]
+            }
+          },
+          
+          {
+            "density" : 1,
+            "filter-groupIndex" : -10,
+            "friction" : 0.2,
+            "id" : 19,
+            "name" : "fixture0",
+            "shapes" : 
+            [
+              
+              {
+                "type" : "polygon"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : 
+              [
+                82.74665832519531,
+                91.74882507324219,
+                91.74882507324219,
+                82.74665832519531
+              ],
+              "y" : 
+              [
+                27.93325614929199,
+                27.91990089416504,
+                30.39749908447266,
+                30.41091537475586
+              ]
+            }
+          },
+          
+          {
+            "density" : 1,
+            "friction" : 0.2,
+            "id" : 20,
+            "name" : "fixture3",
+            "shapes" : 
+            [
+              
+              {
+                "type" : "line"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : [ 72.87076568603516, 79.05310821533203 ],
+              "y" : [ 30.40387535095215, 30.42564773559570 ]
+            }
+          },
+          
+          {
+            "density" : 1,
+            "friction" : 0.2,
+            "id" : 21,
+            "name" : "fixture7",
+            "shapes" : 
+            [
+              
+              {
+                "type" : "line"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : [ 72.87076568603516, 79.05310821533203 ],
+              "y" : [ 30.40387535095215, 30.42564773559570 ]
+            }
+          },
+          
+          {
+            "density" : 1,
+            "friction" : 0.2,
+            "id" : 23,
+            "name" : "fixture9",
+            "shapes" : 
+            [
+              
+              {
+                "type" : "line"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : [ 84.61708068847656, 84.57203674316406 ],
+              "y" : [ 13.03386974334717, 9.252852439880371 ]
+            }
+          },
+          
+          {
+            "density" : 1,
+            "friction" : 0.2,
+            "id" : 31,
+            "name" : "fixture0",
+            "shapes" : 
+            [
+              
+              {
+                "type" : "polygon"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : 
+              [
+                91.80162048339844,
+                100.6313400268555,
+                100.6313400268555,
+                91.80162048339844
+              ],
+              "y" : 
+              [
+                4.472803115844727,
+                4.459413528442383,
+                30.43805503845215,
+                30.45144462585449
+              ]
+            }
+          }
+        ],
+        "id" : 2,
+        "linearVelocity" : 0,
+        "name" : "ground",
+        "position" : 
+        {
+          "x" : 0.2274942398071289,
+          "y" : -10.85460281372070
+        },
+        "type" : "static"
+      },
+      
+      {
+        "angle" : 0,
+        "angularVelocity" : 0,
+        "awake" : true,
+        "fixedRotation" : true,
+        "fixture" : 
+        [
+          
+          {
+            "density" : 1,
+            "filter-groupIndex" : -10,
+            "friction" : 0.2,
+            "id" : 24,
+            "name" : "fixture10",
+            "shapes" : 
+            [
+              
+              {
+                "type" : "polygon"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : 
+              [
+                -0.5196380615234375,
+                4.580013275146484,
+                4.586013793945313,
+                -0.5136947631835938
+              ],
+              "y" : 
+              [
+                -0.1660606861114502,
+                -0.1701519936323166,
+                0.8656409978866577,
+                0.8697321414947510
+              ]
+            }
+          }
+        ],
+        "id" : 3,
+        "linearVelocity" : 0,
+        "massData-I" : 22.48198509216309,
+        "massData-center" : 
+        {
+          "x" : 2.033173561096191,
+          "y" : 0.3497910797595978
+        },
+        "massData-mass" : 5.282237052917481,
+        "name" : "object",
+        "position" : 
+        {
+          "x" : 85.96618652343750,
+          "y" : -0.9539012908935547
+        },
+        "type" : "dynamic"
+      },
+      
+      {
+        "angle" : 0,
+        "angularVelocity" : 0,
+        "awake" : true,
+        "fixedRotation" : true,
+        "fixture" : 
+        [
+          
+          {
+            "density" : 1,
+            "filter-groupIndex" : -10,
+            "friction" : 0.2,
+            "id" : 28,
+            "name" : "fixture11",
+            "shapes" : 
+            [
+              
+              {
+                "type" : "polygon"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : 
+              [
+                -0.03728199005126953,
+                2.03479003906250,
+                2.03479003906250,
+                -0.03728199005126953
+              ],
+              "y" : 
+              [
+                2.656608104705811,
+                2.679419994354248,
+                3.679419994354248,
+                3.656608343124390
+              ]
+            }
+          },
+          
+          {
+            "density" : 1,
+            "friction" : 0.2,
+            "id" : 30,
+            "name" : "fixture12",
+            "shapes" : 
+            [
+              
+              {
+                "type" : "polygon"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : 
+              [
+                0.5370597839355469,
+                1.537059783935547,
+                1.537059783935547,
+                0.5370597839355469
+              ],
+              "y" : 
+              [
+                -0.8313083648681641,
+                -0.8313083648681641,
+                0.1686916351318359,
+                0.1686916351318359
+              ]
+            }
+          }
+        ],
+        "id" : 4,
+        "linearVelocity" : 0,
+        "massData-I" : 15.78788185119629,
+        "massData-center" : 
+        {
+          "x" : 1.011222958564758,
+          "y" : 2.028938531875610
+        },
+        "massData-mass" : 3.072072267532349,
+        "name" : "door",
+        "position" : 
+        {
+          "x" : 87.10969543457031,
+          "y" : 0.8383883833885193
+        },
+        "type" : "dynamic"
+      },
+      
+      {
+        "angle" : 0,
+        "angularVelocity" : 0,
+        "awake" : true,
+        "fixedRotation" : true,
+        "fixture" : 
+        [
+          
+          {
+            "density" : 1.000000834465027,
+            "friction" : 0.4000000059604645,
+            "id" : 8,
+            "name" : "playerFixture",
+            "shapes" : 
+            [
+              
+              {
+                "type" : "polygon"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : 
+              [
+                -0.8183018565177918,
+                0.7256819605827332,
+                0.8384853005409241,
+                0.8384919762611389,
+                -0.8999689817428589,
+                -0.9000132679939270
+              ],
+              "y" : 
+              [
+                -1.519089579582214,
+                -1.519080638885498,
+                -1.403979182243347,
+                1.286200046539307,
+                1.286170005798340,
+                -1.412702202796936
+              ]
+            }
+          },
+          
+          {
+            "density" : 1.000000834465027,
+            "friction" : 0.4000000059604645,
+            "id" : 9,
+            "name" : "footSensor",
+            "sensor" : true,
+            "shapes" : 
+            [
+              
+              {
+                "type" : "polygon"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : 
+              [
+                -0.5557309985160828,
+                0.4346149861812592,
+                0.6943879723548889,
+                -0.7777990102767944
+              ],
+              "y" : 
+              [
+                -1.854769945144653,
+                -1.853710055351257,
+                -1.520490050315857,
+                -1.516649961471558
+              ]
+            }
+          },
+          
+          {
+            "density" : 1.000000834465027,
+            "friction" : 0.4000000059604645,
+            "id" : 25,
+            "name" : "wallSensor",
+            "sensor" : true,
+            "shapes" : 
+            [
+              
+              {
+                "type" : "polygon"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : 
+              [
+                1.194198369979858,
+                1.182458043098450,
+                0.8464559316635132,
+                0.8584929704666138
+              ],
+              "y" : 
+              [
+                -0.7326182723045349,
+                0.2576586306095123,
+                0.5138228535652161,
+                -0.9583199024200440
+              ]
+            }
+          },
+          
+          {
+            "density" : 1.000000834465027,
+            "friction" : 0.4000000059604645,
+            "id" : 26,
+            "name" : "wallSensor",
+            "sensor" : true,
+            "shapes" : 
+            [
+              
+              {
+                "type" : "polygon"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : 
+              [
+                -1.258884072303772,
+                -1.267059803009033,
+                -0.9362789392471314,
+                -0.9187133312225342
+              ],
+              "y" : 
+              [
+                0.4112096130847931,
+                -0.5791032314300537,
+                -0.8419720530509949,
+                0.6301153898239136
+              ]
+            }
+          }
+        ],
+        "id" : 6,
+        "linearVelocity" : 0,
+        "massData-I" : 0.3181097209453583,
+        "massData-center" : 
+        {
+          "x" : -0.03336424008011818,
+          "y" : -0.2257971018552780
+        },
+        "massData-mass" : 6.106045246124268,
+        "name" : "player",
+        "position" : 
+        {
+          "x" : 5.999874591827393,
+          "y" : -7.899903297424316
+        },
+        "type" : "dynamic"
+      },
+      
+      {
+        "angle" : 0,
+        "angularVelocity" : 0,
+        "awake" : true,
+        "fixture" : 
+        [
+          
+          {
+            "density" : 1,
+            "friction" : 0.2,
+            "id" : 11,
+            "name" : "fixture4",
+            "shapes" : 
+            [
+              
+              {
+                "type" : "line"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : [ 93.88562774658203, 1.144580245018005 ],
+              "y" : [ 21.82340049743652, 21.89950180053711 ]
+            }
+          },
+          
+          {
+            "density" : 1,
+            "friction" : 0.2,
+            "id" : 13,
+            "name" : "fixture6",
+            "shapes" : 
+            [
+              
+              {
+                "type" : "line"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : [ 0.7038319706916809, 93.65959930419922 ],
+              "y" : [ -24.63629913330078, -24.76980018615723 ]
+            }
+          },
+          
+          {
+            "density" : 1,
+            "friction" : 0.2,
+            "id" : 14,
+            "name" : "fixture2",
+            "shapes" : 
+            [
+              
+              {
+                "type" : "line"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : [ 0.9237353205680847, 0.7029610276222229 ],
+              "y" : [ 21.85350036621094, -24.63470077514648 ]
+            }
+          },
+          
+          {
+            "density" : 1,
+            "friction" : 0.2,
+            "id" : 22,
+            "name" : "fixture6",
+            "shapes" : 
+            [
+              
+              {
+                "type" : "line"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : [ 93.61360168457031, 93.71562194824219 ],
+              "y" : [ -24.61490058898926, 21.33930015563965 ]
+            }
+          }
+        ],
+        "id" : 7,
+        "linearVelocity" : 0,
+        "name" : "boundary",
+        "position" : 
+        {
+          "x" : -1.704144120216370,
+          "y" : 13.18726158142090
+        },
+        "type" : "static"
+      },
+      
+      {
+        "angle" : 0,
+        "angularVelocity" : 0,
+        "awake" : true,
+        "fixture" : 
+        [
+          
+          {
+            "density" : 1,
+            "friction" : 0.2,
+            "id" : 32,
+            "name" : "fixture0",
+            "shapes" : 
+            [
+              
+              {
+                "type" : "polygon"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : 
+              [
+                -5.928289890289307,
+                6.138609886169434,
+                6.138609886169434,
+                -5.928289890289307
+              ],
+              "y" : 
+              [
+                -0.5263730287551880,
+                -0.5397629737854004,
+                0.4602369964122772,
+                0.4736270010471344
+              ]
+            }
+          }
+        ],
+        "id" : 8,
+        "linearVelocity" : 0,
+        "name" : "floor",
+        "position" : 
+        {
+          "x" : 5.911960124969482,
+          "y" : -10.83819961547852
+        },
+        "type" : "kinematic"
+      },
+      
+      {
+        "angle" : 0,
+        "angularVelocity" : 0,
+        "awake" : true,
+        "fixture" : 
+        [
+          
+          {
+            "density" : 1,
+            "friction" : 0.2,
+            "id" : 33,
+            "name" : "fixture13",
+            "sensor" : true,
+            "shapes" : 
+            [
+              
+              {
+                "type" : "polygon"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : [ -0.50, 12.49451828002930, 12.49451828002930, -0.50 ],
+              "y" : [ -0.50, -0.5000000596046448, 0.4999999403953552, 0.50 ]
+            }
+          }
+        ],
+        "id" : 9,
+        "linearVelocity" : 0,
+        "name" : "button",
+        "position" : 
+        {
+          "x" : 47.32833862304688,
+          "y" : -1.016965866088867
+        },
+        "type" : "static"
+      }
+    ],
+    "metaimage" : 
+    [
+      
+      {
+        "body" : 2,
+        "center" : 
+        {
+          "x" : 23.57941436767578,
+          "y" : 26.95316314697266
+        },
+        "file" : "../res/cloudplatform1.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 1,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "scale" : 2.950812578201294
+      },
+      
+      {
+        "body" : 6,
+        "center" : 
+        {
+          "x" : -0.03076460026204586,
+          "y" : -0.1165499985218048
+        },
+        "file" : "../res/player_idle.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 2,
+        "name" : "playerTexture",
+        "opacity" : 0.50,
+        "scale" : 2.805250644683838
+      },
+      
+      {
+        "body" : 2,
+        "center" : 
+        {
+          "x" : 29.42489624023438,
+          "y" : 27.03533935546875
+        },
+        "file" : "../res/cloudplatform2.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 4,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "scale" : 2.926066398620606
+      },
+      
+      {
+        "body" : 2,
+        "center" : 
+        {
+          "x" : 35.22641754150391,
+          "y" : 26.96844482421875
+        },
+        "file" : "../res/cloudplatform2.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 5,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "scale" : 2.926066398620606
+      },
+      
+      {
+        "body" : 2,
+        "center" : 
+        {
+          "x" : -1.247360229492188,
+          "y" : 10.13844299316406
+        },
+        "file" : "../res/tree.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 6,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "scale" : 21.37069511413574
+      },
+      
+      {
+        "body" : 2,
+        "center" : 
+        {
+          "x" : 12.63949203491211,
+          "y" : 10.01445293426514
+        },
+        "file" : "../res/tree.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 7,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "scale" : 21.37069511413574
+      },
+      
+      {
+        "body" : 2,
+        "center" : 
+        {
+          "x" : 4.033806324005127,
+          "y" : 0.03723526000976563
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 8,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "scale" : 1
+      },
+      
+      {
+        "body" : 2,
+        "center" : 
+        {
+          "x" : 5.664422035217285,
+          "y" : 0.02341651916503906
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 9,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "scale" : 1
+      },
+      
+      {
+        "body" : 2,
+        "center" : 
+        {
+          "x" : 7.322675704956055,
+          "y" : 0.02341651916503906
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 10,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : 1.488644123077393,
+        "body" : 2,
+        "center" : 
+        {
+          "x" : 8.497271537780762,
+          "y" : 1.253287315368652
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 11,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : 1.488644123077393,
+        "body" : 2,
+        "center" : 
+        {
+          "x" : 8.676916122436523,
+          "y" : 2.918450355529785
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 12,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : -1.519491195678711,
+        "body" : 2,
+        "center" : 
+        {
+          "x" : 2.895683050155640,
+          "y" : 1.222196578979492
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 13,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : -1.519491195678711,
+        "body" : 2,
+        "center" : 
+        {
+          "x" : 2.790301322937012,
+          "y" : 2.861469745635986
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 14,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : -1.519491195678711,
+        "body" : 2,
+        "center" : 
+        {
+          "x" : 2.742293834686279,
+          "y" : 4.456247806549072
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 15,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "scale" : 1
+      },
+      
+      {
+        "body" : 2,
+        "center" : 
+        {
+          "x" : 5.688043594360352,
+          "y" : 10.46770668029785
+        },
+        "file" : "../res/leveltext7.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 16,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "scale" : 6.087907314300537
+      },
+      
+      {
+        "body" : 9,
+        "center" : 
+        {
+          "x" : 3.859676361083984,
+          "y" : 7.986993789672852
+        },
+        "file" : "../res/leveltext8.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 17,
+        "name" : "buttonImage",
+        "opacity" : 0.50,
+        "scale" : 4.310178279876709
+      },
+      
+      {
+        "body" : 2,
+        "center" : 
+        {
+          "x" : 54.80826187133789,
+          "y" : 4.346632480621338
+        },
+        "file" : "../res/truckback.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 18,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "renderOrder" : 1,
+        "scale" : 9.915268898010254
+      },
+      
+      {
+        "angle" : 1.585989952087402,
+        "body" : 2,
+        "center" : 
+        {
+          "x" : 60.18720245361328,
+          "y" : 10.09270286560059
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 19,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : 1.592245697975159,
+        "body" : 2,
+        "center" : 
+        {
+          "x" : 60.17463302612305,
+          "y" : 11.78315258026123
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 20,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : 1.592245697975159,
+        "body" : 2,
+        "center" : 
+        {
+          "x" : 60.19340896606445,
+          "y" : 13.48077297210693
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 21,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : 1.592245697975159,
+        "body" : 2,
+        "center" : 
+        {
+          "x" : 60.16870498657227,
+          "y" : 15.16554737091065
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 22,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : 1.592245697975159,
+        "body" : 2,
+        "center" : 
+        {
+          "x" : 60.13906097412109,
+          "y" : 16.84142875671387
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 23,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : 1.592245697975159,
+        "body" : 2,
+        "center" : 
+        {
+          "x" : 60.16672897338867,
+          "y" : 18.56770515441895
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 24,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : 1.592245697975159,
+        "body" : 2,
+        "center" : 
+        {
+          "x" : 60.16376495361328,
+          "y" : 20.25445556640625
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 25,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : 1.592245697975159,
+        "body" : 2,
+        "center" : 
+        {
+          "x" : 60.19340896606445,
+          "y" : 21.92440795898438
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 26,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : 1.592245697975159,
+        "body" : 2,
+        "center" : 
+        {
+          "x" : 60.20131301879883,
+          "y" : 23.59337234497070
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 27,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : 1.592245697975159,
+        "body" : 2,
+        "center" : 
+        {
+          "x" : 60.19044113159180,
+          "y" : 25.26134872436523
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 28,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : 1.592245697975159,
+        "body" : 2,
+        "center" : 
+        {
+          "x" : 60.17957305908203,
+          "y" : 26.91450119018555
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 29,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : 1.592245697975159,
+        "body" : 2,
+        "center" : 
+        {
+          "x" : 60.19044113159180,
+          "y" : 28.57061958312988
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 30,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : 0.006978640332818031,
+        "body" : 2,
+        "center" : 
+        {
+          "x" : 60.52542114257813,
+          "y" : 29.97475814819336
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 31,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : 0.006978640332818031,
+        "body" : 2,
+        "center" : 
+        {
+          "x" : 70.57489013671875,
+          "y" : 29.93849945068359
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 37,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : 0.006978640332818031,
+        "body" : 2,
+        "center" : 
+        {
+          "x" : 72.21324920654297,
+          "y" : 29.93849945068359
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 38,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : -0.9217685461044312,
+        "body" : 2,
+        "center" : 
+        {
+          "x" : 73.54078674316406,
+          "y" : 28.70161247253418
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 39,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : -1.579349994659424,
+        "body" : 2,
+        "center" : 
+        {
+          "x" : 74.27729797363281,
+          "y" : 27.00609970092773
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 40,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "scale" : 1
+      },
+      
+      {
+        "body" : 2,
+        "center" : 
+        {
+          "x" : 86.85171508789063,
+          "y" : 28.98779106140137
+        },
+        "file" : "../res/cloudplatform1.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 42,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "renderOrder" : 1,
+        "scale" : 2.950812578201294
+      },
+      
+      {
+        "body" : 2,
+        "center" : 
+        {
+          "x" : 92.69719696044922,
+          "y" : 29.06996726989746
+        },
+        "file" : "../res/cloudplatform2.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 43,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "renderOrder" : 1,
+        "scale" : 2.926066398620606
+      },
+      
+      {
+        "body" : 2,
+        "center" : 
+        {
+          "x" : 16.91440773010254,
+          "y" : 9.109132766723633
+        },
+        "file" : "../res/spikes.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 45,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "scale" : 1.430089950561523
+      },
+      
+      {
+        "body" : 2,
+        "center" : 
+        {
+          "x" : 19.09204864501953,
+          "y" : 9.107838630676270
+        },
+        "file" : "../res/spikes.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 46,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "scale" : 1.430089950561523
+      },
+      
+      {
+        "body" : 2,
+        "center" : 
+        {
+          "x" : 21.32576179504395,
+          "y" : 9.095773696899414
+        },
+        "file" : "../res/spikes.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 47,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "scale" : 1.430089950561523
+      },
+      
+      {
+        "body" : 2,
+        "center" : 
+        {
+          "x" : 23.56412124633789,
+          "y" : 9.083708763122559
+        },
+        "file" : "../res/spikes.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 48,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "scale" : 1.430089950561523
+      },
+      
+      {
+        "body" : 2,
+        "center" : 
+        {
+          "x" : 25.77648353576660,
+          "y" : 9.063382148742676
+        },
+        "file" : "../res/spikes.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 49,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "scale" : 1.430089950561523
+      },
+      
+      {
+        "body" : 2,
+        "center" : 
+        {
+          "x" : 27.96497344970703,
+          "y" : 9.068314552307129
+        },
+        "file" : "../res/spikes.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 50,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "scale" : 1.430089950561523
+      },
+      
+      {
+        "body" : 2,
+        "center" : 
+        {
+          "x" : 30.14151000976563,
+          "y" : 9.056249618530273
+        },
+        "file" : "../res/spikes.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 51,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "scale" : 1.430089950561523
+      },
+      
+      {
+        "body" : 2,
+        "center" : 
+        {
+          "x" : 32.36751556396484,
+          "y" : 9.044184684753418
+        },
+        "file" : "../res/spikes.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 52,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "scale" : 1.430089950561523
+      },
+      
+      {
+        "body" : 2,
+        "center" : 
+        {
+          "x" : 34.55129241943359,
+          "y" : 9.056249618530273
+        },
+        "file" : "../res/spikes.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 53,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "scale" : 1.430089950561523
+      },
+      
+      {
+        "body" : 2,
+        "center" : 
+        {
+          "x" : 36.74110412597656,
+          "y" : 9.044184684753418
+        },
+        "file" : "../res/spikes.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 54,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "scale" : 1.430089950561523
+      },
+      
+      {
+        "body" : 2,
+        "center" : 
+        {
+          "x" : 38.96228408813477,
+          "y" : 9.032119750976563
+        },
+        "file" : "../res/spikes.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 55,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "scale" : 1.430089950561523
+      },
+      
+      {
+        "body" : 2,
+        "center" : 
+        {
+          "x" : 41.12675857543945,
+          "y" : 9.018848419189453
+        },
+        "file" : "../res/spikes.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 56,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "scale" : 1.430089950561523
+      },
+      
+      {
+        "body" : 2,
+        "center" : 
+        {
+          "x" : 43.29484939575195,
+          "y" : 9.016435623168945
+        },
+        "file" : "../res/spikes.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 57,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "scale" : 1.430089950561523
+      },
+      
+      {
+        "body" : 2,
+        "center" : 
+        {
+          "x" : 45.47862625122070,
+          "y" : 9.028500556945801
+        },
+        "file" : "../res/spikes.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 58,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "scale" : 1.430089950561523
+      },
+      
+      {
+        "angle" : 0.006978640332818031,
+        "body" : 3,
+        "center" : 
+        {
+          "x" : 3.722747802734375,
+          "y" : 0.3845166862010956
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 59,
+        "name" : "objectImage",
+        "opacity" : 0.50,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : 0.006978640332818031,
+        "body" : 3,
+        "center" : 
+        {
+          "x" : 0.3776473999023438,
+          "y" : 0.3984155356884003
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 60,
+        "name" : "objectImage",
+        "opacity" : 0.50,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : 0.006978640332818031,
+        "body" : 3,
+        "center" : 
+        {
+          "x" : 2.055046081542969,
+          "y" : 0.4123162925243378
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 61,
+        "name" : "objectImage",
+        "opacity" : 0.50,
+        "scale" : 1
+      },
+      
+      {
+        "body" : 4,
+        "center" : 
+        {
+          "x" : 1.0097656250,
+          "y" : 5.937946796417236
+        },
+        "file" : "../res/exit_sign.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 67,
+        "name" : "doorImage",
+        "opacity" : 0.50,
+        "scale" : 1
+      },
+      
+      {
+        "body" : 2,
+        "center" : 
+        {
+          "x" : 40.85341644287109,
+          "y" : 26.91352272033691
+        },
+        "file" : "../res/cloudplatform3.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 69,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "scale" : 2.773238182067871
+      },
+      
+      {
+        "angle" : -1.579349994659424,
+        "body" : 2,
+        "center" : 
+        {
+          "x" : 74.21360015869141,
+          "y" : 25.31870079040527
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 70,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : -1.579349994659424,
+        "body" : 2,
+        "center" : 
+        {
+          "x" : 74.17030334472656,
+          "y" : 23.56660079956055
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 71,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : -1.579349994659424,
+        "body" : 2,
+        "center" : 
+        {
+          "x" : 74.17030334472656,
+          "y" : 21.72369956970215
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 72,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : -1.579349994659424,
+        "body" : 2,
+        "center" : 
+        {
+          "x" : 74.12899780273438,
+          "y" : 19.99020004272461
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 73,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : -1.579349994659424,
+        "body" : 2,
+        "center" : 
+        {
+          "x" : 74.08769989013672,
+          "y" : 18.11230087280273
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 74,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : -1.579349994659424,
+        "body" : 2,
+        "center" : 
+        {
+          "x" : 74.02580261230469,
+          "y" : 16.29619979858398
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 75,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : -4.702528953552246,
+        "body" : 2,
+        "center" : 
+        {
+          "x" : 77.60774993896484,
+          "y" : 16.32532501220703
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 76,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : -4.702528953552246,
+        "body" : 2,
+        "center" : 
+        {
+          "x" : 77.65139770507813,
+          "y" : 19.76621055603027
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 77,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : -4.702528953552246,
+        "body" : 2,
+        "center" : 
+        {
+          "x" : 77.64036560058594,
+          "y" : 18.01360702514648
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 78,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : -4.702528953552246,
+        "body" : 2,
+        "center" : 
+        {
+          "x" : 77.66200256347656,
+          "y" : 27.03804016113281
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 79,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : -4.702528953552246,
+        "body" : 2,
+        "center" : 
+        {
+          "x" : 77.62683868408203,
+          "y" : 23.34276580810547
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 80,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : -4.702528953552246,
+        "body" : 2,
+        "center" : 
+        {
+          "x" : 77.61746215820313,
+          "y" : 21.60879707336426
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 81,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : -4.702528953552246,
+        "body" : 2,
+        "center" : 
+        {
+          "x" : 77.63355255126953,
+          "y" : 25.22110557556152
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 82,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : -5.340369224548340,
+        "body" : 2,
+        "center" : 
+        {
+          "x" : 78.51258087158203,
+          "y" : 28.91674423217773
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 83,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : -6.292603969573975,
+        "body" : 2,
+        "center" : 
+        {
+          "x" : 80.07254028320313,
+          "y" : 29.95700454711914
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 84,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : -6.292603969573975,
+        "body" : 2,
+        "center" : 
+        {
+          "x" : 81.70958709716797,
+          "y" : 29.94834327697754
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 85,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : -6.292603969573975,
+        "body" : 2,
+        "center" : 
+        {
+          "x" : 83.42718505859375,
+          "y" : 29.94834327697754
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 86,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "scale" : 1
+      },
+      
+      {
+        "body" : 2,
+        "center" : 
+        {
+          "x" : 66.93730926513672,
+          "y" : 22.47630310058594
+        },
+        "file" : "../res/pump.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 87,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "scale" : 16.741699218750
+      },
+      
+      {
+        "angle" : -7.853810310363770,
+        "body" : 2,
+        "center" : 
+        {
+          "x" : 84.18094635009766,
+          "y" : 27.05310249328613
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 88,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : -7.853810310363770,
+        "body" : 2,
+        "center" : 
+        {
+          "x" : 84.21131134033203,
+          "y" : 25.32224655151367
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 89,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : -7.853810310363770,
+        "body" : 2,
+        "center" : 
+        {
+          "x" : 84.17089843750,
+          "y" : 23.58431625366211
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 90,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : -7.853810310363770,
+        "body" : 2,
+        "center" : 
+        {
+          "x" : 84.21131896972656,
+          "y" : 21.86659431457520
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 91,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : -7.853810310363770,
+        "body" : 2,
+        "center" : 
+        {
+          "x" : 84.16483306884766,
+          "y" : 20.11653900146484
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 92,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : -7.853810310363770,
+        "body" : 2,
+        "center" : 
+        {
+          "x" : 84.14462280273438,
+          "y" : 18.39881706237793
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 93,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "scale" : 1
+      },
+      
+      {
+        "body" : 2,
+        "center" : 
+        {
+          "x" : 75.87852478027344,
+          "y" : 29.14063835144043
+        },
+        "file" : "../res/drain.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 94,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "scale" : 2.527271747589111
+      }
+    ],
+    "positionIterations" : 4,
+    "stepsPerSecond" : 60.0,
+    "subStepping" : false,
+    "velocityIterations" : 8,
+    "warmStarting" : true
+  }
+}

@@ -66,6 +66,44 @@
           {
             "density" : 1,
             "friction" : 0.2,
+            "id" : 1,
+            "name" : "fixture12",
+            "sensor" : true,
+            "shapes" : 
+            [
+              
+              {
+                "type" : "line"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : [ -23.53765487670898, 125.5096359252930 ],
+              "y" : [ 0.1986007690429688, 0.1898460388183594 ]
+            }
+          }
+        ],
+        "id" : 1,
+        "linearVelocity" : 0,
+        "name" : "death",
+        "position" : 
+        {
+          "x" : -4.106601715087891,
+          "y" : -19.90175819396973
+        },
+        "type" : "static"
+      },
+      
+      {
+        "angle" : 0,
+        "angularVelocity" : 0,
+        "awake" : true,
+        "fixture" : 
+        [
+          
+          {
+            "density" : 1,
+            "friction" : 0.2,
             "id" : 17,
             "name" : "fixture5",
             "sensor" : true,
@@ -170,7 +208,6 @@
           
           {
             "density" : 1,
-            "friction" : 100.0,
             "id" : 19,
             "name" : "fixture3",
             "shapes" : 
@@ -236,16 +273,16 @@
               [
                 73.20810699462891,
                 78.73869323730469,
-                78.72480773925781,
-                76.88402557373047,
+                78.77036285400391,
+                77.24092102050781,
                 73.27890777587891
               ],
               "y" : 
               [
                 -5.913214683532715,
                 -5.871033668518066,
-                2.683231830596924,
-                4.657336235046387,
+                2.652858018875122,
+                4.683913230895996,
                 4.699619293212891
               ]
             }
@@ -428,8 +465,8 @@
             ],
             "vertices" : 
             {
-              "x" : [ 32.60376358032227, 38.81526184082031 ],
-              "y" : [ -3.314336299896240, -3.292195796966553 ]
+              "x" : [ 32.62421035766602, 38.8088378906250 ],
+              "y" : [ -3.313565731048584, -3.291792392730713 ]
             }
           },
           
@@ -449,19 +486,19 @@
             {
               "x" : 
               [
-                80.91539764404297,
+                80.70659637451172,
                 80.90383911132813,
                 92.73992156982422,
                 92.73648834228516,
-                82.87059020996094
+                82.26689910888672
               ],
               "y" : 
               [
-                2.679889917373657,
+                2.64572000503540,
                 -1.322873115539551,
                 -1.341899871826172,
                 4.648978710174561,
-                4.716230392456055
+                4.697249889373779
               ]
             }
           },
@@ -480,8 +517,8 @@
             ],
             "vertices" : 
             {
-              "x" : [ 76.75937652587891, 82.97087097167969 ],
-              "y" : [ 4.683110237121582, 4.705250740051270 ]
+              "x" : [ 77.23880004882813, 82.26750946044922 ],
+              "y" : [ 4.683919906616211, 4.697242259979248 ]
             }
           },
           
@@ -620,17 +657,21 @@
             {
               "x" : 
               [
-                -0.9000149965286255,
-                0.8384850025177002,
+                -0.8164627552032471,
+                0.7588090896606445,
+                0.8384852409362793,
                 0.8384919762611389,
-                -0.8999689817428589
+                -0.8999689817428589,
+                -0.9000133872032166
               ],
               "y" : 
               [
-                -1.519090056419373,
-                -1.519080042839050,
+                -1.519089579582214,
+                -1.519080519676209,
+                -1.424703955650330,
                 1.286200046539307,
-                1.286170005798340
+                1.286170005798340,
+                -1.420390725135803
               ]
             }
           },
@@ -733,13 +774,13 @@
         ],
         "id" : 6,
         "linearVelocity" : 0,
-        "massData-I" : 0.3247354924678803,
+        "massData-I" : 0.3197887837886810,
         "massData-center" : 
         {
-          "x" : -0.03307534009218216,
-          "y" : -0.2280228137969971
+          "x" : -0.03302905708551407,
+          "y" : -0.2263983786106110
         },
-        "massData-mass" : 6.116884231567383,
+        "massData-mass" : 6.109001636505127,
         "name" : "player",
         "position" : 
         {
@@ -902,7 +943,6 @@
           
           {
             "density" : 1,
-            "friction" : 100.0,
             "id" : 35,
             "name" : "fixture3",
             "shapes" : 
@@ -1035,7 +1075,7 @@
           "x" : -0.07975006103515625,
           "y" : 0.005384445190429688
         },
-        "file" : "../res/button_pressed.png",
+        "file" : "../res/button_unpressed.png",
         "filter" : 1,
         "flip" : false,
         "id" : 3,
@@ -1102,140 +1142,48 @@
         "body" : 5,
         "center" : 
         {
-          "x" : -7.173130035400391,
-          "y" : 9.958999633789063
+          "x" : 35.68225097656250,
+          "y" : -4.581008911132813
         },
-        "file" : "../res/block.png",
+        "file" : "../res/drain.png",
         "filter" : 1,
         "flip" : false,
         "id" : 7,
         "name" : "groundImage",
         "opacity" : 0.50,
-        "renderOrder" : 1,
-        "scale" : 1
+        "scale" : 2.506957054138184
       },
       
       {
         "body" : 5,
         "center" : 
         {
-          "x" : -5.523769855499268,
-          "y" : 9.960249900817871
+          "x" : 79.69126129150391,
+          "y" : 3.656757831573486
         },
-        "file" : "../res/block.png",
+        "file" : "../res/drain.png",
         "filter" : 1,
         "flip" : false,
         "id" : 8,
         "name" : "groundImage",
         "opacity" : 0.50,
-        "renderOrder" : 1,
-        "scale" : 1
+        "scale" : 2.049635887145996
       },
       
       {
         "body" : 5,
         "center" : 
         {
-          "x" : 28.16020011901856,
-          "y" : 9.271200180053711
+          "x" : 35.31100463867188,
+          "y" : -2.074688434600830
         },
-        "file" : "../res/block.png",
+        "file" : "../res/leveltext9.png",
         "filter" : 1,
         "flip" : false,
         "id" : 9,
         "name" : "groundImage",
         "opacity" : 0.50,
-        "renderOrder" : 1,
-        "scale" : 1
-      },
-      
-      {
-        "body" : 5,
-        "center" : 
-        {
-          "x" : 26.37430000305176,
-          "y" : 9.275420188903809
-        },
-        "file" : "../res/block.png",
-        "filter" : 1,
-        "flip" : false,
-        "id" : 10,
-        "name" : "groundImage",
-        "opacity" : 0.50,
-        "renderOrder" : 1,
-        "scale" : 1
-      },
-      
-      {
-        "angle" : -0.2857716381549835,
-        "body" : 5,
-        "center" : 
-        {
-          "x" : -2.316839933395386,
-          "y" : 9.233860015869141
-        },
-        "file" : "../res/block.png",
-        "filter" : 1,
-        "flip" : false,
-        "id" : 11,
-        "name" : "groundImage",
-        "opacity" : 0.50,
-        "renderOrder" : 1,
-        "scale" : 1
-      },
-      
-      {
-        "angle" : -0.2857716381549835,
-        "body" : 5,
-        "center" : 
-        {
-          "x" : -3.900409936904907,
-          "y" : 9.730199813842773
-        },
-        "file" : "../res/block.png",
-        "filter" : 1,
-        "flip" : false,
-        "id" : 12,
-        "name" : "groundImage",
-        "opacity" : 0.50,
-        "renderOrder" : 1,
-        "scale" : 1
-      },
-      
-      {
-        "angle" : -0.2857716381549835,
-        "body" : 5,
-        "center" : 
-        {
-          "x" : -0.7253890037536621,
-          "y" : 8.800539970397949
-        },
-        "file" : "../res/block.png",
-        "filter" : 1,
-        "flip" : false,
-        "id" : 13,
-        "name" : "groundImage",
-        "opacity" : 0.50,
-        "renderOrder" : 1,
-        "scale" : 1
-      },
-      
-      {
-        "angle" : -0.5008260011672974,
-        "body" : 5,
-        "center" : 
-        {
-          "x" : 0.8626130223274231,
-          "y" : 8.230500221252441
-        },
-        "file" : "../res/block.png",
-        "filter" : 1,
-        "flip" : false,
-        "id" : 14,
-        "name" : "groundImage",
-        "opacity" : 0.50,
-        "renderOrder" : 1,
-        "scale" : 1
+        "scale" : 4.801250457763672
       },
       
       {
@@ -1268,60 +1216,6 @@
         "filter" : 1,
         "flip" : false,
         "id" : 16,
-        "name" : "groundImage",
-        "opacity" : 0.50,
-        "renderOrder" : 1,
-        "scale" : 1
-      },
-      
-      {
-        "angle" : -1.604149460792542,
-        "body" : 5,
-        "center" : 
-        {
-          "x" : 5.836510181427002,
-          "y" : 0.9218329787254334
-        },
-        "file" : "../res/block.png",
-        "filter" : 1,
-        "flip" : true,
-        "id" : 17,
-        "name" : "groundImage",
-        "opacity" : 0.50,
-        "renderOrder" : 1,
-        "scale" : 1
-      },
-      
-      {
-        "angle" : -1.604149460792542,
-        "body" : 5,
-        "center" : 
-        {
-          "x" : 5.854400157928467,
-          "y" : -0.7153649926185608
-        },
-        "file" : "../res/block.png",
-        "filter" : 1,
-        "flip" : true,
-        "id" : 18,
-        "name" : "groundImage",
-        "opacity" : 0.50,
-        "renderOrder" : 1,
-        "scale" : 1
-      },
-      
-      {
-        "angle" : -1.604149460792542,
-        "body" : 5,
-        "center" : 
-        {
-          "x" : 5.863349914550781,
-          "y" : -2.388350009918213
-        },
-        "file" : "../res/block.png",
-        "filter" : 1,
-        "flip" : true,
-        "id" : 19,
         "name" : "groundImage",
         "opacity" : 0.50,
         "renderOrder" : 1,
@@ -1423,60 +1317,6 @@
         "body" : 5,
         "center" : 
         {
-          "x" : 15.33549976348877,
-          "y" : -2.180660009384155
-        },
-        "file" : "../res/block.png",
-        "filter" : 1,
-        "flip" : false,
-        "id" : 25,
-        "name" : "groundImage",
-        "opacity" : 0.50,
-        "renderOrder" : 1,
-        "scale" : 1
-      },
-      
-      {
-        "angle" : 1.550510525703430,
-        "body" : 5,
-        "center" : 
-        {
-          "x" : 15.33800029754639,
-          "y" : -0.4790909886360169
-        },
-        "file" : "../res/block.png",
-        "filter" : 1,
-        "flip" : false,
-        "id" : 26,
-        "name" : "groundImage",
-        "opacity" : 0.50,
-        "renderOrder" : 1,
-        "scale" : 1
-      },
-      
-      {
-        "angle" : 1.550510525703430,
-        "body" : 5,
-        "center" : 
-        {
-          "x" : 15.36229991912842,
-          "y" : 1.196969985961914
-        },
-        "file" : "../res/block.png",
-        "filter" : 1,
-        "flip" : false,
-        "id" : 27,
-        "name" : "groundImage",
-        "opacity" : 0.50,
-        "renderOrder" : 1,
-        "scale" : 1
-      },
-      
-      {
-        "angle" : 1.550510525703430,
-        "body" : 5,
-        "center" : 
-        {
           "x" : 15.36229991912842,
           "y" : 2.873039960861206
         },
@@ -1545,108 +1385,18 @@
       },
       
       {
-        "angle" : 0.5049872994422913,
-        "body" : 5,
-        "center" : 
-        {
-          "x" : 19.36779975891113,
-          "y" : 7.536880016326904
-        },
-        "file" : "../res/block.png",
-        "filter" : 1,
-        "flip" : false,
-        "id" : 32,
-        "name" : "groundImage",
-        "opacity" : 0.50,
-        "renderOrder" : 1,
-        "scale" : 1
-      },
-      
-      {
-        "angle" : 0.2705000042915344,
-        "body" : 5,
-        "center" : 
-        {
-          "x" : 20.98320007324219,
-          "y" : 8.217020034790039
-        },
-        "file" : "../res/block.png",
-        "filter" : 1,
-        "flip" : false,
-        "id" : 33,
-        "name" : "groundImage",
-        "opacity" : 0.50,
-        "renderOrder" : 1,
-        "scale" : 1
-      },
-      
-      {
-        "angle" : 0.2705000042915344,
-        "body" : 5,
-        "center" : 
-        {
-          "x" : 22.59849929809570,
-          "y" : 8.654250144958496
-        },
-        "file" : "../res/block.png",
-        "filter" : 1,
-        "flip" : false,
-        "id" : 34,
-        "name" : "groundImage",
-        "opacity" : 0.50,
-        "renderOrder" : 1,
-        "scale" : 1
-      },
-      
-      {
-        "angle" : 0.2705000042915344,
-        "body" : 5,
-        "center" : 
-        {
-          "x" : 24.26239967346191,
-          "y" : 9.12792968750
-        },
-        "file" : "../res/block.png",
-        "filter" : 1,
-        "flip" : false,
-        "id" : 35,
-        "name" : "groundImage",
-        "opacity" : 0.50,
-        "renderOrder" : 1,
-        "scale" : 1
-      },
-      
-      {
         "body" : 14,
         "center" : 
         {
-          "x" : -0.07975006103515625,
-          "y" : 0.005384445190429688
+          "x" : -0.07975009828805924,
+          "y" : 0.005384449847042561
         },
-        "file" : "../res/button_pressed.png",
+        "file" : "../res/button_unpressed.png",
         "filter" : 1,
         "flip" : false,
         "id" : 36,
         "name" : "buttonImage",
         "opacity" : 0.50,
-        "scale" : 1
-      },
-      
-      {
-        "angle" : -0.003241181373596191,
-        "body" : 5,
-        "center" : 
-        {
-          "x" : 66.32859802246094,
-          "y" : 9.13366699218750
-        },
-        "file" : "../res/block.png",
-        "filter" : 1,
-        "flip" : false,
-        "id" : 37,
-        "name" : "groundImage",
-        "opacity" : 0.50,
-        "renderOrder" : 1,
         "scale" : 1
       },
       
@@ -1673,44 +1423,8 @@
         "body" : 5,
         "center" : 
         {
-          "x" : 67.98549652099609,
-          "y" : 9.094863891601563
-        },
-        "file" : "../res/block.png",
-        "filter" : 1,
-        "flip" : false,
-        "id" : 39,
-        "name" : "groundImage",
-        "opacity" : 0.50,
-        "renderOrder" : 1,
-        "scale" : 1
-      },
-      
-      {
-        "angle" : -0.003241181373596191,
-        "body" : 5,
-        "center" : 
-        {
-          "x" : 69.65144348144531,
-          "y" : 9.096157073974609
-        },
-        "file" : "../res/block.png",
-        "filter" : 1,
-        "flip" : false,
-        "id" : 40,
-        "name" : "groundImage",
-        "opacity" : 0.50,
-        "renderOrder" : 1,
-        "scale" : 1
-      },
-      
-      {
-        "angle" : -0.003241181373596191,
-        "body" : 5,
-        "center" : 
-        {
-          "x" : 71.32515716552734,
-          "y" : 9.096157073974609
+          "x" : 71.08535766601563,
+          "y" : 9.085257530212402
         },
         "file" : "../res/block.png",
         "filter" : 1,
@@ -1727,7 +1441,7 @@
         "body" : 5,
         "center" : 
         {
-          "x" : 72.98981475830078,
+          "x" : 72.85901641845703,
           "y" : 9.070287704467773
         },
         "file" : "../res/block.png",
@@ -1961,97 +1675,7 @@
         "body" : 5,
         "center" : 
         {
-          "x" : 49.63902282714844,
-          "y" : 9.20397949218750
-        },
-        "file" : "../res/block.png",
-        "filter" : 1,
-        "flip" : false,
-        "id" : 55,
-        "name" : "groundImage",
-        "opacity" : 0.50,
-        "renderOrder" : 1,
-        "scale" : 1
-      },
-      
-      {
-        "angle" : -0.003241181373596191,
-        "body" : 5,
-        "center" : 
-        {
-          "x" : 51.30509567260742,
-          "y" : 9.20397949218750
-        },
-        "file" : "../res/block.png",
-        "filter" : 1,
-        "flip" : false,
-        "id" : 56,
-        "name" : "groundImage",
-        "opacity" : 0.50,
-        "renderOrder" : 1,
-        "scale" : 1
-      },
-      
-      {
-        "angle" : -0.003241181373596191,
-        "body" : 5,
-        "center" : 
-        {
-          "x" : 52.95943450927734,
-          "y" : 9.20397949218750
-        },
-        "file" : "../res/block.png",
-        "filter" : 1,
-        "flip" : false,
-        "id" : 57,
-        "name" : "groundImage",
-        "opacity" : 0.50,
-        "renderOrder" : 1,
-        "scale" : 1
-      },
-      
-      {
-        "angle" : -0.003241181373596191,
-        "body" : 5,
-        "center" : 
-        {
-          "x" : 54.63724136352539,
-          "y" : 9.192246437072754
-        },
-        "file" : "../res/block.png",
-        "filter" : 1,
-        "flip" : false,
-        "id" : 58,
-        "name" : "groundImage",
-        "opacity" : 0.50,
-        "renderOrder" : 1,
-        "scale" : 1
-      },
-      
-      {
-        "angle" : -0.003241181373596191,
-        "body" : 5,
-        "center" : 
-        {
-          "x" : 56.30331420898438,
-          "y" : 9.180513381958008
-        },
-        "file" : "../res/block.png",
-        "filter" : 1,
-        "flip" : false,
-        "id" : 59,
-        "name" : "groundImage",
-        "opacity" : 0.50,
-        "renderOrder" : 1,
-        "scale" : 1
-      },
-      
-      {
-        "angle" : -0.003241181373596191,
-        "body" : 5,
-        "center" : 
-        {
-          "x" : 57.96939086914063,
+          "x" : 57.49734497070313,
           "y" : 9.168780326843262
         },
         "file" : "../res/block.png",
@@ -2069,7 +1693,7 @@
         "body" : 5,
         "center" : 
         {
-          "x" : 59.63898468017578,
+          "x" : 59.43374633789063,
           "y" : 9.157047271728516
         },
         "file" : "../res/block.png",
@@ -2087,49 +1711,13 @@
         "body" : 5,
         "center" : 
         {
-          "x" : 61.30740356445313,
+          "x" : 61.23557281494141,
           "y" : 9.168780326843262
         },
         "file" : "../res/block.png",
         "filter" : 1,
         "flip" : false,
         "id" : 62,
-        "name" : "groundImage",
-        "opacity" : 0.50,
-        "renderOrder" : 1,
-        "scale" : 1
-      },
-      
-      {
-        "angle" : -0.003241181373596191,
-        "body" : 5,
-        "center" : 
-        {
-          "x" : 62.97348022460938,
-          "y" : 9.168780326843262
-        },
-        "file" : "../res/block.png",
-        "filter" : 1,
-        "flip" : false,
-        "id" : 63,
-        "name" : "groundImage",
-        "opacity" : 0.50,
-        "renderOrder" : 1,
-        "scale" : 1
-      },
-      
-      {
-        "angle" : -0.003241181373596191,
-        "body" : 5,
-        "center" : 
-        {
-          "x" : 64.63439941406250,
-          "y" : 9.157047271728516
-        },
-        "file" : "../res/block.png",
-        "filter" : 1,
-        "flip" : false,
-        "id" : 64,
         "name" : "groundImage",
         "opacity" : 0.50,
         "renderOrder" : 1,
@@ -2189,12 +1777,12 @@
       },
       
       {
-        "angle" : -0.8174664378166199,
+        "angle" : -0.9210712313652039,
         "body" : 5,
         "center" : 
         {
-          "x" : 77.49169158935547,
-          "y" : 3.308438539505005
+          "x" : 77.58348846435547,
+          "y" : 3.430829286575317
         },
         "file" : "../res/block.png",
         "filter" : 1,
@@ -2310,12 +1898,12 @@
       },
       
       {
-        "angle" : 0.8054828047752380,
+        "angle" : 0.9070421457290649,
         "body" : 5,
         "center" : 
         {
-          "x" : 82.14864349365234,
-          "y" : 3.308411359786987
+          "x" : 81.83042144775391,
+          "y" : 3.357367992401123
         },
         "file" : "../res/block.png",
         "filter" : 1,
@@ -2324,6 +1912,22 @@
         "name" : "groundImage",
         "opacity" : 0.50,
         "renderOrder" : 1,
+        "scale" : 1
+      },
+      
+      {
+        "body" : 8,
+        "center" : 
+        {
+          "x" : -0.00056457519531250,
+          "y" : 3.668520927429199
+        },
+        "file" : "../res/exit_sign.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 76,
+        "name" : "doorImage",
+        "opacity" : 0.50,
         "scale" : 1
       },
       
@@ -2584,8 +2188,8 @@
         "body" : 5,
         "center" : 
         {
-          "x" : 89.67076873779297,
-          "y" : -4.808301448822022
+          "x" : 89.67079925537109,
+          "y" : -4.808300018310547
         },
         "file" : "../res/block.png",
         "filter" : 1,
@@ -2760,19 +2364,35 @@
       },
       
       {
-        "body" : 8,
+        "body" : 5,
         "center" : 
         {
-          "x" : -0.07975006103515625,
-          "y" : 0.005384445190429688
+          "x" : 10.60759353637695,
+          "y" : 2.243445396423340
         },
-        "file" : "../res/button_pressed.png",
+        "file" : "../res/leveltext1.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 102,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "scale" : 3.698662042617798
+      },
+      
+      {
+        "body" : 5,
+        "center" : 
+        {
+          "x" : -2.567306518554688,
+          "y" : 18.38996315002441
+        },
+        "file" : "../res/leveltext2.png",
         "filter" : 1,
         "flip" : false,
         "id" : 103,
-        "name" : "buttonImage",
+        "name" : "groundImage",
         "opacity" : 0.50,
-        "scale" : 1
+        "scale" : 4.676678657531738
       },
       
       {
@@ -2935,6 +2555,106 @@
         "opacity" : 0.50,
         "renderOrder" : 1,
         "scale" : 1.438242316246033
+      },
+      
+      {
+        "body" : 5,
+        "center" : 
+        {
+          "x" : 44.47888183593750,
+          "y" : 6.081509590148926
+        },
+        "file" : "../res/leveltext3.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 113,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "scale" : 3.451969385147095
+      },
+      
+      {
+        "angle" : -0.001643300056457520,
+        "body" : 5,
+        "center" : 
+        {
+          "x" : 91.05255126953125,
+          "y" : -4.800075531005859
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 116,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "renderOrder" : 1,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : -3.130392074584961,
+        "body" : 5,
+        "center" : 
+        {
+          "x" : 91.85689544677734,
+          "y" : -0.8162603378295898
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 117,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "renderOrder" : 1,
+        "scale" : 1
+      },
+      
+      {
+        "body" : 5,
+        "center" : 
+        {
+          "x" : 54.05250549316406,
+          "y" : 2.297309875488281
+        },
+        "file" : "../res/pump.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 118,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "scale" : 15.60120010375977
+      },
+      
+      {
+        "body" : 5,
+        "center" : 
+        {
+          "x" : 67.46601104736328,
+          "y" : 2.183293104171753
+        },
+        "file" : "../res/pump.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 119,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "scale" : 15.60123920440674
+      },
+      
+      {
+        "body" : 3,
+        "center" : 
+        {
+          "x" : 0.0124511718750,
+          "y" : -0.005487442016601563
+        },
+        "file" : "../res/crate.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 120,
+        "name" : "objectImage",
+        "opacity" : 0.50,
+        "scale" : 2.337396621704102
       },
       
       {
@@ -3151,78 +2871,6 @@
         "opacity" : 0.50,
         "renderOrder" : 1,
         "scale" : 1.438242316246033
-      },
-      
-      {
-        "angle" : -0.003241181373596191,
-        "body" : 3,
-        "center" : 
-        {
-          "x" : -0.01704347692430019,
-          "y" : 0.5544728040695190
-        },
-        "file" : "../res/block.png",
-        "filter" : 1,
-        "flip" : false,
-        "id" : 137,
-        "name" : "objectImage",
-        "opacity" : 0.50,
-        "renderOrder" : 1,
-        "scale" : 1.259004831314087
-      },
-      
-      {
-        "angle" : -0.003241181373596191,
-        "body" : 3,
-        "center" : 
-        {
-          "x" : -0.01704347692430019,
-          "y" : 0.5544728040695190
-        },
-        "file" : "../res/block.png",
-        "filter" : 1,
-        "flip" : false,
-        "id" : 138,
-        "name" : "objectImage",
-        "opacity" : 0.50,
-        "renderOrder" : 1,
-        "scale" : 1.259004831314087
-      },
-      
-      {
-        "angle" : -0.003241181373596191,
-        "body" : 3,
-        "center" : 
-        {
-          "x" : -0.002822285518050194,
-          "y" : -0.5924569368362427
-        },
-        "file" : "../res/block.png",
-        "filter" : 1,
-        "flip" : false,
-        "id" : 139,
-        "name" : "objectImage",
-        "opacity" : 0.50,
-        "renderOrder" : 1,
-        "scale" : 1.259004831314087
-      },
-      
-      {
-        "angle" : -0.003241181373596191,
-        "body" : 3,
-        "center" : 
-        {
-          "x" : -0.002822285518050194,
-          "y" : -0.5924569368362427
-        },
-        "file" : "../res/block.png",
-        "filter" : 1,
-        "flip" : false,
-        "id" : 140,
-        "name" : "objectImage",
-        "opacity" : 0.50,
-        "renderOrder" : 1,
-        "scale" : 1.259004831314087
       }
     ],
     "positionIterations" : 4,

@@ -1,0 +1,3053 @@
+
+{
+  "collisionbitplanes" : 
+  {
+    "names" : 
+    [
+      "bitplane1",
+      "bitplane2",
+      "bitplane3",
+      "bitplane4",
+      "bitplane5",
+      "bitplane6",
+      "bitplane7",
+      "bitplane8",
+      "bitplane9",
+      "bitplane10",
+      "bitplane11",
+      "bitplane12",
+      "bitplane13",
+      "bitplane14",
+      "bitplane15",
+      "bitplane16",
+      "bitplane17",
+      "bitplane18",
+      "bitplane19",
+      "bitplane20",
+      "bitplane21",
+      "bitplane22",
+      "bitplane23",
+      "bitplane24",
+      "bitplane25",
+      "bitplane26",
+      "bitplane27",
+      "bitplane28",
+      "bitplane29",
+      "bitplane30",
+      "bitplane31",
+      "bitplane32"
+    ]
+  },
+  "metaworld" : 
+  {
+    "allowSleep" : true,
+    "autoClearForces" : true,
+    "continuousPhysics" : true,
+    "exportOptions" : 
+    {
+      "saveFullPathForImages" : false,
+      "useHumanReadableFloats" : true
+    },
+    "gravity" : 
+    {
+      "x" : 0,
+      "y" : -40.0
+    },
+    "metabody" : 
+    [
+      
+      {
+        "angle" : 0,
+        "angularVelocity" : 0,
+        "awake" : true,
+        "fixture" : 
+        [
+          
+          {
+            "density" : 1,
+            "friction" : 0.2,
+            "id" : 5,
+            "name" : "fixture5",
+            "sensor" : true,
+            "shapes" : 
+            [
+              
+              {
+                "type" : "line"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : [ -5.022747039794922, 40.66607284545898 ],
+              "y" : [ -2.925356864929199, -2.887085437774658 ]
+            }
+          },
+          
+          {
+            "density" : 1,
+            "friction" : 0.2,
+            "id" : 6,
+            "name" : "fixture5",
+            "sensor" : true,
+            "shapes" : 
+            [
+              
+              {
+                "type" : "line"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : [ -49.30540847778320, 73.24415588378906 ],
+              "y" : [ -17.73619079589844, -17.81621170043945 ]
+            }
+          }
+        ],
+        "id" : 1,
+        "linearVelocity" : 0,
+        "name" : "death",
+        "position" : 
+        {
+          "x" : 38.23891448974609,
+          "y" : -4.622693061828613
+        },
+        "type" : "static"
+      },
+      
+      {
+        "angle" : 0,
+        "angularVelocity" : 0,
+        "awake" : true,
+        "fixture" : 
+        [
+          
+          {
+            "density" : 1,
+            "friction" : 0.2,
+            "id" : 4,
+            "name" : "fixture7",
+            "sensor" : true,
+            "shapes" : 
+            [
+              
+              {
+                "type" : "polygon"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : [ -0.50, 2.889259338378906, 2.889259338378906, -0.50 ],
+              "y" : [ -0.50, -0.50, 0.50, 0.50 ]
+            }
+          }
+        ],
+        "id" : 2,
+        "linearVelocity" : 0,
+        "name" : "door",
+        "position" : 
+        {
+          "x" : 96.86289978027344,
+          "y" : 7.595017433166504
+        },
+        "type" : "static"
+      },
+      
+      {
+        "angle" : 0,
+        "angularVelocity" : 0,
+        "awake" : true,
+        "fixedRotation" : true,
+        "fixture" : 
+        [
+          
+          {
+            "density" : 0.2451469749212265,
+            "filter-groupIndex" : -10,
+            "id" : 18,
+            "name" : "fixture10",
+            "shapes" : 
+            [
+              
+              {
+                "type" : "polygon"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : 
+              [
+                4.643091201782227,
+                4.633791923522949,
+                -0.1863560676574707,
+                -0.1993887424468994,
+                13.11760425567627,
+                13.13357162475586,
+                7.608365058898926,
+                7.622739791870117
+              ],
+              "y" : 
+              [
+                -1.816849946975708,
+                -7.581203937530518,
+                -7.605490684509277,
+                -10.96419906616211,
+                -11.00258255004883,
+                -7.600288391113281,
+                -7.582590103149414,
+                -1.814760327339172
+              ]
+            }
+          },
+          
+          {
+            "density" : 1,
+            "friction" : 0.1000000014901161,
+            "id" : 40,
+            "name" : "water",
+            "shapes" : 
+            [
+              
+              {
+                "type" : "polygon"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : 
+              [
+                -1.179642677307129,
+                13.32115173339844,
+                13.32520389556885,
+                -1.175590515136719
+              ],
+              "y" : 
+              [
+                -1.370034813880920,
+                -1.345157384872437,
+                0.03373739123344421,
+                0.008860021829605103
+              ]
+            }
+          },
+          
+          {
+            "density" : 1,
+            "friction" : 0.2,
+            "id" : 45,
+            "name" : "fixture3",
+            "shapes" : 
+            [
+              
+              {
+                "type" : "line"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : [ -0.1787150055170059, 13.69017219543457 ],
+              "y" : [ -10.65180015563965, -10.63902854919434 ]
+            }
+          }
+        ],
+        "id" : 3,
+        "linearVelocity" : 0,
+        "massData-I" : 1883.720825195313,
+        "massData-center" : 
+        {
+          "x" : 6.207015991210938,
+          "y" : -3.855176210403442
+        },
+        "massData-mass" : 35.28265380859375,
+        "name" : "object",
+        "position" : 
+        {
+          "x" : 13.6717996597290,
+          "y" : 1.683719992637634
+        },
+        "type" : "dynamic"
+      },
+      
+      {
+        "angle" : 0,
+        "angularVelocity" : 0,
+        "awake" : true,
+        "fixedRotation" : true,
+        "fixture" : 
+        [
+          
+          {
+            "density" : 1.000000834465027,
+            "friction" : 0.4000000059604645,
+            "id" : 8,
+            "name" : "playerFixture",
+            "shapes" : 
+            [
+              
+              {
+                "type" : "polygon"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : 
+              [
+                -0.8183018565177918,
+                0.7256819605827332,
+                0.8384853005409241,
+                0.8384919762611389,
+                -0.8999689817428589,
+                -0.9000132679939270
+              ],
+              "y" : 
+              [
+                -1.519089579582214,
+                -1.519080638885498,
+                -1.403979182243347,
+                1.286200046539307,
+                1.286170005798340,
+                -1.412702202796936
+              ]
+            }
+          },
+          
+          {
+            "density" : 1.000000834465027,
+            "friction" : 0.4000000059604645,
+            "id" : 9,
+            "name" : "footSensor",
+            "sensor" : true,
+            "shapes" : 
+            [
+              
+              {
+                "type" : "polygon"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : 
+              [
+                -0.5557309985160828,
+                0.4346149861812592,
+                0.6943879723548889,
+                -0.7777990102767944
+              ],
+              "y" : 
+              [
+                -1.854769945144653,
+                -1.853710055351257,
+                -1.520490050315857,
+                -1.516649961471558
+              ]
+            }
+          },
+          
+          {
+            "density" : 1.000000834465027,
+            "friction" : 0.4000000059604645,
+            "id" : 25,
+            "name" : "wallSensor",
+            "sensor" : true,
+            "shapes" : 
+            [
+              
+              {
+                "type" : "polygon"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : 
+              [
+                1.194198369979858,
+                1.182458043098450,
+                0.8464559316635132,
+                0.8584929704666138
+              ],
+              "y" : 
+              [
+                -0.7326182723045349,
+                0.2576586306095123,
+                0.5138228535652161,
+                -0.9583199024200440
+              ]
+            }
+          },
+          
+          {
+            "density" : 1.000000834465027,
+            "friction" : 0.4000000059604645,
+            "id" : 26,
+            "name" : "wallSensor",
+            "sensor" : true,
+            "shapes" : 
+            [
+              
+              {
+                "type" : "polygon"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : 
+              [
+                -1.258884072303772,
+                -1.267059803009033,
+                -0.9362789392471314,
+                -0.9187133312225342
+              ],
+              "y" : 
+              [
+                0.4112096130847931,
+                -0.5791032314300537,
+                -0.8419720530509949,
+                0.6301153898239136
+              ]
+            }
+          }
+        ],
+        "id" : 6,
+        "linearVelocity" : 0,
+        "massData-I" : 0.3181097209453583,
+        "massData-center" : 
+        {
+          "x" : -0.03336424008011818,
+          "y" : -0.2257971018552780
+        },
+        "massData-mass" : 6.106045246124268,
+        "name" : "player",
+        "position" : 
+        {
+          "x" : 9.808155059814453,
+          "y" : 4.960190296173096
+        },
+        "type" : "dynamic"
+      },
+      
+      {
+        "angle" : 0,
+        "angularVelocity" : 0,
+        "awake" : true,
+        "fixture" : 
+        [
+          
+          {
+            "density" : 1,
+            "friction" : 0.2,
+            "id" : 11,
+            "name" : "fixture4",
+            "shapes" : 
+            [
+              
+              {
+                "type" : "line"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : [ 101.7429809570313, 1.031649947166443 ],
+              "y" : [ 13.01500320434570, 13.09109973907471 ]
+            }
+          },
+          
+          {
+            "density" : 1,
+            "friction" : 0.2,
+            "id" : 13,
+            "name" : "fixture6",
+            "shapes" : 
+            [
+              
+              {
+                "type" : "line"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : [ 0.7038319706916809, 101.6297225952148 ],
+              "y" : [ -24.63629913330078, -24.76979446411133 ]
+            }
+          },
+          
+          {
+            "density" : 1,
+            "friction" : 0.2,
+            "id" : 14,
+            "name" : "fixture2",
+            "shapes" : 
+            [
+              
+              {
+                "type" : "line"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : [ 0.8108050227165222, 0.7029610276222229 ],
+              "y" : [ 13.04510021209717, -24.63470077514648 ]
+            }
+          },
+          
+          {
+            "density" : 1,
+            "friction" : 0.2,
+            "id" : 22,
+            "name" : "fixture6",
+            "shapes" : 
+            [
+              
+              {
+                "type" : "line"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : [ 101.5836410522461, 101.5733871459961 ],
+              "y" : [ -24.61488151550293, 12.53085899353027 ]
+            }
+          }
+        ],
+        "id" : 7,
+        "linearVelocity" : 0,
+        "name" : "boundary",
+        "position" : 
+        {
+          "x" : -1.704144120216370,
+          "y" : 13.18726158142090
+        },
+        "type" : "static"
+      },
+      
+      {
+        "angle" : 0,
+        "angularVelocity" : 0,
+        "awake" : true,
+        "fixture" : 
+        [
+          
+          {
+            "density" : 1,
+            "friction" : 0.2,
+            "id" : 1,
+            "name" : "fixture8",
+            "shapes" : 
+            [
+              
+              {
+                "type" : "polygon"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : 
+              [
+                -5.016359806060791,
+                -5.043821811676025,
+                0.2751607298851013,
+                0.3314450085163117,
+                -3.093660116195679
+              ],
+              "y" : 
+              [
+                -8.127820968627930,
+                -10.75322723388672,
+                -10.75526809692383,
+                -5.578234672546387,
+                -5.587884902954102
+              ]
+            }
+          },
+          
+          {
+            "density" : 1,
+            "friction" : 0.2,
+            "id" : 2,
+            "name" : "fixture1",
+            "shapes" : 
+            [
+              
+              {
+                "type" : "polygon"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : 
+              [
+                33.15579605102539,
+                34.85620498657227,
+                34.84013366699219,
+                33.13972473144531
+              ],
+              "y" : 
+              [
+                -1.670190811157227,
+                -1.662139892578125,
+                0.2486739158630371,
+                0.2406229972839356
+              ]
+            }
+          },
+          
+          {
+            "density" : 1,
+            "friction" : 0.2,
+            "id" : 3,
+            "name" : "fixture1",
+            "shapes" : 
+            [
+              
+              {
+                "type" : "polygon"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : 
+              [
+                67.15113830566406,
+                87.99039459228516,
+                87.94361114501953,
+                67.10435485839844
+              ],
+              "y" : 
+              [
+                -19.47618103027344,
+                -19.50983238220215,
+                -0.8833861351013184,
+                -0.8497328758239746
+              ]
+            }
+          },
+          
+          {
+            "density" : 1,
+            "friction" : 0.2,
+            "id" : 7,
+            "name" : "fixture1",
+            "shapes" : 
+            [
+              
+              {
+                "type" : "polygon"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : 
+              [
+                43.23535537719727,
+                44.93576431274414,
+                44.91969299316406,
+                43.21928405761719
+              ],
+              "y" : 
+              [
+                -1.639614105224609,
+                -1.631563186645508,
+                0.2792506217956543,
+                0.2711997032165527
+              ]
+            }
+          },
+          
+          {
+            "density" : 1,
+            "friction" : 0.2,
+            "id" : 10,
+            "name" : "fixture1",
+            "shapes" : 
+            [
+              
+              {
+                "type" : "polygon"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : 
+              [
+                54.14568328857422,
+                55.84609222412109,
+                55.83002090454102,
+                54.12961196899414
+              ],
+              "y" : 
+              [
+                -1.569390773773193,
+                -1.561339855194092,
+                0.3494739532470703,
+                0.3414230346679688
+              ]
+            }
+          },
+          
+          {
+            "density" : 1,
+            "friction" : 0.2,
+            "id" : 24,
+            "name" : "fixture8",
+            "shapes" : 
+            [
+              
+              {
+                "type" : "polygon"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : 
+              [
+                -12.90312957763672,
+                -7.487938880920410,
+                -7.435070037841797,
+                -9.275850296020508,
+                -12.84710025787354
+              ],
+              "y" : 
+              [
+                -13.46188449859619,
+                -13.45499134063721,
+                -8.108050346374512,
+                -5.609644889831543,
+                -5.601194858551025
+              ]
+            }
+          },
+          
+          {
+            "density" : 1,
+            "friction" : 0.2,
+            "id" : 27,
+            "name" : "fixture9",
+            "shapes" : 
+            [
+              
+              {
+                "type" : "line"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : [ -9.276557922363281, -3.093475103378296 ],
+              "y" : [ -5.609641075134277, -5.587889671325684 ]
+            }
+          },
+          
+          {
+            "density" : 1,
+            "friction" : 0.2,
+            "id" : 28,
+            "name" : "fixture8",
+            "shapes" : 
+            [
+              
+              {
+                "type" : "polygon"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : 
+              [
+                -12.98875522613525,
+                -5.664669990539551,
+                -5.633244514465332,
+                -7.473939895629883,
+                -12.88969993591309
+              ],
+              "y" : 
+              [
+                -19.45994186401367,
+                -19.44235992431641,
+                -12.92447471618652,
+                -11.03709983825684,
+                -11.04360008239746
+              ]
+            }
+          },
+          
+          {
+            "density" : 1,
+            "filter-groupIndex" : -10,
+            "friction" : 0.2,
+            "id" : 29,
+            "name" : "fixture12",
+            "shapes" : 
+            [
+              
+              {
+                "type" : "polygon"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : 
+              [
+                0.07880711555480957,
+                16.27994918823242,
+                16.28862953186035,
+                0.09244728088378906
+              ],
+              "y" : 
+              [
+                -10.76184654235840,
+                -10.75531387329102,
+                -7.974438190460205,
+                -7.980755805969238
+              ]
+            }
+          },
+          
+          {
+            "density" : 1,
+            "friction" : 0.2,
+            "id" : 31,
+            "name" : "fixture12",
+            "shapes" : 
+            [
+              
+              {
+                "type" : "polygon"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : 
+              [
+                -0.2034311294555664,
+                16.05776977539063,
+                16.06400871276856,
+                -0.1922321319580078
+              ],
+              "y" : 
+              [
+                -19.45775985717773,
+                -19.46231460571289,
+                -17.59743881225586,
+                -17.59267616271973
+              ]
+            }
+          },
+          
+          {
+            "density" : 1,
+            "friction" : 0.2,
+            "id" : 34,
+            "name" : "fixture8",
+            "shapes" : 
+            [
+              
+              {
+                "type" : "polygon"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : 
+              [
+                15.62731742858887,
+                24.60273933410645,
+                24.62939071655273,
+                15.64150047302246
+              ],
+              "y" : 
+              [
+                -3.888596773147583,
+                -3.864824771881104,
+                1.742322087287903,
+                1.730659961700440
+              ]
+            }
+          },
+          
+          {
+            "density" : 1,
+            "friction" : 0.2,
+            "id" : 39,
+            "name" : "fixture0",
+            "shapes" : 
+            [
+              
+              {
+                "type" : "polygon"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : 
+              [
+                -7.363051414489746,
+                0.3328161239624023,
+                0.3431692123413086,
+                -7.332219123840332
+              ],
+              "y" : 
+              [
+                -19.44418334960938,
+                -19.44852828979492,
+                -12.94094371795654,
+                -12.92900943756104
+              ]
+            }
+          },
+          
+          {
+            "density" : 1,
+            "friction" : 0.2,
+            "id" : 43,
+            "name" : "fixture8",
+            "shapes" : 
+            [
+              
+              {
+                "type" : "polygon"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : 
+              [
+                16.85610008239746,
+                24.59652328491211,
+                24.60294532775879,
+                15.63821029663086,
+                15.62320041656494
+              ],
+              "y" : 
+              [
+                -6.199820041656494,
+                -6.183826446533203,
+                -3.265754461288452,
+                -3.252957105636597,
+                -5.243569850921631
+              ]
+            }
+          },
+          
+          {
+            "density" : 1,
+            "friction" : 0.2,
+            "id" : 44,
+            "name" : "fixture8",
+            "shapes" : 
+            [
+              
+              {
+                "type" : "polygon"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : 
+              [
+                20.96364021301270,
+                20.97444152832031,
+                15.52279090881348,
+                15.50647735595703
+              ],
+              "y" : 
+              [
+                -19.48697280883789,
+                -7.978287220001221,
+                -7.980615139007568,
+                -19.45923233032227
+              ]
+            }
+          },
+          
+          {
+            "density" : 1,
+            "friction" : 0.2,
+            "id" : 46,
+            "name" : "fixture8",
+            "shapes" : 
+            [
+              
+              {
+                "type" : "polygon"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : 
+              [
+                -12.84497928619385,
+                -9.297999382019043,
+                -9.309345245361328,
+                -12.78894996643066
+              ],
+              "y" : 
+              [
+                -6.179298400878906,
+                -6.179610252380371,
+                1.672941207885742,
+                1.681391239166260
+              ]
+            }
+          }
+        ],
+        "gravityScale" : 0,
+        "id" : 13,
+        "linearVelocity" : 0,
+        "name" : "ground",
+        "position" : 
+        {
+          "x" : 11.89439964294434,
+          "y" : 7.977729797363281
+        },
+        "type" : "static"
+      }
+    ],
+    "metaimage" : 
+    [
+      
+      {
+        "body" : 3,
+        "center" : 
+        {
+          "x" : 6.058845520019531,
+          "y" : -0.5267791748046875
+        },
+        "file" : "../res/cautionlift.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 1,
+        "name" : "objectImage",
+        "opacity" : 0.50,
+        "scale" : 1.074765324592590
+      },
+      
+      {
+        "body" : 6,
+        "center" : 
+        {
+          "x" : -0.03076460026204586,
+          "y" : -0.1165499985218048
+        },
+        "file" : "../res/player_idle.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 2,
+        "name" : "playerTexture",
+        "opacity" : 0.50,
+        "scale" : 2.805250644683838
+      },
+      
+      {
+        "body" : 13,
+        "center" : 
+        {
+          "x" : -6.277531147003174,
+          "y" : -6.858231544494629
+        },
+        "file" : "../res/drain.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 3,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "scale" : 2.537056684494019
+      },
+      
+      {
+        "angle" : 12.56998157501221,
+        "body" : 13,
+        "center" : 
+        {
+          "x" : 33.98045730590820,
+          "y" : -1.180685520172119
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 4,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "renderOrder" : 1,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : -0.9071459770202637,
+        "body" : 13,
+        "center" : 
+        {
+          "x" : -8.746438980102539,
+          "y" : -7.106760501861572
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 5,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "renderOrder" : 1,
+        "scale" : 1
+      },
+      
+      {
+        "body" : 13,
+        "center" : 
+        {
+          "x" : 29.06113624572754,
+          "y" : 7.766407012939453
+        },
+        "file" : "../res/leveltext5.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 6,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "scale" : 5.191722869873047
+      },
+      
+      {
+        "angle" : 12.56998157501221,
+        "body" : 13,
+        "center" : 
+        {
+          "x" : 23.77095413208008,
+          "y" : 1.242161870002747
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 7,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "renderOrder" : 1,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : 12.56998157501221,
+        "body" : 13,
+        "center" : 
+        {
+          "x" : 44.07824707031250,
+          "y" : -1.138509273529053
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 8,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "renderOrder" : 1,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : 12.56998157501221,
+        "body" : 13,
+        "center" : 
+        {
+          "x" : 44.07292556762695,
+          "y" : -0.2276943922042847
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 9,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "renderOrder" : 1,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : -1.581767559051514,
+        "body" : 13,
+        "center" : 
+        {
+          "x" : -7.979064941406250,
+          "y" : -8.711753845214844
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 10,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "renderOrder" : 1,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : -1.581767559051514,
+        "body" : 13,
+        "center" : 
+        {
+          "x" : -8.008352279663086,
+          "y" : -10.37137603759766
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 11,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "renderOrder" : 1,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : -0.7879884839057922,
+        "body" : 13,
+        "center" : 
+        {
+          "x" : -6.992182254791260,
+          "y" : -12.19056129455566
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 12,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "renderOrder" : 1,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : -0.0002955393865704536,
+        "body" : 13,
+        "center" : 
+        {
+          "x" : -3.865996360778809,
+          "y" : -13.40366935729981
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 13,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "renderOrder" : 1,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : -0.0002955393865704536,
+        "body" : 13,
+        "center" : 
+        {
+          "x" : -2.211024284362793,
+          "y" : -13.40991401672363
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 14,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "renderOrder" : 1,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : -0.0002955393865704536,
+        "body" : 13,
+        "center" : 
+        {
+          "x" : -0.5373144149780273,
+          "y" : -13.40991401672363
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 15,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "renderOrder" : 1,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : -0.0002955393865704536,
+        "body" : 13,
+        "center" : 
+        {
+          "x" : -5.554069519042969,
+          "y" : -13.40991497039795
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 16,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "renderOrder" : 1,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : 12.56998157501221,
+        "body" : 13,
+        "center" : 
+        {
+          "x" : 55.03335571289063,
+          "y" : -1.053728699684143
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 17,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "renderOrder" : 1,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : 12.56998157501221,
+        "body" : 13,
+        "center" : 
+        {
+          "x" : 55.02799987792969,
+          "y" : -0.1429179906845093
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 18,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "renderOrder" : 1,
+        "scale" : 1
+      },
+      
+      {
+        "body" : 13,
+        "center" : 
+        {
+          "x" : 24.46949958801270,
+          "y" : -15.76725006103516
+        },
+        "file" : "../res/spikes.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 19,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "scale" : 1.489130020141602
+      },
+      
+      {
+        "body" : 13,
+        "center" : 
+        {
+          "x" : 26.78981208801270,
+          "y" : -15.75918579101563
+        },
+        "file" : "../res/spikes.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 20,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "scale" : 1.489130020141602
+      },
+      
+      {
+        "angle" : 1.567324042320252,
+        "body" : 13,
+        "center" : 
+        {
+          "x" : -4.566671371459961,
+          "y" : -8.928235054016113
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 21,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "renderOrder" : 1,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : 3.133823633193970,
+        "body" : 13,
+        "center" : 
+        {
+          "x" : -4.156339645385742,
+          "y" : -10.26711750030518
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 22,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "renderOrder" : 1,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : 3.133823633193970,
+        "body" : 13,
+        "center" : 
+        {
+          "x" : -2.485113143920898,
+          "y" : -10.26711750030518
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 23,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "renderOrder" : 1,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : 3.133823633193970,
+        "body" : 13,
+        "center" : 
+        {
+          "x" : -0.8276987075805664,
+          "y" : -10.25456142425537
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 24,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "renderOrder" : 1,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : 3.133823633193970,
+        "body" : 13,
+        "center" : 
+        {
+          "x" : 0.8613681793212891,
+          "y" : -10.29222965240479
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 25,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "renderOrder" : 1,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : 3.133823633193970,
+        "body" : 13,
+        "center" : 
+        {
+          "x" : 2.536921501159668,
+          "y" : -10.29222965240479
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 26,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "renderOrder" : 1,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : 3.133823633193970,
+        "body" : 13,
+        "center" : 
+        {
+          "x" : 4.235899925231934,
+          "y" : -10.29222965240479
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 27,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "renderOrder" : 1,
+        "scale" : 1
+      },
+      
+      {
+        "body" : 13,
+        "center" : 
+        {
+          "x" : 29.06779670715332,
+          "y" : -15.75918579101563
+        },
+        "file" : "../res/spikes.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 28,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "scale" : 1.489130020141602
+      },
+      
+      {
+        "angle" : 6.285984992980957,
+        "body" : 13,
+        "center" : 
+        {
+          "x" : 5.176970958709717,
+          "y" : -8.460527420043945
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 29,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "renderOrder" : 1,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : 6.285984992980957,
+        "body" : 13,
+        "center" : 
+        {
+          "x" : 3.517029285430908,
+          "y" : -8.453921318054199
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 30,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "renderOrder" : 1,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : 6.285984992980957,
+        "body" : 13,
+        "center" : 
+        {
+          "x" : 1.841473102569580,
+          "y" : -8.447916030883789
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 31,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "renderOrder" : 1,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : 6.285984992980957,
+        "body" : 13,
+        "center" : 
+        {
+          "x" : 0.1803307533264160,
+          "y" : -8.441309928894043
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 32,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "renderOrder" : 1,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : 4.718461513519287,
+        "body" : 13,
+        "center" : 
+        {
+          "x" : -0.1529036313295364,
+          "y" : -7.149004936218262
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 33,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "renderOrder" : 1,
+        "scale" : 1
+      },
+      
+      {
+        "body" : 13,
+        "center" : 
+        {
+          "x" : 31.36594200134277,
+          "y" : -15.75918579101563
+        },
+        "file" : "../res/spikes.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 34,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "scale" : 1.489130020141602
+      },
+      
+      {
+        "body" : 13,
+        "center" : 
+        {
+          "x" : 33.70439910888672,
+          "y" : -15.77934646606445
+        },
+        "file" : "../res/spikes.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 35,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "scale" : 1.489130020141602
+      },
+      
+      {
+        "body" : 13,
+        "center" : 
+        {
+          "x" : 36.0227050781250,
+          "y" : -15.75918579101563
+        },
+        "file" : "../res/spikes.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 36,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "scale" : 1.489130020141602
+      },
+      
+      {
+        "body" : 13,
+        "center" : 
+        {
+          "x" : 38.39140319824219,
+          "y" : -15.75918579101563
+        },
+        "file" : "../res/spikes.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 37,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "scale" : 1.489130020141602
+      },
+      
+      {
+        "angle" : 6.288290500640869,
+        "body" : 13,
+        "center" : 
+        {
+          "x" : -0.5025093555450440,
+          "y" : -6.065166473388672
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 38,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "renderOrder" : 1,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : 6.288290500640869,
+        "body" : 13,
+        "center" : 
+        {
+          "x" : -2.189280748367310,
+          "y" : -6.058629035949707
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 39,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "renderOrder" : 1,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : 7.183667659759522,
+        "body" : 13,
+        "center" : 
+        {
+          "x" : -3.824402809143066,
+          "y" : -7.209950447082520
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 40,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "renderOrder" : 1,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : -0.0002955393865704536,
+        "body" : 13,
+        "center" : 
+        {
+          "x" : 1.115362167358398,
+          "y" : -18.07551193237305
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 41,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "renderOrder" : 1,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : -0.0002955393865704536,
+        "body" : 13,
+        "center" : 
+        {
+          "x" : 2.789694786071777,
+          "y" : -18.07551193237305
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 42,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "renderOrder" : 1,
+        "scale" : 1
+      },
+      
+      {
+        "body" : 13,
+        "center" : 
+        {
+          "x" : 40.73389434814453,
+          "y" : -15.75918579101563
+        },
+        "file" : "../res/spikes.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 43,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "scale" : 1.489130020141602
+      },
+      
+      {
+        "body" : 13,
+        "center" : 
+        {
+          "x" : 43.11267089843750,
+          "y" : -15.77934646606445
+        },
+        "file" : "../res/spikes.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 44,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "scale" : 1.489130020141602
+      },
+      
+      {
+        "body" : 13,
+        "center" : 
+        {
+          "x" : 45.38259124755859,
+          "y" : -15.77934646606445
+        },
+        "file" : "../res/spikes.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 45,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "scale" : 1.489130020141602
+      },
+      
+      {
+        "body" : 13,
+        "center" : 
+        {
+          "x" : 47.70089721679688,
+          "y" : -15.77934646606445
+        },
+        "file" : "../res/spikes.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 46,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "scale" : 1.489130020141602
+      },
+      
+      {
+        "body" : 13,
+        "center" : 
+        {
+          "x" : 49.97888183593750,
+          "y" : -15.77934646606445
+        },
+        "file" : "../res/spikes.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 47,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "scale" : 1.489130020141602
+      },
+      
+      {
+        "angle" : -0.0002955393865704536,
+        "body" : 13,
+        "center" : 
+        {
+          "x" : 12.80760574340820,
+          "y" : -18.08695030212402
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 48,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "renderOrder" : 1,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : -0.0002955393865704536,
+        "body" : 13,
+        "center" : 
+        {
+          "x" : 14.50689697265625,
+          "y" : -18.07654953002930
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 49,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "renderOrder" : 1,
+        "scale" : 1
+      },
+      
+      {
+        "body" : 13,
+        "center" : 
+        {
+          "x" : 52.26088714599609,
+          "y" : -15.79950523376465
+        },
+        "file" : "../res/spikes.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 50,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "scale" : 1.489130020141602
+      },
+      
+      {
+        "angle" : 6.281834602355957,
+        "body" : 13,
+        "center" : 
+        {
+          "x" : 10.62292671203613,
+          "y" : -8.468126296997070
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 51,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "renderOrder" : 1,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : 6.281834602355957,
+        "body" : 13,
+        "center" : 
+        {
+          "x" : 12.47931098937988,
+          "y" : -8.456458091735840
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 52,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "renderOrder" : 1,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : 6.281834602355957,
+        "body" : 13,
+        "center" : 
+        {
+          "x" : 14.38257980346680,
+          "y" : -8.468126296997070
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 53,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "renderOrder" : 1,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : 3.154000043869019,
+        "body" : 13,
+        "center" : 
+        {
+          "x" : 11.69530010223389,
+          "y" : -10.28610038757324
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 54,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "renderOrder" : 1,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : 3.154000043869019,
+        "body" : 13,
+        "center" : 
+        {
+          "x" : 13.39297580718994,
+          "y" : -10.27607154846191
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 55,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "renderOrder" : 1,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : 3.154000043869019,
+        "body" : 13,
+        "center" : 
+        {
+          "x" : 15.07254505157471,
+          "y" : -10.26602649688721
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 56,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "renderOrder" : 1,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : 4.717717647552490,
+        "body" : 13,
+        "center" : 
+        {
+          "x" : -0.1389212608337402,
+          "y" : -14.78960609436035
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 57,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "renderOrder" : 1,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : 4.717717647552490,
+        "body" : 13,
+        "center" : 
+        {
+          "x" : -0.1137986183166504,
+          "y" : -16.43350028991699
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 58,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "renderOrder" : 1,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : 4.717717647552490,
+        "body" : 13,
+        "center" : 
+        {
+          "x" : -0.1425995826721191,
+          "y" : -18.09303283691406
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 59,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "renderOrder" : 1,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : 7.847448348999023,
+        "body" : 13,
+        "center" : 
+        {
+          "x" : 16.05063056945801,
+          "y" : -11.71309471130371
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 60,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "renderOrder" : 1,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : 7.847448348999023,
+        "body" : 13,
+        "center" : 
+        {
+          "x" : 16.01255035400391,
+          "y" : -13.40133380889893
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 61,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "renderOrder" : 1,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : 7.847448348999023,
+        "body" : 13,
+        "center" : 
+        {
+          "x" : 15.98716354370117,
+          "y" : -15.09972763061523
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 62,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "renderOrder" : 1,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : 7.847448348999023,
+        "body" : 13,
+        "center" : 
+        {
+          "x" : 16.01255035400391,
+          "y" : -16.77527236938477
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 63,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "renderOrder" : 1,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : 7.847448348999023,
+        "body" : 13,
+        "center" : 
+        {
+          "x" : 15.93638992309570,
+          "y" : -18.44193267822266
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 64,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "renderOrder" : 1,
+        "scale" : 1
+      },
+      
+      {
+        "body" : 13,
+        "center" : 
+        {
+          "x" : 54.55902862548828,
+          "y" : -15.79950523376465
+        },
+        "file" : "../res/spikes.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 65,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "scale" : 1.489130020141602
+      },
+      
+      {
+        "angle" : 8.759222030639648,
+        "body" : 13,
+        "center" : 
+        {
+          "x" : 16.52927398681641,
+          "y" : -5.023435115814209
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 66,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "renderOrder" : 1,
+        "scale" : 1
+      },
+      
+      {
+        "body" : 13,
+        "center" : 
+        {
+          "x" : 56.85919189453125,
+          "y" : -15.79950523376465
+        },
+        "file" : "../res/spikes.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 67,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "scale" : 1.489130020141602
+      },
+      
+      {
+        "angle" : 7.847448348999023,
+        "body" : 13,
+        "center" : 
+        {
+          "x" : 16.10560989379883,
+          "y" : -3.294769763946533
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 68,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "renderOrder" : 1,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : 7.847448348999023,
+        "body" : 13,
+        "center" : 
+        {
+          "x" : 16.11723518371582,
+          "y" : -1.626526832580566
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 69,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "renderOrder" : 1,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : 7.847448348999023,
+        "body" : 13,
+        "center" : 
+        {
+          "x" : 16.12079238891602,
+          "y" : 0.006550788879394531
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 70,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "renderOrder" : 1,
+        "scale" : 1
+      },
+      
+      {
+        "body" : 13,
+        "center" : 
+        {
+          "x" : 59.09686279296875,
+          "y" : -15.81966400146484
+        },
+        "file" : "../res/spikes.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 71,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "scale" : 1.489130020141602
+      },
+      
+      {
+        "body" : 13,
+        "center" : 
+        {
+          "x" : 61.36476135253906,
+          "y" : -15.79950523376465
+        },
+        "file" : "../res/spikes.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 72,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "scale" : 1.489130020141602
+      },
+      
+      {
+        "body" : 13,
+        "center" : 
+        {
+          "x" : 63.72338104248047,
+          "y" : -15.77934646606445
+        },
+        "file" : "../res/spikes.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 73,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "scale" : 1.489130020141602
+      },
+      
+      {
+        "body" : 13,
+        "center" : 
+        {
+          "x" : 66.04168701171875,
+          "y" : -15.77934646606445
+        },
+        "file" : "../res/spikes.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 74,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "scale" : 1.489130020141602
+      },
+      
+      {
+        "body" : 13,
+        "center" : 
+        {
+          "x" : 50.01212692260742,
+          "y" : -14.24802017211914
+        },
+        "file" : "../res/leveltext6.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 75,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "scale" : 6.864069938659668
+      },
+      
+      {
+        "body" : 2,
+        "center" : 
+        {
+          "x" : 1.265159606933594,
+          "y" : 3.961489677429199
+        },
+        "file" : "../res/exit_sign.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 76,
+        "name" : "doorImage",
+        "opacity" : 0.50,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : 7.847448348999023,
+        "body" : 13,
+        "center" : 
+        {
+          "x" : 67.61933898925781,
+          "y" : -1.737449645996094
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 77,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "renderOrder" : 1,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : 7.847448348999023,
+        "body" : 13,
+        "center" : 
+        {
+          "x" : 67.58126068115234,
+          "y" : -3.425688743591309
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 78,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "renderOrder" : 1,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : 7.847448348999023,
+        "body" : 13,
+        "center" : 
+        {
+          "x" : 67.55587005615234,
+          "y" : -5.124082565307617
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 79,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "renderOrder" : 1,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : 7.847448348999023,
+        "body" : 13,
+        "center" : 
+        {
+          "x" : 67.58126068115234,
+          "y" : -6.799627304077148
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 80,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "renderOrder" : 1,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : 7.847448348999023,
+        "body" : 13,
+        "center" : 
+        {
+          "x" : 67.52505493164063,
+          "y" : -11.90438461303711
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 81,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "renderOrder" : 1,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : 7.847448348999023,
+        "body" : 13,
+        "center" : 
+        {
+          "x" : 67.58852386474609,
+          "y" : -8.517751693725586
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 82,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "renderOrder" : 1,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : 7.847448348999023,
+        "body" : 13,
+        "center" : 
+        {
+          "x" : 67.55044555664063,
+          "y" : -10.20599174499512
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 83,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "renderOrder" : 1,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : 7.847448348999023,
+        "body" : 13,
+        "center" : 
+        {
+          "x" : 67.55044555664063,
+          "y" : -13.57992935180664
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 84,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "renderOrder" : 1,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : 7.847448348999023,
+        "body" : 13,
+        "center" : 
+        {
+          "x" : 67.58104705810547,
+          "y" : -15.23268985748291
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 85,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "renderOrder" : 1,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : 7.847448348999023,
+        "body" : 13,
+        "center" : 
+        {
+          "x" : 67.60643768310547,
+          "y" : -16.90823364257813
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 86,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "renderOrder" : 1,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : 7.847448348999023,
+        "body" : 13,
+        "center" : 
+        {
+          "x" : 67.58996582031250,
+          "y" : -18.60449981689453
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 87,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "renderOrder" : 1,
+        "scale" : 1
+      },
+      
+      {
+        "body" : 13,
+        "center" : 
+        {
+          "x" : 78.00978088378906,
+          "y" : -6.648907661437988
+        },
+        "file" : "../res/truckback.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 88,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "scale" : 11.58079814910889
+      },
+      
+      {
+        "angle" : 9.425183296203613,
+        "body" : 13,
+        "center" : 
+        {
+          "x" : 23.75408172607422,
+          "y" : -5.653063297271729
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 93,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "renderOrder" : 1,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : 4.700329780578613,
+        "body" : 13,
+        "center" : 
+        {
+          "x" : 5.591639995574951,
+          "y" : -9.821169853210449
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 94,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "renderOrder" : 1,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : 1.569411158561707,
+        "body" : 13,
+        "center" : 
+        {
+          "x" : 10.28786277770996,
+          "y" : -9.848358154296875
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 95,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "renderOrder" : 1,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : 6.281834602355957,
+        "body" : 13,
+        "center" : 
+        {
+          "x" : 16.27077865600586,
+          "y" : -8.456696510314941
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 96,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "renderOrder" : 1,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : 6.281834602355957,
+        "body" : 13,
+        "center" : 
+        {
+          "x" : 18.09725761413574,
+          "y" : -8.479556083679199
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 97,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "renderOrder" : 1,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : 6.281834602355957,
+        "body" : 13,
+        "center" : 
+        {
+          "x" : 20.01749992370606,
+          "y" : -8.479559898376465
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 98,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "renderOrder" : 1,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : 4.710806369781494,
+        "body" : 13,
+        "center" : 
+        {
+          "x" : 20.43851280212402,
+          "y" : -9.816875457763672
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 99,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "renderOrder" : 1,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : 4.710806369781494,
+        "body" : 13,
+        "center" : 
+        {
+          "x" : 20.46102714538574,
+          "y" : -11.48289203643799
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 100,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "renderOrder" : 1,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : 4.710806369781494,
+        "body" : 13,
+        "center" : 
+        {
+          "x" : 20.46102714538574,
+          "y" : -13.14328002929688
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 101,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "renderOrder" : 1,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : 4.710806369781494,
+        "body" : 13,
+        "center" : 
+        {
+          "x" : 20.45990180969238,
+          "y" : -14.78678321838379
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 102,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "renderOrder" : 1,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : 4.710806369781494,
+        "body" : 13,
+        "center" : 
+        {
+          "x" : 20.42613410949707,
+          "y" : -16.46405792236328
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 103,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "renderOrder" : 1,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : 4.710806369781494,
+        "body" : 13,
+        "center" : 
+        {
+          "x" : 20.41487693786621,
+          "y" : -18.15371322631836
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 104,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "renderOrder" : 1,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : 10.99625301361084,
+        "body" : 13,
+        "center" : 
+        {
+          "x" : 24.11621284484863,
+          "y" : -2.278307914733887
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 105,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "renderOrder" : 1,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : 10.99625301361084,
+        "body" : 13,
+        "center" : 
+        {
+          "x" : 24.07741355895996,
+          "y" : -4.240332126617432
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 106,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "renderOrder" : 1,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : -1.581767559051514,
+        "body" : 13,
+        "center" : 
+        {
+          "x" : -9.788579940795898,
+          "y" : -4.736933231353760
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 126,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "renderOrder" : 1,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : -1.581767559051514,
+        "body" : 13,
+        "center" : 
+        {
+          "x" : -9.788579940795898,
+          "y" : -2.947063207626343
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 127,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "renderOrder" : 1,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : -1.581767559051514,
+        "body" : 13,
+        "center" : 
+        {
+          "x" : -9.788579940795898,
+          "y" : -1.179021120071411
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 128,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "renderOrder" : 1,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : -1.581767559051514,
+        "body" : 13,
+        "center" : 
+        {
+          "x" : -9.788579940795898,
+          "y" : 0.6201584339141846
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 129,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "renderOrder" : 1,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : -0.004178524017333984,
+        "body" : 13,
+        "center" : 
+        {
+          "x" : -11.20611476898193,
+          "y" : 1.176964640617371
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 130,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "renderOrder" : 1,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : 10.99625301361084,
+        "body" : 13,
+        "center" : 
+        {
+          "x" : 24.11701393127441,
+          "y" : -0.4468379020690918
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 131,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "renderOrder" : 1,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : 12.56998157501221,
+        "body" : 13,
+        "center" : 
+        {
+          "x" : 33.97513580322266,
+          "y" : -0.2698706388473511
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 132,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "renderOrder" : 1,
+        "scale" : 1
+      },
+      
+      {
+        "angle" : 12.56998157501221,
+        "body" : 13,
+        "center" : 
+        {
+          "x" : 16.47912025451660,
+          "y" : 1.265876173973084
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 133,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "renderOrder" : 1,
+        "scale" : 1
+      },
+      
+      {
+        "body" : 13,
+        "center" : 
+        {
+          "x" : 7.980443954467773,
+          "y" : -0.5460491180419922
+        },
+        "file" : "../res/leveltext4.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 139,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "scale" : 6.024718761444092
+      },
+      
+      {
+        "body" : 3,
+        "center" : 
+        {
+          "x" : 6.143284797668457,
+          "y" : -6.064765930175781
+        },
+        "file" : "../res/lift.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 141,
+        "name" : "objectImage",
+        "opacity" : 0.50,
+        "scale" : 10.00353908538818
+      },
+      
+      {
+        "body" : 3,
+        "center" : 
+        {
+          "x" : 3.900872230529785,
+          "y" : -11.73256587982178
+        },
+        "file" : "../res/crate.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 142,
+        "name" : "objectImage",
+        "opacity" : 0.50,
+        "scale" : 2.151067972183228
+      },
+      
+      {
+        "body" : 3,
+        "center" : 
+        {
+          "x" : 6.091954231262207,
+          "y" : -11.73256492614746
+        },
+        "file" : "../res/crate.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 143,
+        "name" : "objectImage",
+        "opacity" : 0.50,
+        "scale" : 2.151067972183228
+      },
+      
+      {
+        "body" : 3,
+        "center" : 
+        {
+          "x" : 8.283034324645996,
+          "y" : -11.73256492614746
+        },
+        "file" : "../res/crate.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 144,
+        "name" : "objectImage",
+        "opacity" : 0.50,
+        "scale" : 2.151067972183228
+      },
+      
+      {
+        "body" : 13,
+        "center" : 
+        {
+          "x" : 20.08291053771973,
+          "y" : -2.148147821426392
+        },
+        "file" : "../res/pump.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 149,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "scale" : 8.149095535278320
+      },
+      
+      {
+        "angle" : 12.56998157501221,
+        "body" : 13,
+        "center" : 
+        {
+          "x" : 22.1350097656250,
+          "y" : 1.242161870002747
+        },
+        "file" : "../res/block.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 150,
+        "name" : "groundImage",
+        "opacity" : 0.50,
+        "renderOrder" : 1,
+        "scale" : 1
+      }
+    ],
+    "positionIterations" : 4,
+    "stepsPerSecond" : 60.0,
+    "subStepping" : false,
+    "velocityIterations" : 8,
+    "warmStarting" : true
+  }
+}
